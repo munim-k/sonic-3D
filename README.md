@@ -12,4 +12,4 @@ ill try to keep updating it tho as i will still be working on some parts like th
 
 anyway as self conscious as i am about some of the code it really isnt that bad and works well enough. i hope someone will still find it useful in their games. also if u need any help or just want to make fun of me for my bad code consider joining the discord which ive spammed practically everywhere at this point so im sure it wont be too big of a challenge to find it
 
-also there do seem to be a few memory leaks which i think have something to do with the behaviour graph but ive been too lazy to debug them so just deal with it itll be fine ur computer isnt gonna explode or anything
+also thee do seem to be a few memory leaks which i think have something to do with the behaviour graph but ive been too lazy to debug them so just deal with it itll be fine ur computer isnt gonna explode or anything
