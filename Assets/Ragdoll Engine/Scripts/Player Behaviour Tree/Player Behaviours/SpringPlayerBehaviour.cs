@@ -75,7 +75,7 @@ namespace RagdollEngine
                     additiveVelocity = -RB.linearVelocity
                         + thisStageObject.transform.up * (Vector3.Dot(RB.linearVelocity, thisStageObject.transform.up) > 0 ? Mathf.Max(springStageObject.speed, RB.linearVelocity.magnitude) : springStageObject.speed);
 
-                    animator.SetTrigger("Spring");
+                    //animator.SetTrigger("Spring");
 
                     return true;
                 }

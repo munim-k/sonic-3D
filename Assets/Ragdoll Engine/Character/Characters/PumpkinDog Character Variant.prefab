@@ -52,38 +52,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4426056147231167128, guid: f344aeeb8c12f524aaa6f13cac485041, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3.588192
-      objectReference: {fileID: 0}
-    - target: {fileID: 4426056147231167128, guid: f344aeeb8c12f524aaa6f13cac485041, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -9.659258
-      objectReference: {fileID: 0}
-    - target: {fileID: 4426056147231167128, guid: f344aeeb8c12f524aaa6f13cac485041, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9914449
-      objectReference: {fileID: 0}
-    - target: {fileID: 4426056147231167128, guid: f344aeeb8c12f524aaa6f13cac485041, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.13052626
-      objectReference: {fileID: 0}
     - target: {fileID: 8487498030417276728, guid: f344aeeb8c12f524aaa6f13cac485041, type: 3}
       propertyPath: m_Name
-      value: Sonic Character Variant
-      objectReference: {fileID: 0}
-    - target: {fileID: 8842867025789024806, guid: f344aeeb8c12f524aaa6f13cac485041, type: 3}
-      propertyPath: uis.Array.size
-      value: 1
+      value: PumpkinDog Character Variant
       objectReference: {fileID: 0}
     - target: {fileID: 8842867025789024806, guid: f344aeeb8c12f524aaa6f13cac485041, type: 3}
       propertyPath: playerBehaviourTreePrefab
       value: 
-      objectReference: {fileID: 5910379342027677545, guid: 4e1f1f6a346302347bd38889ee87d4ab, type: 3}
-    - target: {fileID: 8842867025789024806, guid: f344aeeb8c12f524aaa6f13cac485041, type: 3}
-      propertyPath: respawnTransformData.rotation.x
-      value: -0
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 5910379342027677545, guid: c7f39fcd6ca22f24995df8bd9686a373, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

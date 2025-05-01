@@ -74,7 +74,6 @@ namespace RagdollEngine
 
                 emissionModule.enabled = value;
             }
-
             foreach (TrailRenderer thisTrailRenderer in trailRenderers)
                 thisTrailRenderer.emitting = value;
         }
