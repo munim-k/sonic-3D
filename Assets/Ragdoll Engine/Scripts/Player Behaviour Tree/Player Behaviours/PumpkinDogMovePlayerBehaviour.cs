@@ -5,43 +5,33 @@ namespace RagdollEngine
 {
     public class PumpkinDogMovePlayerBehaviour : PlayerBehaviour
     {
-        [SerializeField] float maxSpeed;
+        [SerializeField] float maxSpeed; // Maximum speed the player can move
+        [SerializeField] float baseSpeed; // Base speed when starting movement
+        [SerializeField] float acceleration; // Acceleration rate when moving
+        [SerializeField, Range(0, 1)] float smoothness; // Smoothness factor for movement transitions
+        [SerializeField] float uphillSlopeRatio; // Speed reduction factor for uphill slopes
+        [SerializeField] float downhillSlopeRatio; // Speed increase factor for downhill slopes
+        [SerializeField] float maxSpeedUphillSlopeRatio; // Maximum speed reduction on steep uphill slopes
+        [SerializeField] float maxSpeedDownhillSlopeRatio; // Maximum speed increase on steep downhill slopes
 
-        [SerializeField] float baseSpeed;
-
-        [SerializeField] float acceleration;
-
-        [SerializeField, Range(0, 1)] float smoothness;
-
-        [SerializeField] float uphillSlopeRatio;
-
-        [SerializeField] float downhillSlopeRatio;
-
-        [SerializeField] float maxSpeedUphillSlopeRatio;
-
-        [SerializeField] float maxSpeedDownhillSlopeRatio;
-
-        bool wasMoving;
+        bool wasMoving; // Tracks whether the player was moving in the previous frame
 
         public override void Execute()
         {
-            active = true;
+            active = true; // Mark this behavior as active
 
+            // Determine if the player was moving in the previous frame and is still active
             wasMoving = wasMoving && wasActive;
 
+            // Check if the player is providing movement input
             moving = inputHandler.move.magnitude > InputSystem.settings.defaultDeadzoneMin;
 
-            Vector3 moveForwardNormal;
+            // Calculate movement directions relative to the camera and player orientation
+            Vector3 moveForwardNormal = Vector3.Cross(cameraTransform.right, playerTransform.up).normalized; // Forward direction
+            Vector3 moveRightNormal = Vector3.Cross(playerTransform.up, cameraTransform.forward).normalized; // Right direction
 
-            Vector3 moveRightNormal;
-
-            Vector3 moveNormal;
-
-            moveForwardNormal = Vector3.Cross(cameraTransform.right, playerTransform.up).normalized;
-
-            moveRightNormal = Vector3.Cross(playerTransform.up, cameraTransform.forward).normalized;
-
-            moveNormal = (moveForwardNormal
+            // Combine forward and right movement based on input
+            Vector3 moveNormal = (moveForwardNormal
                     * inputHandler.move.y
                     * Mathf.Sign(Vector3.Dot(tangent, moveForwardNormal)
                         * Mathf.Max(Vector3.Dot(cameraTransform.forward, tangent),
@@ -52,32 +42,46 @@ namespace RagdollEngine
                         * Mathf.Max(Vector3.Dot(cameraTransform.forward, -plane),
                             -Vector3.Dot(Vector3.Cross(tangent, plane), cameraTransform.up))));
 
+            // Calculate the percentage of the maximum speed the player is currently moving at
             float speedPercent = Mathf.Min(moveVelocity.magnitude / maxSpeed, 1);
 
             if (moving)
             {
+                // Adjust movement direction based on the terrain plane
                 if (plane.magnitude > 0)
                 {
                     Vector3 axis = Vector3.Cross(plane, playerTransform.up);
-
                     moveNormal = axis.normalized * Mathf.Sign(Vector3.Dot(moveNormal, axis)) * moveNormal.magnitude;
                 }
-
-                float force = moveVelocity.magnitude <= moveDeadzone ? baseSpeed : acceleration * (1 - (Mathf.Sin(Mathf.Clamp01(speedPercent) * (Mathf.PI / 2)) * Mathf.Max(Vector3.Dot(moveNormal.normalized, moveVelocity.normalized), 0)));
-
-                accelerationVector = moveNormal
-                    * ((wasMoving && moveVelocity.magnitude > moveDeadzone ? force : force / moveNormal.magnitude) * (1 - Mathf.Max(Vector3.Dot(moveNormal.normalized, Vector3.up), 0)));
+                moveVelocity = moveNormal * maxSpeed;
             }
-            else if (groundInformation.ground && moveVelocity.magnitude <= moveDeadzone)
-                additiveVelocity -= moveVelocity;
+            else
+            {
+                moveVelocity = Vector3.zero;
+            }
+            Vector3 finalVel = moveVelocity - RB.linearVelocity;
+            finalVel.y = 0;
+            additiveVelocity += finalVel;
 
-            if (groundInformation.slope)
-                accelerationVector -= Vector3.ProjectOnPlane(groundInformation.hit.normal, playerTransform.up).normalized * Mathf.Min(Vector3.Dot(accelerationVector, Vector3.ProjectOnPlane(groundInformation.hit.normal, playerTransform.up).normalized), 0);
+                //// Adjust for slopes if the player is on a slope
+                //if (groundInformation.slope)
+                //{
+                //    accelerationVector -= Vector3.ProjectOnPlane(groundInformation.hit.normal, playerTransform.up).normalized
+                //        * Mathf.Min(Vector3.Dot(accelerationVector, Vector3.ProjectOnPlane(groundInformation.hit.normal, playerTransform.up).normalized), 0);
+                //}
 
-            if (moving || moveVelocity.magnitude > moveDeadzone)
-                additiveVelocity += Vector3.Project(-Vector3.up * (Vector3.Dot(moveVelocity, Vector3.up) >= 0 ? Mathf.Lerp(uphillSlopeRatio, maxSpeedUphillSlopeRatio, speedPercent) : Mathf.Lerp(downhillSlopeRatio, maxSpeedDownhillSlopeRatio, speedPercent)), moveVelocity.normalized);
+                //// Apply additional velocity adjustments for uphill or downhill movement
+                //if (moving || moveVelocity.magnitude > moveDeadzone)
+                //{
+                //    additiveVelocity += Vector3.Project(
+                //        -Vector3.up * (Vector3.Dot(moveVelocity, Vector3.up) >= 0
+                //            ? Mathf.Lerp(uphillSlopeRatio, maxSpeedUphillSlopeRatio, speedPercent)
+                //            : Mathf.Lerp(downhillSlopeRatio, maxSpeedDownhillSlopeRatio, speedPercent)),
+                //        moveVelocity.normalized);
+                //}
 
-            wasMoving = moving;
+                // Update the movement state for the next frame
+                wasMoving = moving;
         }
     }
 }

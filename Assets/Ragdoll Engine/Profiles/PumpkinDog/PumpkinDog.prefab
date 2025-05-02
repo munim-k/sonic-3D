@@ -1075,8 +1075,8 @@ MonoBehaviour:
   wasActive: 0
   maxSpeed: 20
   baseSpeed: 20
-  acceleration: 10
-  smoothness: 0
+  acceleration: 15
+  smoothness: 0.502
   uphillSlopeRatio: 1.5
   downhillSlopeRatio: 4
   maxSpeedUphillSlopeRatio: 0.5
@@ -1098,7 +1098,7 @@ MonoBehaviour:
   wasActive: 0
   minFriction: 1
   maxFriction: 1
-  maxSpeed: 1
+  maxSpeed: 15
 --- !u!114 &8565838687067289873
 MonoBehaviour:
   m_ObjectHideFlags: 0
