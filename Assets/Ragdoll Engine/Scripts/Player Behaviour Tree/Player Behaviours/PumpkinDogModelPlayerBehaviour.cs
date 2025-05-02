@@ -3,18 +3,17 @@ using UnityEngine.InputSystem;
 
 namespace RagdollEngine
 {
-    public class ModelPlayerBehaviour : PlayerBehaviour
+    public class PumpkinDogModelPlayerBehaviour : PlayerBehaviour
     {
         // Serialized fields for tuning movement and rotation behavior
         [SerializeField] float groundSmoothness; // Smoothness of model alignment when grounded
         [SerializeField] float airSmoothness;    // Smoothness of model alignment when airborne
-        [SerializeField] float turnAngle;        // Angle threshold for turning the model
-        [SerializeField] float turnSmoothness;   // Smoothness of model turning
         [SerializeField] float maxSpeed;         // Maximum speed of the player
 
-        public override void Execute()
+        public override bool Evaluate()
         {
-            bool aiming = inputHandler.roll.hold;
+            if(!inputHandler.roll.hold)
+                return false;
             // Calculate the player's current speed based on input or velocity
             float speed = inputHandler.move.magnitude > InputSystem.settings.defaultDeadzoneMin || moveVelocity.magnitude > moveDeadzone
                 ? moveVelocity.magnitude
@@ -36,21 +35,7 @@ namespace RagdollEngine
             // Update the animator's "Vertical Velocity" parameter to reflect the player's vertical movement
             animator.SetFloat("Vertical Velocity", Vector3.Dot(RB.linearVelocity, playerTransform.up));
 
-            // Calculate the angle between the model's forward direction and the player's velocity
-            float angle = Vector3.SignedAngle(modelTransform.forward, RB.linearVelocity, playerTransform.up) / turnAngle;
 
-            // Determine the direction of movement based on the angle
-            float moveDirection = (1 - Mathf.Pow(10, -Mathf.Abs(angle))) * Mathf.Sign(angle);
-
-            // Smoothly update the animator's "Move Direction" parameter for turning animations
-            animator.SetFloat(
-                "Move Direction",
-                Mathf.Lerp(
-                    animator.GetFloat("Move Direction"),
-                    moveDirection * (1 - Mathf.Cos(moveDirection / 2 * Mathf.PI)),
-                    1 - turnSmoothness
-                )
-            );
 
             // Smoothly align the model's "up" direction with the player's "up" direction
             Vector3 up = Vector3.Lerp(
@@ -59,36 +44,19 @@ namespace RagdollEngine
                 1 - (groundInformation.ground ? groundSmoothness : airSmoothness)
             );
 
-            // Smoothly align the model's forward direction with the player's movement direction
-            Vector3 forward = Vector3.Lerp(
-                modelTransform.forward,
-                moveVelocity,
-                speed > 0 ? (1 - turnSmoothness) : 0
-            );
-
             // If the model's transform is overridden, exit early
-            if (overrideModelTransform) return;
+            if (overrideModelTransform) return false;
 
             // Update the model's rotation to align with the calculated forward and up directions
-            if (!aiming)
-            {
 
-                modelTransform.rotation = Quaternion.LookRotation(
-                    Vector3.ProjectOnPlane(forward - Vector3.Project(forward, plane), up),
-                    up
-                );
-            }
-            else
-            {
-                modelTransform.rotation = Quaternion.LookRotation(
-                    Vector3.ProjectOnPlane(cameraTransform.forward - Vector3.Project(cameraTransform.forward, plane), up),up);
-            }
-
-
+            modelTransform.rotation = Quaternion.LookRotation(
+                Vector3.ProjectOnPlane(cameraTransform.forward - Vector3.Project(cameraTransform.forward, plane), up), up);
             // Update the model's position to match the ground or player's position
             modelTransform.position = groundInformation.cast
                 ? groundInformation.hit.point
                 : playerTransform.position - (modelTransform.up * height);
+
+            return true;
         }
     }
 }

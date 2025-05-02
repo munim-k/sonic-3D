@@ -36,7 +36,7 @@
                     "name": "Start",
                     "type": "Button",
                     "id": "088f1d34-159b-44b2-9266-f34d0b1b49cd",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -63,7 +63,7 @@
                     "name": "Roll",
                     "type": "Button",
                     "id": "f3051d27-22f2-4322-8249-8b98ffc0f968",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -90,7 +90,7 @@
                     "name": "Cyloop",
                     "type": "Button",
                     "id": "889cbb88-b607-4adf-b0e1-7828336ca1f0",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -195,6 +195,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
+                    "action": "Roll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f283c9c0-8282-4ce0-b205-6d75b6236d72",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "Roll",
                     "isComposite": false,
                     "isPartOfComposite": false
