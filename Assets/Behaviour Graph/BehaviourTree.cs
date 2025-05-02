@@ -12,18 +12,22 @@ namespace BehaviourGraph
 
 #if UNITY_EDITOR
 
+    // Custom editor for the BehaviourTree component in the Unity Inspector
     [CustomEditor(typeof(BehaviourTree))]
     public class BehaviourTreeEditor : Editor
     {
         public override void OnInspectorGUI()
         {
+            // Draws the default inspector UI for the BehaviourTree component
             DrawDefaultInspector();
 
+            // Adds a button to the inspector to open the Behavior Graph editor
             if (GUILayout.Button("Edit Behaviour Tree"))
                 BehaviourTreeLoader.LoadGraph(target as BehaviourTree).Load();
         }
     }
 
+    // Ensures that the BehaviourTreeLoader component is always attached to the same GameObject as BehaviourTree
     [RequireComponent(typeof(BehaviourTreeLoader))]
 
 #endif
@@ -33,28 +37,36 @@ namespace BehaviourGraph
 
 #if UNITY_EDITOR
 
+        // Stores the graph data for nodes in the behavior tree (used in the editor)
         [HideInInspector, SerializeReference] public List<NodeGraphData> nodeGraphData;
 
+        // Stores the graph data for edges (connections) between nodes in the behavior tree (used in the editor)
         [HideInInspector] public List<EdgeGraphData> edgeGraphData;
 
 #endif
 
+        // Stores the root node for the update behavior tree
         [HideInInspector, SerializeReference] public InputNodeTreeData update;
 
+        // Stores the root node for the late update behavior tree
         [HideInInspector, SerializeReference] public InputNodeTreeData lateUpdate;
 
+        // Stores the root node for the fixed update behavior tree
         [HideInInspector, SerializeReference] public InputNodeTreeData fixedUpdate;
 
+        // Stores the root node for the late fixed update behavior tree
         [HideInInspector, SerializeReference] public InputNodeTreeData lateFixedUpdate;
 
+        // Array of all behaviors used in the tree
         [HideInInspector] public Behaviour[] behaviours;
 
-        public event EventHandler Set;
-
-        public event EventHandler Reset;
+        // Events triggered during the behavior tree lifecycle
+        public event EventHandler Set;   // Triggered when the tree is "set"
+        public event EventHandler Reset; // Triggered when the tree is "reset"
 
 #if UNITY_EDITOR
 
+        // Provides access to the BehaviourTreeLoader component
         public BehaviourTreeLoader behaviourTreeLoader
         {
             get
@@ -65,32 +77,41 @@ namespace BehaviourGraph
 
 #endif
 
+        // Called every frame to execute the update behavior tree
         public virtual void Update()
         {
             update.Run(this);
         }
 
+        // Called every frame after Update to execute the late update behavior tree
         public virtual void LateUpdate()
         {
             lateUpdate.Run(this);
         }
 
+        // Called at a fixed time interval to execute the fixed update behavior tree
         public virtual void FixedUpdate()
         {
+            // Trigger the Reset event
             Reset?.Invoke(this, EventArgs.Empty);
 
+            // Run the fixed update behavior tree
             fixedUpdate.Run(this);
 
+            // Schedule the late fixed update behavior tree
             StartCoroutine(ScheduleLateFixedUpdate());
         }
 
+        // Executes the late fixed update behavior tree
         public virtual void LateFixedUpdate()
         {
             lateFixedUpdate.Run(this);
 
+            // Trigger the Set event
             Set?.Invoke(this, EventArgs.Empty);
         }
 
+        // Coroutine to schedule the late fixed update behavior tree after the next FixedUpdate
         IEnumerator ScheduleLateFixedUpdate()
         {
             yield return new WaitForFixedUpdate();
@@ -98,64 +119,80 @@ namespace BehaviourGraph
             LateFixedUpdate();
         }
 
+        // Retrieves the index of a behavior in the behaviors array, adding it if it doesn't exist
         public int GetBehaviourIndex(Behaviour behaviour)
         {
+            // Check if the behavior already exists in the array
             for (int i = 0; i < behaviours.Length; i++)
                 if (behaviours[i] == behaviour) return i;
 
+            // If not, add the behavior to the array and return its new index
             behaviours = behaviours.Append(behaviour).ToArray();
 
             return behaviours.Length - 1;
         }
     }
 
+    // Represents a single behavior in the behavior tree
     public class Behaviour : MonoBehaviour
     {
+        // Reference to the parent BehaviorTree
         [HideInInspector] public BehaviourTree behaviourTree;
 
+        // Indicates whether the behavior is currently active
         [HideInInspector] public bool active;
 
+        // Indicates whether the behavior was active in the previous frame
         [HideInInspector] public bool wasActive;
 
+        // Called when the behavior is enabled
         public virtual void OnEnable()
         {
+            // Get the parent BehaviorTree
             behaviourTree = GetComponentInParent<BehaviourTree>();
 
+            // Subscribe to the Set and Reset events
             behaviourTree.Set += OnSet;
-
             behaviourTree.Reset += OnReset;
         }
 
+        // Called when the behavior is disabled
         public virtual void OnDisable()
         {
+            // Unsubscribe from the Set and Reset events
             behaviourTree.Set -= OnSet;
-
             behaviourTree.Reset -= OnReset;
         }
 
+        // Evaluates whether the behavior should be active (default implementation always returns false)
         public virtual bool Evaluate()
         {
             return false;
         }
 
+        // Executes the behavior (default implementation does nothing)
         public virtual void Execute() { }
 
+        // Called when the Set event is triggered
         public virtual void OnSet(object sender, EventArgs e)
         {
             wasActive = active;
         }
 
+        // Called when the Reset event is triggered
         public virtual void OnReset(object sender, EventArgs e)
         {
             active = false;
         }
     }
 
+
+
 #if UNITY_EDITOR
 
-    #region Graph Data
+#region Graph Data
 
-    [Serializable]
+[Serializable]
     public class EdgeGraphData
     {
         public string input;

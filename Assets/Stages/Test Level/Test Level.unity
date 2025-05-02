@@ -3386,50 +3386,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entity: {fileID: 1224952286424388346, guid: 0df56b7e9af05c146aa5bbfa32e1a946, type: 3}
   respawnTime: 3
---- !u!1 &475108777
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 475108778}
-  - component: {fileID: 475108779}
-  m_Layer: 0
-  m_Name: AudioDebug
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &475108778
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 475108777}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 263.2329, y: -112.90502, z: 66.25316}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &475108779
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 475108777}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdec89b8c813f4b4e88e02316493725c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &480385651
 GameObject:
   m_ObjectHideFlags: 0
@@ -5525,14 +5481,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1187977934}
     m_Modifications:
-    - target: {fileID: 3878610575818270484, guid: 2422fc0436eed8b4cbe4ff8977bc0d6c, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5863961061459325770, guid: 2422fc0436eed8b4cbe4ff8977bc0d6c, type: 3}
-      propertyPath: m_RootOrder
-      value: -1
-      objectReference: {fileID: 0}
     - target: {fileID: 5863961061459325770, guid: 2422fc0436eed8b4cbe4ff8977bc0d6c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 60
@@ -5576,6 +5524,10 @@ PrefabInstance:
     - target: {fileID: 5863961061459325773, guid: 2422fc0436eed8b4cbe4ff8977bc0d6c, type: 3}
       propertyPath: m_Name
       value: Upreel
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863961061985742375, guid: 2422fc0436eed8b4cbe4ff8977bc0d6c, type: 3}
+      propertyPath: defaultExtended
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12747,7 +12699,7 @@ GameObject:
   - component: {fileID: 1888381159}
   - component: {fileID: 1888381158}
   - component: {fileID: 1888381157}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14467,4 +14419,3 @@ SceneRoots:
   - {fileID: 1360524475}
   - {fileID: 996205327}
   - {fileID: 840963770}
-  - {fileID: 475108778}

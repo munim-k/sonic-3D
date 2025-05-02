@@ -24,7 +24,7 @@ public class UpreelStageObject : StageObject
 
     [HideInInspector] public bool extended;
 
-    State state;
+    State state=State.Retracted;
 
     float goalLength;
 
@@ -64,8 +64,7 @@ public class UpreelStageObject : StageObject
 
     void FixedUpdate()
     {
-        extended = currentLength > 0;
-
+        
         if (currentLength == goalLength)
             SetState(extended ? State.Extended : State.Retracted);
         else if (currentLength < goalLength)
@@ -77,90 +76,12 @@ public class UpreelStageObject : StageObject
         {
             case State.Retracted:
                 goalLength = length;
-
                 break;
             case State.Extending:
                 UpdatePosition();
-
                 break;
         }
 
-        /*
-
-        extended = currentLength > 0;
-
-        if (currentLength > goalLength) return;
-
-        if (currentLength == 0 && goalLength == 0)
-            goalLength = length;
-
-        UpdatePosition();
-
-        */
-
-        /*
-        if (currentLength != goalLength)
-        {
-            idle = false;
-
-            extended = currentLength > 0;
-
-            retracted = !extended;
-
-            float oldSign = sign;
-
-            sign = Mathf.Sign(goalLength - currentLength);
-
-            if (!audioSourceLoop1.isPlaying)
-                audioSourceLoop1.Play();
-
-            if (sign != oldSign)
-            {
-                if (sign < 0)
-                {
-                    audioSourceIntro2.Play();
-
-                    audioSourceLoop2.PlayScheduled(AudioSettings.dspTime + audioSourceIntro2.clip.length);
-                }
-                else
-                {
-                    audioSourceIntro2.Stop();
-
-                    audioSourceLoop2.Stop();
-                }
-            }
-
-            currentLength += sign * Mathf.Min(Mathf.Abs(goalLength - currentLength), (sign > 0 ? extensionSpeed : retractionSpeed) * Time.fixedDeltaTime);
-        }
-        else
-        {
-            if (!idle)
-            {
-                audioSourceLoop1.Stop();
-
-                audioSourceIntro2.Stop();
-
-                audioSourceLoop2.Stop();
-            }
-
-            idle = true;
-
-            extended = currentLength > 0;
-
-            retracted = !extended;
-        }
-
-        if (retracted)
-            goalLength = length;
-
-        transform.position = transform.parent.position -(Vector3.up * currentLength);
-
-        transform.rotation = extended ? Quaternion.LookRotation(Vector3.ProjectOnPlane(transform.parent.forward, Vector3.up), Vector3.up) : transform.parent.rotation;
-
-        lineRenderer.SetPosition(0, stand.position);
-
-        lineRenderer.SetPosition(1, transform.position);
-        */
     }
 
     void SetState(State state)
@@ -177,7 +98,6 @@ public class UpreelStageObject : StageObject
         {
             case State.Extending:
                 audioSourceLoop1.Play();
-
                 break;
             case State.Retracting:
                 audioSourceLoop1.Play();

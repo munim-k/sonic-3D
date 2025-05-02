@@ -143,5 +143,19 @@ namespace RagdollEngine
 
             fixedJump = true;
         }
+
+        public void ResetJumps()
+        {
+            if (currentJumps == jumps)
+                return;
+            currentJumps = jumps;
+            currentCoyoteTime = coyoteTime;
+            if (groundInformation.ground)
+            {
+                currentJumpTimer = jumpTimer;
+                additiveVelocity = currentJumpForce * (Time.fixedDeltaTime / jumpTimer);
+                jumping = true;
+            }
+        }
     }
 }
