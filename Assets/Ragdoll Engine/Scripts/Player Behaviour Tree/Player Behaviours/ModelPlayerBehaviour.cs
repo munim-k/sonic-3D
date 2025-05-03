@@ -14,7 +14,6 @@ namespace RagdollEngine
 
         public override void Execute()
         {
-            bool aiming = inputHandler.roll.hold;
             // Calculate the player's current speed based on input or velocity
             float speed = inputHandler.move.magnitude > InputSystem.settings.defaultDeadzoneMin || moveVelocity.magnitude > moveDeadzone
                 ? moveVelocity.magnitude
@@ -70,20 +69,11 @@ namespace RagdollEngine
             if (overrideModelTransform) return;
 
             // Update the model's rotation to align with the calculated forward and up directions
-            if (!aiming)
-            {
 
-                modelTransform.rotation = Quaternion.LookRotation(
-                    Vector3.ProjectOnPlane(forward - Vector3.Project(forward, plane), up),
-                    up
-                );
-            }
-            else
-            {
-                modelTransform.rotation = Quaternion.LookRotation(
-                    Vector3.ProjectOnPlane(cameraTransform.forward - Vector3.Project(cameraTransform.forward, plane), up),up);
-            }
-
+            modelTransform.rotation = Quaternion.LookRotation(
+                Vector3.ProjectOnPlane(forward - Vector3.Project(forward, plane), up),
+                up
+            );
 
             // Update the model's position to match the ground or player's position
             modelTransform.position = groundInformation.cast

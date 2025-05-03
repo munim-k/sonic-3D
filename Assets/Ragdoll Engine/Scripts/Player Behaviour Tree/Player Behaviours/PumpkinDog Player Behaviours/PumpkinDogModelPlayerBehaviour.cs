@@ -10,10 +10,9 @@ namespace RagdollEngine
         [SerializeField] float airSmoothness;    // Smoothness of model alignment when airborne
         [SerializeField] float maxSpeed;         // Maximum speed of the player
 
-        public override bool Evaluate()
+        public override void Execute()
         {
-            if(!inputHandler.roll.hold)
-                return false;
+            
             // Calculate the player's current speed based on input or velocity
             float speed = inputHandler.move.magnitude > InputSystem.settings.defaultDeadzoneMin || moveVelocity.magnitude > moveDeadzone
                 ? moveVelocity.magnitude
@@ -45,7 +44,7 @@ namespace RagdollEngine
             );
 
             // If the model's transform is overridden, exit early
-            if (overrideModelTransform) return false;
+            if (overrideModelTransform) return ;
 
             // Update the model's rotation to align with the calculated forward and up directions
 
@@ -56,7 +55,6 @@ namespace RagdollEngine
                 ? groundInformation.hit.point
                 : playerTransform.position - (modelTransform.up * height);
 
-            return true;
         }
     }
 }

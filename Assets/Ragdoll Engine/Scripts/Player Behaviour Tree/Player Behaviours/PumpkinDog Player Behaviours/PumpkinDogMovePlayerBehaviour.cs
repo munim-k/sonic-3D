@@ -6,14 +6,7 @@ namespace RagdollEngine
     public class PumpkinDogMovePlayerBehaviour : PlayerBehaviour
     {
         [SerializeField] float maxSpeed; // Maximum speed the player can move
-        [SerializeField] float baseSpeed; // Base speed when starting movement
-        [SerializeField] float acceleration; // Acceleration rate when moving
-        [SerializeField, Range(0, 1)] float smoothness; // Smoothness factor for movement transitions
-        [SerializeField] float uphillSlopeRatio; // Speed reduction factor for uphill slopes
-        [SerializeField] float downhillSlopeRatio; // Speed increase factor for downhill slopes
-        [SerializeField] float maxSpeedUphillSlopeRatio; // Maximum speed reduction on steep uphill slopes
-        [SerializeField] float maxSpeedDownhillSlopeRatio; // Maximum speed increase on steep downhill slopes
-
+        
         bool wasMoving; // Tracks whether the player was moving in the previous frame
 
         public override void Execute()
@@ -62,26 +55,8 @@ namespace RagdollEngine
             Vector3 finalVel = moveVelocity - RB.linearVelocity;
             finalVel.y = 0;
             additiveVelocity += finalVel;
-
-                //// Adjust for slopes if the player is on a slope
-                //if (groundInformation.slope)
-                //{
-                //    accelerationVector -= Vector3.ProjectOnPlane(groundInformation.hit.normal, playerTransform.up).normalized
-                //        * Mathf.Min(Vector3.Dot(accelerationVector, Vector3.ProjectOnPlane(groundInformation.hit.normal, playerTransform.up).normalized), 0);
-                //}
-
-                //// Apply additional velocity adjustments for uphill or downhill movement
-                //if (moving || moveVelocity.magnitude > moveDeadzone)
-                //{
-                //    additiveVelocity += Vector3.Project(
-                //        -Vector3.up * (Vector3.Dot(moveVelocity, Vector3.up) >= 0
-                //            ? Mathf.Lerp(uphillSlopeRatio, maxSpeedUphillSlopeRatio, speedPercent)
-                //            : Mathf.Lerp(downhillSlopeRatio, maxSpeedDownhillSlopeRatio, speedPercent)),
-                //        moveVelocity.normalized);
-                //}
-
-                // Update the movement state for the next frame
-                wasMoving = moving;
+            // Update the movement state for the next frame
+            wasMoving = moving;
         }
     }
 }
