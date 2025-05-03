@@ -17,7 +17,7 @@ namespace RagdollEngine
 
         public Button jump = new Button();
 
-        public Button roll = new Button();
+        public Button aim = new Button();
 
         public Button stomp = new Button();
 
@@ -32,6 +32,7 @@ namespace RagdollEngine
         public Button zoomDelta = new Button();
 
         public Button zoom = new Button();
+        public Button fire = new Button();
 
         public class Button
         {

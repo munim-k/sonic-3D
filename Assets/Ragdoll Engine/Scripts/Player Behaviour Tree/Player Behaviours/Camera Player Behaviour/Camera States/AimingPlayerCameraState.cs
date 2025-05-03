@@ -67,7 +67,7 @@ namespace RagdollEngine
         // Determines if this camera state should be active
         public override bool Check()
         {
-            return inputHandler.roll.hold; // Activate this state if the player is holding the "roll" input (used for aiming).
+            return inputHandler.aim.hold; // Activate this state if the player is holding the "roll" input (used for aiming).
         }
 
         // Main logic for updating the camera's position and rotation

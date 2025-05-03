@@ -21,7 +21,7 @@ namespace RagdollEngine
 
         public override bool Evaluate()
         {
-            return (inputHandler.roll.pressed || (wasActive && inputHandler.roll.hold)) && !(plane.magnitude > 0);
+            return (inputHandler.aim.pressed || (wasActive && inputHandler.aim.hold)) && !(plane.magnitude > 0);
         }
 
         public override void Execute()

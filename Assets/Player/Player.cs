@@ -41,7 +41,9 @@ public class Player : MonoBehaviour
         {
             case "Move":
                 inputHandler.move = callbackContext.ReadValue<Vector2>();
-
+                break;
+            case "Fire":
+                inputHandler.fire.Set(callbackContext.ReadValue<float>());
                 break;
             case "Look Delta":
                 inputHandler.lookDelta = callbackContext.ReadValue<Vector2>();
@@ -63,8 +65,8 @@ public class Player : MonoBehaviour
                 inputHandler.jump.Set(callbackContext.ReadValue<float>());
 
                 break;
-            case "Roll":
-                inputHandler.roll.Set(callbackContext.ReadValue<float>());
+            case "Aim":
+                inputHandler.aim.Set(callbackContext.ReadValue<float>());
 
                 break;
             case "Stomp":

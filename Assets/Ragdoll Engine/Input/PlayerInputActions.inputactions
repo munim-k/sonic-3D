@@ -60,7 +60,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Roll",
+                    "name": "Aim",
                     "type": "Button",
                     "id": "f3051d27-22f2-4322-8249-8b98ffc0f968",
                     "expectedControlType": "",
@@ -72,7 +72,7 @@
                     "name": "Stomp",
                     "type": "Button",
                     "id": "02289cc4-2226-46b4-9c27-8c39f64a9991",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -81,7 +81,7 @@
                     "name": "Boost",
                     "type": "Button",
                     "id": "a9955ac1-2b0d-4fe1-95f2-d29000315ebc",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -130,6 +130,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Fire",
+                    "type": "Button",
+                    "id": "d9903886-6db5-4268-822b-4a8f65de18cb",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -157,17 +166,6 @@
                 },
                 {
                     "name": "",
-                    "id": "126c0c62-28ea-4d27-9e31-d489b6ba5c28",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard & Mouse",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "57d3af2b-cfd5-4304-a86c-18588452f780",
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
@@ -184,7 +182,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard & Mouse",
-                    "action": "Roll",
+                    "action": "Aim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -195,7 +193,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Roll",
+                    "action": "Aim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -206,7 +204,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Roll",
+                    "action": "Aim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -504,6 +502,17 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Cyloop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6dd132a9-8503-498d-bd7e-e605449c4dce",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

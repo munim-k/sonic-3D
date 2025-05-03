@@ -26,11 +26,11 @@ namespace RagdollEngine
                 || (rollLock
                     && wasActive
                     && groundInformation.ground
-                    && !inputHandler.roll.hold);
+                    && !inputHandler.aim.hold);
 
             roll = false;
 
-            if (((moveVelocity + additiveVelocity).magnitude > moveDeadzone) && (inputHandler.roll.pressed || (wasActive && inputHandler.roll.hold) || rollLock || (wasActive && !groundInformation.ground)))
+            if (((moveVelocity + additiveVelocity).magnitude > moveDeadzone) && (inputHandler.aim.pressed || (wasActive && inputHandler.aim.hold) || rollLock || (wasActive && !groundInformation.ground)))
             {
                 if (!wasActive)
                     animator.SetTrigger("Roll");
