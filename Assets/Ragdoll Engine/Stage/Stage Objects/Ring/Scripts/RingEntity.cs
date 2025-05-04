@@ -56,10 +56,15 @@ public class RingEntity : Entity
 
     void OnTriggerEnter(Collider other)
     {
-        PlayerBehaviourTree playerBehaviourTree = other.transform.parent.GetComponentInChildren<PlayerBehaviourTree>();
+        try
+        {
+            PlayerBehaviourTree playerBehaviourTree = other.transform.parent.GetComponentInChildren<PlayerBehaviourTree>();
+            if (!playerBehaviourTree) return;
+            Collect(playerBehaviourTree);
+        }
+        catch
+        {
 
-        if (!playerBehaviourTree) return;
-
-        Collect(playerBehaviourTree);
+        }
     }
 }
