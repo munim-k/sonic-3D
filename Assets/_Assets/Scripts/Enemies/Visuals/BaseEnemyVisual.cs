@@ -4,8 +4,8 @@ using UnityEngine.UI;
 public class BaseEnemyVisual : MonoBehaviour
 {
 
-    [SerializeField] private BaseEnemy enemy;
-    [SerializeField] private Image healthBar;
+    [SerializeField] protected BaseEnemy enemy;
+    [SerializeField] protected Image healthBar;
 
     private void Start()
     {

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace RagdollEngine
 {
@@ -34,7 +35,12 @@ namespace RagdollEngine
             foreach (Volume thisVolume in volumes)
             {
                 bool inVolume = false;
-
+                if (thisVolume == null)
+                {
+                    removedVolumes.Add(thisVolume);
+                    continue;
+                }
+                    
                 foreach (Trigger thisTrigger in thisVolume.triggers)
                 {
                     if (theseColliders.Contains(thisTrigger.GetComponent<Collider>()))

@@ -10,7 +10,13 @@ namespace RagdollEngine
         {
             if (groundInformation.cast)
             {
-                JumpPanelStageObject jumpPanelStageObject = groundInformation.hit.collider.GetComponentInParent<JumpPanelStageObject>();
+                JumpPanelStageObject jumpPanelStageObject = null;
+                try
+                {
+                jumpPanelStageObject = groundInformation.hit.collider.GetComponentInParent<JumpPanelStageObject>();
+                }
+                catch { }
+                
 
                 if (!jumpPanelStageObject || Vector3.Dot(RB.linearVelocity, jumpPanelStageObject.transform.forward) < jumpPanelDeadzone) return false;
 

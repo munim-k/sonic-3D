@@ -6,17 +6,20 @@ namespace RagdollEngine
     {
         bool alive = true;
 
+     
         public override bool Evaluate()
         {
+           
             return alive;
         }
 
         public override void Execute()
         {
-            if (DeathCheck() && alive)
+ 
+            if ((DeathCheck() && alive))
             {
                 alive = false;
-
+        
                 character.Respawn();
             }
         }

@@ -48,7 +48,7 @@ public class PlayerBombAttack : MonoBehaviour
             BaseEnemy enemy = hitCollider.GetComponent<BaseEnemy>();
             if (enemy != null && !enemiesAttacked.Contains(enemy))
             {
-                enemy.DoDamage(damage);
+                enemy.DoDamageToEnemy(damage);
                 enemiesAttacked.Add(enemy);
             }
         }

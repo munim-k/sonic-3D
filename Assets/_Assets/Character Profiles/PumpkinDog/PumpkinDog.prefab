@@ -806,52 +806,6 @@ MonoBehaviour:
   - audioSource: {fileID: 7154397376107734759}
     stopOnInactive: 0
   jumpPlayerBehaviour: {fileID: 3773458990709628176}
---- !u!1 &3380849214089985023
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4067476848089761399}
-  - component: {fileID: 9033323155604860728}
-  m_Layer: 0
-  m_Name: Ring Counter
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4067476848089761399
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3380849214089985023}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8495618233400320221}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9033323155604860728
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3380849214089985023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21dd89e5b3a5fd94ebc36144c007bbf4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerBehaviourTree: {fileID: 5910379342027677545}
-  ringsUIPrefab: {fileID: 5172323168173194793, guid: e0bc6bc882168374285252155eff6344, type: 3}
 --- !u!1 &4076232753979174194
 GameObject:
   m_ObjectHideFlags: 0
@@ -1080,18 +1034,10 @@ MonoBehaviour:
   active: 0
   wasActive: 0
   audioSource: {fileID: 2507663164231191367}
-  knockbackAudioClip: {fileID: 8300000, guid: 073b6e2179bb0ab40844c659ec0bbf58, type: 3}
-  stumbleAudioClip: {fileID: 8300000, guid: 1060293b4945f204b83fe14677ac84c2, type: 3}
-  ringSpreadAudioClip: {fileID: 8300000, guid: db84d5c2640a17e4a9c587e448ad2c11, type: 3}
-  ringScatterEffectPrefab: {fileID: 2103024035946880748, guid: 35ac0be13ef8d634b8b8f7169c79b618, type: 3}
-  knockbackDistance: 5
-  knockbackTime: 0.2
-  knockbackHeight: 1
-  stumbleSpeedMultiplier: 0.5
-  minStumbleSpeed: 20
-  knockbackAnimationTime: 2
-  stumbleAnimationTime: 1
+  damageAudioClip: {fileID: 8300000, guid: 073b6e2179bb0ab40844c659ec0bbf58, type: 3}
   cooldownTime: 3
+  maxHealth: 100
+  HealthUIPrefab: {fileID: 7790848347744495380, guid: 733c601f4bcfa1545b71568b2f7abd5a, type: 3}
 --- !u!114 &6796199063833464416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2160,7 +2106,6 @@ Transform:
   - {fileID: 810846559498169767}
   - {fileID: 625548281573258681}
   - {fileID: 690346625335943398}
-  - {fileID: 4067476848089761399}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5910379342027677545
