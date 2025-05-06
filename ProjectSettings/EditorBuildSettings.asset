@@ -4,5 +4,18 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Stages/Levels/World1 (GrassHills)/World1Level1.unity
+    guid: ff1a20798dae2d546b2acff3f80fca47
+  - enabled: 1
+    path: Assets/Stages/Levels/World1 (GrassHills)/World1Level2.unity
+    guid: adcae74b987c56a4ca2cb80efa1a5be2
+  - enabled: 1
+    path: Assets/Stages/Levels/World1 (GrassHills)/World1Bonus.unity
+    guid: 13a0ae2761cb4b548b19bd3e5989dbb3
+  - enabled: 1
+    path: Assets/Stages/Levels/World1 (GrassHills)/World1Boss.unity
+    guid: 83b3dba5b48a6c04595e083b74f3a63d
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0

@@ -8,6 +8,7 @@ namespace RagdollEngine
 
         public override void Execute()
         {
+            
             foreach (Collector thisCollector in collectors)
                 thisCollector.Execute();
         }

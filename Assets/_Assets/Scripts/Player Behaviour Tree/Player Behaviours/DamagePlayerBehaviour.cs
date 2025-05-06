@@ -35,7 +35,7 @@ namespace RagdollEngine
         }
 
 
-        // Evaluates whether the behavior should be active
+        // Evaluates whether the behavior should be activ
         public override bool Evaluate()
         {
             // Decrease the cooldown timer
@@ -52,20 +52,15 @@ namespace RagdollEngine
             // Iterate through all volumes the player is interacting with
             foreach (Volume thisVolume in volumes)
             {
-                if (thisVolume is DamageVolume)
-                {
-                    // Cast the volume to a DamageVolume
+                if (thisVolume is DamageVolume) { 
                     DamageVolume thisDamageVolume = thisVolume as DamageVolume;
-                    print("DamageVolume detected: " + thisDamageVolume.name);
-                    // Deplete health based on the power of the damage volume
-                    int damageAmount = Mathf.FloorToInt(thisDamageVolume.power);
+                // Deplete health based on the power of the damage volume
+                 int damageAmount = Mathf.FloorToInt(thisDamageVolume.power);
                     currentHealth = Mathf.Max(currentHealth - damageAmount, 0);
 
                     // Play damage sound
                     audioSource.PlayOneShot(damageAudioClip);
 
-                    // Trigger damage animation
-                    animator.SetTrigger("Damage");
 
                     // Set cooldown timer
                     cooldownTimer = cooldownTime;
@@ -76,7 +71,6 @@ namespace RagdollEngine
                         character.Respawn(); // Respawn the player if health is depleted
                     }
                     onDamage?.Invoke(currentHealth,maxHealth); // Invoke the damage event
-                    print("Damage taken: " + damageAmount);
                     return true; // Damage was applied
                 }
             }

@@ -572,6 +572,52 @@ MonoBehaviour:
   - {fileID: 6000896631642832674}
   particleSystems: []
   trailRenderers: []
+--- !u!1 &2781572682347644396
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3469392126551915416}
+  - component: {fileID: 4210832840736205058}
+  m_Layer: 0
+  m_Name: LollipopCounter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3469392126551915416
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2781572682347644396}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8495618233400320221}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4210832840736205058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2781572682347644396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e66a3e8269d626c48965a8ba37d1fc63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerBehaviourTree: {fileID: 5910379342027677545}
+  lollipopUIPrefab: {fileID: -9091307763560963992, guid: a9aba26edaa98fb409f4ea904dbe1388, type: 3}
 --- !u!1 &3005731293402125105
 GameObject:
   m_ObjectHideFlags: 0
@@ -939,7 +985,6 @@ GameObject:
   - component: {fileID: 4408494176549516385}
   - component: {fileID: 562838398013132567}
   - component: {fileID: 6796199063833464416}
-  - component: {fileID: 4610193299641843634}
   - component: {fileID: 4122254495487756090}
   - component: {fileID: 8323637760306336601}
   - component: {fileID: 5926310269270268065}
@@ -958,6 +1003,8 @@ GameObject:
   - component: {fileID: 826953371461937429}
   - component: {fileID: 2513757073181524026}
   - component: {fileID: 4428756655569498475}
+  - component: {fileID: 8685496684624406044}
+  - component: {fileID: 3682769586396265492}
   m_Layer: 0
   m_Name: Behaviours
   m_TagString: Untagged
@@ -978,7 +1025,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4219811906292302852}
   - {fileID: 7279205528556183501}
   - {fileID: 3357715879118400865}
   - {fileID: 7650406965061611541}
@@ -1035,7 +1081,7 @@ MonoBehaviour:
   wasActive: 0
   audioSource: {fileID: 2507663164231191367}
   damageAudioClip: {fileID: 8300000, guid: 073b6e2179bb0ab40844c659ec0bbf58, type: 3}
-  cooldownTime: 3
+  cooldownTime: 0.1
   maxHealth: 100
   HealthUIPrefab: {fileID: 7790848347744495380, guid: 733c601f4bcfa1545b71568b2f7abd5a, type: 3}
 --- !u!114 &6796199063833464416
@@ -1053,22 +1099,6 @@ MonoBehaviour:
   behaviourTree: {fileID: 0}
   active: 0
   wasActive: 0
---- !u!114 &4610193299641843634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5563684112672901607}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 086fb0c5d28dfda439253f10cbb3a292, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  behaviourTree: {fileID: 0}
-  active: 0
-  wasActive: 0
-  collectors: []
 --- !u!114 &4122254495487756090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1404,6 +1434,36 @@ MonoBehaviour:
   wallLayerMask:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &8685496684624406044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5563684112672901607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c349d81ca473abd46b2dbed31986eba1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  behaviourTree: {fileID: 0}
+  active: 0
+  wasActive: 0
+--- !u!114 &3682769586396265492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5563684112672901607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90d4a44981e78e84fbe82c88c72b3175, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  behaviourTree: {fileID: 0}
+  active: 0
+  wasActive: 0
 --- !u!1 &5689821660740501638
 GameObject:
   m_ObjectHideFlags: 0
@@ -2041,37 +2101,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &6318031235303322306
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4219811906292302852}
-  m_Layer: 0
-  m_Name: Collectors
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4219811906292302852
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6318031235303322306}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 810846559498169767}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6902942789428032903
 GameObject:
   m_ObjectHideFlags: 0
@@ -2106,6 +2135,7 @@ Transform:
   - {fileID: 810846559498169767}
   - {fileID: 625548281573258681}
   - {fileID: 690346625335943398}
+  - {fileID: 3469392126551915416}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5910379342027677545
@@ -2121,64 +2151,55 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nodeGraphData:
-  - rid: 6447708885710013077
-  - rid: 6447708885710013078
-  - rid: 6447708885710013079
-  - rid: 6447708885710013080
-  - rid: 6447708885710013081
-  - rid: 6447708885710013082
-  - rid: 6447708885710013083
-  - rid: 6447708885710013084
-  - rid: 6447708885710013085
-  - rid: 6447708885710013086
-  - rid: 6447708885710013087
-  - rid: 6447708885710013088
-  - rid: 6447708885710013089
-  - rid: 6447708885710013090
-  - rid: 6447708885710013091
-  - rid: 6447708885710013092
-  - rid: 6447708885710013093
-  - rid: 6447708885710013094
-  - rid: 6447708885710013095
-  - rid: 6447708885710013096
-  - rid: 6447708885710013097
-  - rid: 6447708885710013098
-  - rid: 6447708885710013099
-  - rid: 6447708885710013100
-  - rid: 6447708885710013101
-  - rid: 6447708885710013102
-  - rid: 6447708885710013103
-  - rid: 6447708885710013104
-  - rid: 6447708885710013105
-  - rid: 6447708885710013106
-  - rid: 6447708885710013107
-  - rid: 6447708885710013108
-  - rid: 6447708885710013109
-  - rid: 6447708885710013110
-  - rid: 6447708885710013111
-  - rid: 6447708885710013112
-  - rid: 6447708885710013113
-  - rid: 6447708885710013114
-  - rid: 6447708885710013115
-  - rid: 6447708885710013116
-  - rid: 6447708885710013117
-  - rid: 6447708885710013118
-  - rid: 6447708885710013119
-  - rid: 6447708885710013120
-  - rid: 6447708885710013121
-  - rid: 6447708885710013122
-  - rid: 6447708885710013123
+  - rid: 6447708957307830728
+  - rid: 6447708957307830729
+  - rid: 6447708957307830730
+  - rid: 6447708957307830731
+  - rid: 6447708957307830732
+  - rid: 6447708957307830733
+  - rid: 6447708957307830734
+  - rid: 6447708957307830735
+  - rid: 6447708957307830736
+  - rid: 6447708957307830737
+  - rid: 6447708957307830738
+  - rid: 6447708957307830739
+  - rid: 6447708957307830740
+  - rid: 6447708957307830741
+  - rid: 6447708957307830742
+  - rid: 6447708957307830743
+  - rid: 6447708957307830744
+  - rid: 6447708957307830745
+  - rid: 6447708957307830746
+  - rid: 6447708957307830747
+  - rid: 6447708957307830748
+  - rid: 6447708957307830749
+  - rid: 6447708957307830750
+  - rid: 6447708957307830751
+  - rid: 6447708957307830752
+  - rid: 6447708957307830753
+  - rid: 6447708957307830754
+  - rid: 6447708957307830755
+  - rid: 6447708957307830756
+  - rid: 6447708957307830757
+  - rid: 6447708957307830758
+  - rid: 6447708957307830759
+  - rid: 6447708957307830760
+  - rid: 6447708957307830761
+  - rid: 6447708957307830762
+  - rid: 6447708957307830763
+  - rid: 6447708957307830764
+  - rid: 6447708957307830765
+  - rid: 6447708957307830766
+  - rid: 6447708957307830767
+  - rid: 6447708957307830768
+  - rid: 6447708957307830769
+  - rid: 6447708957307830770
+  - rid: 6447708957307830771
+  - rid: 6447708957307830772
+  - rid: 6447708957307830773
+  - rid: 6447708957307830774
+  - rid: 6447708957307830775
   edgeGraphData:
-  - input: 9aa1ffd1-5021-4059-81e5-aa7afae1a402
-    output: ebc12244-0c36-487c-ae46-eb36e8f4e2e3
-  - input: 16244db9-1794-4822-8e5e-bd03ccec9c62
-    output: d19dfa27-f85c-40d3-9652-e9211eecd729
-  - input: f8fd6b48-d7da-4738-b6e3-72bb824f7647
-    output: ecca5fb1-2f43-4118-9e13-5dbea09f1315
-  - input: ca8a55f5-2415-4c39-a7f0-1230cea09174
-    output: b8cb89f8-4a49-4b72-9396-c2d36b99aa4c
-  - input: 9cb353e6-0f5d-49b5-9f81-4d66d91c1b46
-    output: b5395abd-fd94-4e4e-b07f-22837e79c502
   - input: 24c5e500-39e3-4bc9-addd-069216035d2d
     output: c517a22c-4cea-4f2f-aad1-25056877753a
   - input: ae158dd1-fd21-49a1-965c-80c81ffa8d3d
@@ -2195,16 +2216,6 @@ MonoBehaviour:
     output: d8b20a00-8315-4783-8425-e640d0c466f0
   - input: f1adf040-0686-43f1-83c3-70ae77afb6a1
     output: d86c87e5-2929-4609-986a-2eb5abcfe995
-  - input: fb972d59-aaba-41e9-96c8-a6e3bf8ce37a
-    output: 0a6080b3-f2f3-435a-9b18-4aebab3df063
-  - input: 309516ed-8e4e-4130-8479-dc815e4d945d
-    output: d2780364-1f89-46a6-a87a-ebe2ed402dc2
-  - input: 66552754-ae24-426a-8d60-d5e1332383dd
-    output: dc7a401c-25fb-49fb-9406-0bc2f5928c77
-  - input: ca8a55f5-2415-4c39-a7f0-1230cea09174
-    output: 948d5cd4-1a75-4b7d-9090-4fd496d469fc
-  - input: e49f17a2-7ed0-46f4-b882-2125a0b29173
-    output: 8694389a-bb25-4fb4-a554-e7b1c167e9e2
   - input: 980e35ae-3e9c-45ce-910e-c692c7ff884a
     output: ed0866cf-c54d-4abb-b85d-07b0b6688fa1
   - input: 6c0a2792-6aa5-4f5a-930c-22c029613dfb
@@ -2263,24 +2274,41 @@ MonoBehaviour:
     output: f790a234-52d3-4fee-bf63-1409abc4d42f
   - input: 2edb7153-727a-4876-9cfa-85bbae9365f8
     output: ef9c9b7d-e53c-49b5-8970-4b6e720daaa0
+  - input: fb972d59-aaba-41e9-96c8-a6e3bf8ce37a
+    output: ee0370f6-b599-4417-9955-eb3ba21e9313
+  - input: 9aa1ffd1-5021-4059-81e5-aa7afae1a402
+    output: ebc12244-0c36-487c-ae46-eb36e8f4e2e3
+  - input: 16244db9-1794-4822-8e5e-bd03ccec9c62
+    output: d19dfa27-f85c-40d3-9652-e9211eecd729
+  - input: 9cb353e6-0f5d-49b5-9f81-4d66d91c1b46
+    output: b5395abd-fd94-4e4e-b07f-22837e79c502
+  - input: f8fd6b48-d7da-4738-b6e3-72bb824f7647
+    output: ecca5fb1-2f43-4118-9e13-5dbea09f1315
+  - input: ca8a55f5-2415-4c39-a7f0-1230cea09174
+    output: b8cb89f8-4a49-4b72-9396-c2d36b99aa4c
+  - input: ca8a55f5-2415-4c39-a7f0-1230cea09174
+    output: 948d5cd4-1a75-4b7d-9090-4fd496d469fc
+  - input: 25bc1cf4-17b2-4354-a925-2e041ab90500
+    output: 8694389a-bb25-4fb4-a554-e7b1c167e9e2
+  - input: a6675d81-4db2-465a-8ca0-dd8b3dd5932d
+    output: d2780364-1f89-46a6-a87a-ebe2ed402dc2
+  - input: 35c0cd02-0596-4f8c-886c-293193eb95d4
+    output: 0eec6d3b-e1e5-4f65-a982-345efb7222d7
+  - input: 309516ed-8e4e-4130-8479-dc815e4d945d
+    output: 3c4b1fa7-fe55-4005-a74f-fe06eadbbad1
   update:
-    rid: 6447708885710013124
+    rid: 6447708957307830776
   lateUpdate:
-    rid: 6447708885710013125
+    rid: 6447708957307830777
   fixedUpdate:
-    rid: 6447708885710013126
+    rid: 6447708957307830778
   lateFixedUpdate:
-    rid: 6447708885710013127
+    rid: 6447708957307830779
   behaviours:
-  - {fileID: 8293846172126754500}
-  - {fileID: 4408494176549516385}
   - {fileID: 4122254495487756090}
   - {fileID: 1682445047472140645}
   - {fileID: 8565838687067289873}
   - {fileID: 8323637760306336601}
-  - {fileID: 4610193299641843634}
-  - {fileID: 6796199063833464416}
-  - {fileID: 562838398013132567}
   - {fileID: 5926310269270268065}
   - {fileID: 8601145617138274750}
   - {fileID: 4428756655569498475}
@@ -2295,6 +2323,11 @@ MonoBehaviour:
   - {fileID: 3773458990709628176}
   - {fileID: 7028193746661606218}
   - {fileID: 7321479316843855221}
+  - {fileID: 8685496684624406044}
+  - {fileID: 8293846172126754500}
+  - {fileID: 4408494176549516385}
+  - {fileID: 562838398013132567}
+  - {fileID: 3682769586396265492}
   playerTransform: {fileID: 690346625335943398}
   modelTransform: {fileID: 625548281573258681}
   RB: {fileID: 3558923525336771832}
@@ -2325,822 +2358,850 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 6447708885710013077
+    - rid: 6447708957307830728
       type: {class: InputNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 100, y: 100}
         GUID: 04e754de-3d0d-4d55-809e-83b5b47e6bde
         title: Update
         outputPortGUID: 74c763ac-4c21-4cbc-af09-a406a6e34fe1
-    - rid: 6447708885710013078
+    - rid: 6447708957307830729
       type: {class: InputNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 100, y: 502}
         GUID: 699c0eb8-3b69-4261-86a3-bbb009f5206c
         title: Late Update
         outputPortGUID: b564625f-0747-41cb-a5cc-8c69c58365d3
-    - rid: 6447708885710013079
-      type: {class: InputNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        position: {x: 100, y: 900}
-        GUID: c9239b8f-3820-49b2-98f0-c463a60a4fe1
-        title: Fixed Update
-        outputPortGUID: ebc12244-0c36-487c-ae46-eb36e8f4e2e3
-    - rid: 6447708885710013080
-      type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        position: {x: 299, y: 900}
-        GUID: 26357208-974d-4733-9fc1-4bf1b297753f
-        actionIndex: 0
-        inputPortGUID: 9aa1ffd1-5021-4059-81e5-aa7afae1a402
-        outputPortGUID: d19dfa27-f85c-40d3-9652-e9211eecd729
-    - rid: 6447708885710013081
-      type: {class: CheckNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        position: {x: 897, y: 900}
-        GUID: f5ef438c-e190-494d-980d-74d0bb807ae4
-        checkIndex: 1
-        inputPortGUID: 9cb353e6-0f5d-49b5-9f81-4d66d91c1b46
-        passPortGUID: ecca5fb1-2f43-4118-9e13-5dbea09f1315
-        failPortGUID: b8cb89f8-4a49-4b72-9396-c2d36b99aa4c
-    - rid: 6447708885710013082
-      type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        position: {x: 598, y: 900}
-        GUID: 1c26399c-8034-4b1f-b364-863e9870ffb1
-        actionIndex: 1
-        inputPortGUID: 16244db9-1794-4822-8e5e-bd03ccec9c62
-        outputPortGUID: b5395abd-fd94-4e4e-b07f-22837e79c502
-    - rid: 6447708885710013083
+    - rid: 6447708957307830730
       type: {class: InputNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 100, y: 1647}
         GUID: 04df5dde-0051-43fe-aa1d-2d77854ea30d
         title: Late Fixed Update
         outputPortGUID: c517a22c-4cea-4f2f-aad1-25056877753a
-    - rid: 6447708885710013084
+    - rid: 6447708957307830731
       type: {class: CheckNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 2796, y: 1190}
         GUID: 51e80f38-cfa9-45ea-a42a-508d0a88652c
-        checkIndex: 2
+        checkIndex: 0
         inputPortGUID: 309516ed-8e4e-4130-8479-dc815e4d945d
         passPortGUID: aae6f3ca-e05e-4657-a539-34924fdbcf74
         failPortGUID: a49b3580-bd6f-44ba-adcc-a1a229803712
-    - rid: 6447708885710013085
+    - rid: 6447708957307830732
       type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 3105, y: 1316}
         GUID: fcb05594-f78f-439c-913d-272fd902de56
-        actionIndex: 3
+        actionIndex: 1
         inputPortGUID: cfc4aab4-8b82-43be-9dc7-c62f70329a25
         outputPortGUID: 9c6dc54d-f8c4-4779-b36e-713ba75da791
-    - rid: 6447708885710013086
+    - rid: 6447708957307830733
       type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 3405, y: 1316}
         GUID: d2d5fa68-d403-44e2-b6a2-517a23bd26c5
-        actionIndex: 4
+        actionIndex: 2
         inputPortGUID: 0bb14d9a-f76a-4d8f-8816-aaabe3c1cf89
         outputPortGUID: 8a8837f1-ae9b-4722-9eb8-a3122cc7417e
-    - rid: 6447708885710013087
+    - rid: 6447708957307830734
       type: {class: CheckNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 2521, y: 802}
         GUID: d7143508-97c3-4469-8de3-d5ef72acc9f6
-        checkIndex: 2
+        checkIndex: 0
         inputPortGUID: fb972d59-aaba-41e9-96c8-a6e3bf8ce37a
         passPortGUID: 9d6b0acb-ff56-4de1-b509-b4610e997edb
         failPortGUID: 0fbc8d49-5b70-4421-8211-7ca4268e289d
-    - rid: 6447708885710013088
+    - rid: 6447708957307830735
       type: {class: CheckNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 2824, y: 716}
         GUID: 6ef364d9-2c9d-4368-a2dc-395fbcc3cac1
-        checkIndex: 5
+        checkIndex: 3
         inputPortGUID: 30c78249-0224-4e3e-9fab-d487f9bded46
         passPortGUID: 0617cc16-a203-4a13-b25a-eaa03a2524e4
         failPortGUID: d8b20a00-8315-4783-8425-e640d0c466f0
-    - rid: 6447708885710013089
+    - rid: 6447708957307830736
       type: {class: CheckNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 2852, y: 927}
         GUID: d7637c22-a059-4138-80ad-aa2bb369b678
-        checkIndex: 5
+        checkIndex: 3
         inputPortGUID: 6e722b0f-d1ab-48ae-983a-279a0cc55811
         passPortGUID: e7158d46-116a-42d5-86ba-103d75189b8c
         failPortGUID: d86c87e5-2929-4609-986a-2eb5abcfe995
-    - rid: 6447708885710013090
+    - rid: 6447708957307830737
       type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 4221, y: 912}
         GUID: 15cbfc72-300d-4cc7-8b0f-256e9f8c080a
-        actionIndex: 4
+        actionIndex: 2
         inputPortGUID: 6ecabfe0-b4a0-4ec3-b998-f373f3c49c92
         outputPortGUID: 37b33471-386d-4c25-a987-0c1b644dd26a
-    - rid: 6447708885710013091
-      type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        position: {x: 2074, y: 796}
-        GUID: 9dd4c918-3094-45c6-88cc-c00d5f00b920
-        actionIndex: 6
-        inputPortGUID: 66552754-ae24-426a-8d60-d5e1332383dd
-        outputPortGUID: 0a6080b3-f2f3-435a-9b18-4aebab3df063
-    - rid: 6447708885710013092
-      type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        position: {x: 1631, y: 1144}
-        GUID: 04dd5966-d531-4db0-ba7f-e8c54eda8fc1
-        actionIndex: 0
-        inputPortGUID: ca8a55f5-2415-4c39-a7f0-1230cea09174
-        outputPortGUID: d2780364-1f89-46a6-a87a-ebe2ed402dc2
-    - rid: 6447708885710013093
-      type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        position: {x: 1627, y: 850}
-        GUID: 78eb6511-a0b8-48e6-ad33-faeb83a17fd1
-        actionIndex: 7
-        inputPortGUID: e49f17a2-7ed0-46f4-b882-2125a0b29173
-        outputPortGUID: dc7a401c-25fb-49fb-9406-0bc2f5928c77
-    - rid: 6447708885710013094
-      type: {class: CheckNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        position: {x: 1262, y: 830}
-        GUID: 5082816a-b1bf-4931-bc30-9694db2ab2d4
-        checkIndex: 8
-        inputPortGUID: f8fd6b48-d7da-4738-b6e3-72bb824f7647
-        passPortGUID: 948d5cd4-1a75-4b7d-9090-4fd496d469fc
-        failPortGUID: 8694389a-bb25-4fb4-a554-e7b1c167e9e2
-    - rid: 6447708885710013095
+    - rid: 6447708957307830738
       type: {class: CheckNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 3158, y: 727}
         GUID: 5305d7bb-173e-47a2-933b-904ccae3f156
-        checkIndex: 9
+        checkIndex: 4
         inputPortGUID: c11af332-1d6e-46b6-b64e-6d17b5451c8e
         passPortGUID: 0846892e-af79-4269-a153-14f19fc645ae
         failPortGUID: ed0866cf-c54d-4abb-b85d-07b0b6688fa1
-    - rid: 6447708885710013096
+    - rid: 6447708957307830739
       type: {class: CheckNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 3139, y: 924}
         GUID: 1064c275-a278-4311-aa19-b85ca7a72c9c
-        checkIndex: 9
+        checkIndex: 4
         inputPortGUID: f1adf040-0686-43f1-83c3-70ae77afb6a1
         passPortGUID: dbe38686-c2ab-4bb0-b937-220c35bb82c3
         failPortGUID: c910edaa-6154-43ec-9926-b0e676579826
-    - rid: 6447708885710013097
+    - rid: 6447708957307830740
       type: {class: CheckNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 3752, y: 938}
         GUID: 9e1f7c5b-1179-4d18-b2b9-8ea2d4364294
-        checkIndex: 10
+        checkIndex: 5
         inputPortGUID: 56e3ffc5-1682-432e-9ce5-33e0a5d8da93
         passPortGUID: 3c963e8b-0100-431e-9464-9cde131b684a
         failPortGUID: 10ccc714-440f-4b69-ad28-5854a3825869
-    - rid: 6447708885710013098
+    - rid: 6447708957307830741
       type: {class: CheckNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 3428, y: 925}
         GUID: a7debf40-68cc-475b-9108-9358a9604026
-        checkIndex: 11
+        checkIndex: 6
         inputPortGUID: 6c0a2792-6aa5-4f5a-930c-22c029613dfb
         passPortGUID: c6fe53c9-2b3a-48b4-a66d-ea214f5a6cf1
         failPortGUID: 550076a3-b86b-4779-9939-fd213d96b152
-    - rid: 6447708885710013099
+    - rid: 6447708957307830742
       type: {class: CheckNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 3455, y: 721}
         GUID: a1808222-671f-4996-afef-cc4cf82ec605
-        checkIndex: 11
+        checkIndex: 6
         inputPortGUID: 980e35ae-3e9c-45ce-910e-c692c7ff884a
         passPortGUID: fc665ef3-fa8d-427c-b548-5525f9ede9a2
         failPortGUID: 998a8a83-c474-49f6-8ff5-98798fffff59
-    - rid: 6447708885710013100
+    - rid: 6447708957307830743
       type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 3130, y: 1123}
         GUID: 93604611-cb8f-4187-9a85-74be861ad6f3
-        actionIndex: 12
+        actionIndex: 7
         inputPortGUID: ae158dd1-fd21-49a1-965c-80c81ffa8d3d
         outputPortGUID: 78368829-07cf-4c03-8a33-50820b3b15a1
-    - rid: 6447708885710013101
+    - rid: 6447708957307830744
       type: {class: CheckNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 3830, y: 729}
         GUID: d07d600e-be04-4cc2-90f5-45394642e659
-        checkIndex: 10
+        checkIndex: 5
         inputPortGUID: 95b55069-b339-4a6b-af9a-95ef74721760
         passPortGUID: aa95bb53-8af3-4bee-8e2c-9979f179efa8
         failPortGUID: 08ecda21-e8a1-4bdb-bb55-a3119c74b484
-    - rid: 6447708885710013102
+    - rid: 6447708957307830745
       type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 1785, y: 1559}
         GUID: efd01ffa-cd7a-484d-ac84-ad4077fd2490
-        actionIndex: 13
+        actionIndex: 8
         inputPortGUID: a68300dc-7839-4a60-8630-16580e94b362
         outputPortGUID: 2862e876-ae31-485e-8493-4dafa85ea575
-    - rid: 6447708885710013103
+    - rid: 6447708957307830746
       type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 2382, y: 1559}
         GUID: 4b5a50f1-5fd9-411e-ad87-fe6f40a225af
-        actionIndex: 14
+        actionIndex: 9
         inputPortGUID: 874f94ad-c176-4453-b587-f45d7c4b74bf
         outputPortGUID: c15e287a-32bb-4f21-9df8-17dc98d87f19
-    - rid: 6447708885710013104
+    - rid: 6447708957307830747
       type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 2085, y: 1559}
         GUID: 9ec2e7ee-91a5-4895-8f15-64168f382e00
-        actionIndex: 15
+        actionIndex: 10
         inputPortGUID: aec270ea-d758-46e1-ae49-6ec56ad34966
         outputPortGUID: 067a1d58-96bc-47ee-9864-30c1f43cfb4a
-    - rid: 6447708885710013105
+    - rid: 6447708957307830748
       type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 811, y: 1585}
         GUID: 7adc9638-2ee6-4ec7-9fd1-6fece59e3ed9
-        actionIndex: 16
+        actionIndex: 11
         inputPortGUID: e0dc0052-f6a0-486f-b2e2-4ff2291191b1
         outputPortGUID: 19e3cd01-de2c-4658-987e-3c259570ba47
-    - rid: 6447708885710013106
+    - rid: 6447708957307830749
       type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 512, y: 1585}
         GUID: 40054cf3-0bc9-4fa6-a332-c76cf2a5ad22
-        actionIndex: 2
+        actionIndex: 0
         inputPortGUID: 24c5e500-39e3-4bc9-addd-069216035d2d
         outputPortGUID: 3d891e39-e72d-4782-875e-6eb07affc49e
-    - rid: 6447708885710013107
+    - rid: 6447708957307830750
       type: {class: CheckNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 1108, y: 1538}
         GUID: 0dcab331-fa25-4509-a3a2-deda7e586cce
-        checkIndex: 17
+        checkIndex: 12
         inputPortGUID: bec636af-21b2-4c54-ae70-32e696634cff
         passPortGUID: a24dd496-2a77-4206-8f84-1aa7563930ab
         failPortGUID: 78e286bf-08e0-4ce9-8561-a618109444c7
-    - rid: 6447708885710013108
+    - rid: 6447708957307830751
       type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 1399, y: 1419}
         GUID: b932ca15-c28f-4de8-ab38-869ad8b8a6ac
-        actionIndex: 18
+        actionIndex: 13
         inputPortGUID: f5e628c0-1d6b-4e23-abd0-22fd5d0ef025
         outputPortGUID: fdb48146-e745-48c8-ae93-72ccf0ac7b51
-    - rid: 6447708885710013109
+    - rid: 6447708957307830752
       type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 1438, y: 1609}
         GUID: e2d60e68-8df7-4a53-84a1-ef18d28f60c9
-        actionIndex: 19
+        actionIndex: 14
         inputPortGUID: f30b8724-2b70-4976-bc37-216e2b190cb0
         outputPortGUID: 459f444f-b9af-4804-8c01-a6c4c47e9728
-    - rid: 6447708885710013110
+    - rid: 6447708957307830753
       type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 6056, y: 574}
         GUID: a9e09a96-b88f-418c-a2d7-b6dd58fd9799
-        actionIndex: 20
+        actionIndex: 15
         inputPortGUID: b218f024-c9cf-4409-9121-ecc62eb30068
         outputPortGUID: aa24b6cc-a515-49e1-9740-4291b1a1f7a0
-    - rid: 6447708885710013111
+    - rid: 6447708957307830754
       type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 5157, y: 638}
         GUID: 8fdee272-830e-4c00-871b-78d541611f6b
-        actionIndex: 21
+        actionIndex: 16
         inputPortGUID: 13260edf-e841-4369-adef-31eb8d00ac67
         outputPortGUID: 5036c34f-7786-4690-bbb4-3bd95a207c91
-    - rid: 6447708885710013112
+    - rid: 6447708957307830755
       type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 4714, y: 585}
         GUID: 0e58880d-27e0-4064-a0f4-42f2cfea8c5b
-        actionIndex: 17
+        actionIndex: 12
         inputPortGUID: ba018e16-6361-44ee-910b-478e679e532b
         outputPortGUID: 83888e4b-6268-4095-9285-a4d1dc8e1069
-    - rid: 6447708885710013113
+    - rid: 6447708957307830756
       type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 5522, y: 642}
         GUID: 333c7f46-9697-4611-bd57-3dd195a8ea7b
-        actionIndex: 12
+        actionIndex: 7
         inputPortGUID: 1a696e49-3b89-4b66-bd54-48f71648a307
         outputPortGUID: 5d477077-3a1e-454e-940f-095afdd786ae
-    - rid: 6447708885710013114
+    - rid: 6447708957307830757
       type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 4303, y: 1078}
         GUID: fbb36a5a-b856-419b-9c3f-abc337342eb6
-        actionIndex: 22
+        actionIndex: 17
         inputPortGUID: 44214f70-3836-4824-9848-3907421ae93f
         outputPortGUID: 7d461ff6-56bf-4802-b1ed-a8fb8d766a68
-    - rid: 6447708885710013115
+    - rid: 6447708957307830758
       type: {class: CheckNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 4006, y: 1156}
         GUID: 8e98a50c-65b2-4c83-a64d-d76a33800057
-        checkIndex: 22
+        checkIndex: 17
         inputPortGUID: a07c6454-f6c4-4696-98dc-330176befac5
         passPortGUID: 7bf845fe-e600-40c4-a10c-5619e9fdc43d
         failPortGUID: 5e63974a-73f2-471f-8fb5-f2eb8979c8c4
-    - rid: 6447708885710013116
+    - rid: 6447708957307830759
       type: {class: CheckNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 4262, y: 705}
         GUID: 6df6bac5-83b4-4289-8d0e-4b42307f19ff
-        checkIndex: 17
+        checkIndex: 12
         inputPortGUID: 2c483c7a-6c2f-4bb3-a018-3f30ddac3cf9
         passPortGUID: 265976b4-81ef-4a33-8870-ffd2fb8983ad
         failPortGUID: 2b0ab91c-21df-4c59-a308-f69b969bcb6c
-    - rid: 6447708885710013117
+    - rid: 6447708957307830760
       type: {class: CheckNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 4598, y: 1152}
         GUID: 56b0ec4b-5904-4981-b437-3789115b07f0
-        checkIndex: 17
+        checkIndex: 12
         inputPortGUID: 1a3ced0c-7b2e-4f86-92e9-3569856d2f1a
         passPortGUID: cbc73a43-df12-4ffb-a931-aad43b21b069
         failPortGUID: 51c1330c-120c-4a49-ae4d-3542d4c5e873
-    - rid: 6447708885710013118
+    - rid: 6447708957307830761
       type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 5260, y: 1191}
         GUID: ade45893-8803-46d4-abcb-aa88d788c2c0
-        actionIndex: 21
+        actionIndex: 16
         inputPortGUID: 2edb7153-727a-4876-9cfa-85bbae9365f8
         outputPortGUID: ba7cd6ff-7777-446b-93db-88c4f92b6ff9
-    - rid: 6447708885710013119
+    - rid: 6447708957307830762
       type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 5669, y: 1178}
         GUID: 1326bd44-d096-4098-ac61-cbb3600c7f83
-        actionIndex: 12
+        actionIndex: 7
         inputPortGUID: 9c53cb47-bc77-4e80-b24e-d74598f40783
         outputPortGUID: ab265d3e-5b62-4170-ac17-07424845f645
-    - rid: 6447708885710013120
+    - rid: 6447708957307830763
       type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 6017, y: 1181}
         GUID: fe750ff8-2a57-4b44-ba1f-15d1abad6c1b
-        actionIndex: 3
+        actionIndex: 1
         inputPortGUID: 9146e636-e11e-4703-abef-acccc51ec70a
         outputPortGUID: d8e8fa17-10b8-40c8-9d96-0632b711e3b3
-    - rid: 6447708885710013121
+    - rid: 6447708957307830764
       type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 6318, y: 1176}
         GUID: 473f7f68-2640-4f3f-8223-66805588da12
-        actionIndex: 4
+        actionIndex: 2
         inputPortGUID: 7573f1cf-40d3-4960-a6fb-4f1de8440c57
         outputPortGUID: f790a234-52d3-4fee-bf63-1409abc4d42f
-    - rid: 6447708885710013122
+    - rid: 6447708957307830765
       type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 6618, y: 1176}
         GUID: 292adb3b-7410-430b-bfc3-8e75142b76ae
-        actionIndex: 20
+        actionIndex: 15
         inputPortGUID: da8578f3-fea3-4262-8953-f60f5a4f78c7
         outputPortGUID: f55c3600-4d94-451d-9542-832c5b64ed36
-    - rid: 6447708885710013123
+    - rid: 6447708957307830766
       type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         position: {x: 4931, y: 1068}
         GUID: 53cd9450-dd63-4c5a-89f2-a86c66ccec00
-        actionIndex: 17
+        actionIndex: 12
         inputPortGUID: be3c8389-a652-4aa5-b0f4-c3e3bccecc10
         outputPortGUID: ef9c9b7d-e53c-49b5-8970-4b6e720daaa0
-    - rid: 6447708885710013124
-      type: {class: InputNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+    - rid: 6447708957307830767
+      type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
-        pass:
-          rid: 6447708885710013128
-    - rid: 6447708885710013125
-      type: {class: InputNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013129
-    - rid: 6447708885710013126
-      type: {class: InputNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013130
-    - rid: 6447708885710013127
-      type: {class: InputNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013131
-    - rid: 6447708885710013128
-      type: {class: InputNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: -2
-    - rid: 6447708885710013129
-      type: {class: InputNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: -2
-    - rid: 6447708885710013130
-      type: {class: InputNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013132
-    - rid: 6447708885710013131
-      type: {class: InputNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013133
-    - rid: 6447708885710013132
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013134
-        actionIndex: 0
-    - rid: 6447708885710013133
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013135
-        actionIndex: 2
-    - rid: 6447708885710013134
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013136
-        actionIndex: 1
-    - rid: 6447708885710013135
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013137
-        actionIndex: 16
-    - rid: 6447708885710013136
-      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013138
-        fail:
-          rid: 6447708885710013139
-        checkIndex: 1
-    - rid: 6447708885710013137
-      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013140
-        fail:
-          rid: 6447708885710013141
-        checkIndex: 17
-    - rid: 6447708885710013138
-      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013142
-        fail:
-          rid: 6447708885710013143
-        checkIndex: 8
-    - rid: 6447708885710013139
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013144
-        actionIndex: 0
-    - rid: 6447708885710013140
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013145
+        position: {x: 2012, y: 736}
+        GUID: 7a31bf53-2686-4e7e-97a6-dfc8651209f6
         actionIndex: 18
-    - rid: 6447708885710013141
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+        inputPortGUID: 35c0cd02-0596-4f8c-886c-293193eb95d4
+        outputPortGUID: ee0370f6-b599-4417-9955-eb3ba21e9313
+    - rid: 6447708957307830768
+      type: {class: InputNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
-        pass:
-          rid: 6447708885710013146
+        position: {x: -417, y: 909}
+        GUID: c9239b8f-3820-49b2-98f0-c463a60a4fe1
+        title: Fixed Update
+        outputPortGUID: ebc12244-0c36-487c-ae46-eb36e8f4e2e3
+    - rid: 6447708957307830769
+      type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        position: {x: -218, y: 909}
+        GUID: 26357208-974d-4733-9fc1-4bf1b297753f
         actionIndex: 19
-    - rid: 6447708885710013142
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+        inputPortGUID: 9aa1ffd1-5021-4059-81e5-aa7afae1a402
+        outputPortGUID: d19dfa27-f85c-40d3-9652-e9211eecd729
+    - rid: 6447708957307830770
+      type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
-        pass:
-          rid: 6447708885710013147
-        actionIndex: 0
-    - rid: 6447708885710013143
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+        position: {x: 81, y: 909}
+        GUID: 1c26399c-8034-4b1f-b364-863e9870ffb1
+        actionIndex: 20
+        inputPortGUID: 16244db9-1794-4822-8e5e-bd03ccec9c62
+        outputPortGUID: b5395abd-fd94-4e4e-b07f-22837e79c502
+    - rid: 6447708957307830771
+      type: {class: CheckNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
-        pass:
-          rid: 6447708885710013148
-        actionIndex: 7
-    - rid: 6447708885710013144
-      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+        position: {x: 346, y: 908}
+        GUID: f5ef438c-e190-494d-980d-74d0bb807ae4
+        checkIndex: 20
+        inputPortGUID: 9cb353e6-0f5d-49b5-9f81-4d66d91c1b46
+        passPortGUID: ecca5fb1-2f43-4118-9e13-5dbea09f1315
+        failPortGUID: b8cb89f8-4a49-4b72-9396-c2d36b99aa4c
+    - rid: 6447708957307830772
+      type: {class: CheckNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
-        pass:
-          rid: 6447708885710013149
-        fail:
-          rid: 6447708885710013150
-        checkIndex: 2
-    - rid: 6447708885710013145
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+        position: {x: 1022, y: 896}
+        GUID: 5082816a-b1bf-4931-bc30-9694db2ab2d4
+        checkIndex: 21
+        inputPortGUID: f8fd6b48-d7da-4738-b6e3-72bb824f7647
+        passPortGUID: 948d5cd4-1a75-4b7d-9090-4fd496d469fc
+        failPortGUID: 8694389a-bb25-4fb4-a554-e7b1c167e9e2
+    - rid: 6447708957307830773
+      type: {class: ActionNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
-        pass:
-          rid: 6447708885710013151
-        actionIndex: 13
-    - rid: 6447708885710013146
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+        position: {x: 1552, y: 1144}
+        GUID: 04dd5966-d531-4db0-ba7f-e8c54eda8fc1
+        actionIndex: 19
+        inputPortGUID: ca8a55f5-2415-4c39-a7f0-1230cea09174
+        outputPortGUID: d2780364-1f89-46a6-a87a-ebe2ed402dc2
+    - rid: 6447708957307830774
+      type: {class: CheckNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
-        pass:
-          rid: 6447708885710013152
-        actionIndex: 13
-    - rid: 6447708885710013147
-      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013153
-        fail:
-          rid: 6447708885710013154
-        checkIndex: 2
-    - rid: 6447708885710013148
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013155
-        actionIndex: 6
-    - rid: 6447708885710013149
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: -2
-        actionIndex: 12
-    - rid: 6447708885710013150
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013156
-        actionIndex: 3
-    - rid: 6447708885710013151
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013157
-        actionIndex: 15
-    - rid: 6447708885710013152
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013158
-        actionIndex: 15
-    - rid: 6447708885710013153
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: -2
-        actionIndex: 12
-    - rid: 6447708885710013154
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013159
-        actionIndex: 3
-    - rid: 6447708885710013155
-      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013160
-        fail:
-          rid: 6447708885710013161
-        checkIndex: 2
-    - rid: 6447708885710013156
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: -2
-        actionIndex: 4
-    - rid: 6447708885710013157
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: -2
-        actionIndex: 14
-    - rid: 6447708885710013158
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: -2
-        actionIndex: 14
-    - rid: 6447708885710013159
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: -2
-        actionIndex: 4
-    - rid: 6447708885710013160
-      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: -2
-        fail:
-          rid: 6447708885710013162
-        checkIndex: 5
-    - rid: 6447708885710013161
-      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: -2
-        fail:
-          rid: 6447708885710013163
-        checkIndex: 5
-    - rid: 6447708885710013162
-      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: -2
-        fail:
-          rid: 6447708885710013164
-        checkIndex: 9
-    - rid: 6447708885710013163
-      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: -2
-        fail:
-          rid: 6447708885710013165
-        checkIndex: 9
-    - rid: 6447708885710013164
-      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: -2
-        fail:
-          rid: 6447708885710013166
-        checkIndex: 11
-    - rid: 6447708885710013165
-      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: -2
-        fail:
-          rid: 6447708885710013167
-        checkIndex: 11
-    - rid: 6447708885710013166
-      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: -2
-        fail:
-          rid: 6447708885710013168
-        checkIndex: 10
-    - rid: 6447708885710013167
-      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013169
-        fail:
-          rid: 6447708885710013170
-        checkIndex: 10
-    - rid: 6447708885710013168
-      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013171
-        fail:
-          rid: 6447708885710013172
-        checkIndex: 17
-    - rid: 6447708885710013169
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: -2
-        actionIndex: 4
-    - rid: 6447708885710013170
-      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013173
-        fail:
-          rid: 6447708885710013174
+        position: {x: 1526, y: 809}
+        GUID: 3ea51f80-5bea-41a7-bce5-d842f84de244
         checkIndex: 22
-    - rid: 6447708885710013171
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+        inputPortGUID: 25bc1cf4-17b2-4354-a925-2e041ab90500
+        passPortGUID: 2404ad29-a8ef-4809-b4ae-3f7ba810063d
+        failPortGUID: 0eec6d3b-e1e5-4f65-a982-345efb7222d7
+    - rid: 6447708957307830775
+      type: {class: CheckNodeGraphData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        position: {x: 2074, y: 1190}
+        GUID: 4fcbf4b9-b075-4989-84d9-a1ab9db33b33
+        checkIndex: 22
+        inputPortGUID: a6675d81-4db2-465a-8ca0-dd8b3dd5932d
+        passPortGUID: 65a86b2c-6f2b-44f0-b7c3-54c904e7a2f7
+        failPortGUID: 3c4b1fa7-fe55-4005-a74f-fe06eadbbad1
+    - rid: 6447708957307830776
+      type: {class: InputNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         pass:
-          rid: 6447708885710013175
-        actionIndex: 17
-    - rid: 6447708885710013172
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+          rid: 6447708957307830780
+    - rid: 6447708957307830777
+      type: {class: InputNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         pass:
-          rid: 6447708885710013176
-        actionIndex: 21
-    - rid: 6447708885710013173
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+          rid: 6447708957307830781
+    - rid: 6447708957307830778
+      type: {class: InputNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830782
+    - rid: 6447708957307830779
+      type: {class: InputNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830783
+    - rid: 6447708957307830780
+      type: {class: InputNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         pass:
           rid: -2
-        actionIndex: 22
-    - rid: 6447708885710013174
+    - rid: 6447708957307830781
+      type: {class: InputNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: -2
+    - rid: 6447708957307830782
+      type: {class: InputNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830784
+    - rid: 6447708957307830783
+      type: {class: InputNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830785
+    - rid: 6447708957307830784
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830786
+        actionIndex: 19
+    - rid: 6447708957307830785
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830787
+        actionIndex: 0
+    - rid: 6447708957307830786
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830788
+        actionIndex: 20
+    - rid: 6447708957307830787
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830789
+        actionIndex: 11
+    - rid: 6447708957307830788
       type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         pass:
-          rid: 6447708885710013177
+          rid: 6447708957307830790
         fail:
-          rid: 6447708885710013178
+          rid: 6447708957307830791
+        checkIndex: 20
+    - rid: 6447708957307830789
+      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830792
+        fail:
+          rid: 6447708957307830793
+        checkIndex: 12
+    - rid: 6447708957307830790
+      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830794
+        fail:
+          rid: 6447708957307830795
+        checkIndex: 21
+    - rid: 6447708957307830791
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830796
+        actionIndex: 19
+    - rid: 6447708957307830792
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830797
+        actionIndex: 13
+    - rid: 6447708957307830793
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830798
+        actionIndex: 14
+    - rid: 6447708957307830794
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830799
+        actionIndex: 19
+    - rid: 6447708957307830795
+      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: -2
+        fail:
+          rid: 6447708957307830800
+        checkIndex: 22
+    - rid: 6447708957307830796
+      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: -2
+        fail:
+          rid: 6447708957307830801
+        checkIndex: 22
+    - rid: 6447708957307830797
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830802
+        actionIndex: 8
+    - rid: 6447708957307830798
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830803
+        actionIndex: 8
+    - rid: 6447708957307830799
+      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: -2
+        fail:
+          rid: 6447708957307830804
+        checkIndex: 22
+    - rid: 6447708957307830800
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830805
+        actionIndex: 18
+    - rid: 6447708957307830801
+      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830806
+        fail:
+          rid: 6447708957307830807
+        checkIndex: 0
+    - rid: 6447708957307830802
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830808
+        actionIndex: 10
+    - rid: 6447708957307830803
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830809
+        actionIndex: 10
+    - rid: 6447708957307830804
+      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830810
+        fail:
+          rid: 6447708957307830811
+        checkIndex: 0
+    - rid: 6447708957307830805
+      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830812
+        fail:
+          rid: 6447708957307830813
+        checkIndex: 0
+    - rid: 6447708957307830806
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: -2
+        actionIndex: 7
+    - rid: 6447708957307830807
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830814
+        actionIndex: 1
+    - rid: 6447708957307830808
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: -2
+        actionIndex: 9
+    - rid: 6447708957307830809
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: -2
+        actionIndex: 9
+    - rid: 6447708957307830810
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: -2
+        actionIndex: 7
+    - rid: 6447708957307830811
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830815
+        actionIndex: 1
+    - rid: 6447708957307830812
+      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: -2
+        fail:
+          rid: 6447708957307830816
+        checkIndex: 3
+    - rid: 6447708957307830813
+      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: -2
+        fail:
+          rid: 6447708957307830817
+        checkIndex: 3
+    - rid: 6447708957307830814
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: -2
+        actionIndex: 2
+    - rid: 6447708957307830815
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: -2
+        actionIndex: 2
+    - rid: 6447708957307830816
+      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: -2
+        fail:
+          rid: 6447708957307830818
+        checkIndex: 4
+    - rid: 6447708957307830817
+      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: -2
+        fail:
+          rid: 6447708957307830819
+        checkIndex: 4
+    - rid: 6447708957307830818
+      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: -2
+        fail:
+          rid: 6447708957307830820
+        checkIndex: 6
+    - rid: 6447708957307830819
+      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: -2
+        fail:
+          rid: 6447708957307830821
+        checkIndex: 6
+    - rid: 6447708957307830820
+      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: -2
+        fail:
+          rid: 6447708957307830822
+        checkIndex: 5
+    - rid: 6447708957307830821
+      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830823
+        fail:
+          rid: 6447708957307830824
+        checkIndex: 5
+    - rid: 6447708957307830822
+      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830825
+        fail:
+          rid: 6447708957307830826
+        checkIndex: 12
+    - rid: 6447708957307830823
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: -2
+        actionIndex: 2
+    - rid: 6447708957307830824
+      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830827
+        fail:
+          rid: 6447708957307830828
         checkIndex: 17
-    - rid: 6447708885710013175
+    - rid: 6447708957307830825
       type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         pass:
-          rid: 6447708885710013179
-        actionIndex: 21
-    - rid: 6447708885710013176
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013180
+          rid: 6447708957307830829
         actionIndex: 12
-    - rid: 6447708885710013177
+    - rid: 6447708957307830826
       type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         pass:
-          rid: 6447708885710013181
+          rid: 6447708957307830830
+        actionIndex: 16
+    - rid: 6447708957307830827
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: -2
         actionIndex: 17
-    - rid: 6447708885710013178
+    - rid: 6447708957307830828
+      type: {class: CheckNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830831
+        fail:
+          rid: 6447708957307830832
+        checkIndex: 12
+    - rid: 6447708957307830829
       type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         pass:
-          rid: 6447708885710013182
-        actionIndex: 21
-    - rid: 6447708885710013179
+          rid: 6447708957307830833
+        actionIndex: 16
+    - rid: 6447708957307830830
       type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         pass:
-          rid: 6447708885710013183
+          rid: 6447708957307830834
+        actionIndex: 7
+    - rid: 6447708957307830831
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830835
         actionIndex: 12
-    - rid: 6447708885710013180
+    - rid: 6447708957307830832
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830836
+        actionIndex: 16
+    - rid: 6447708957307830833
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830837
+        actionIndex: 7
+    - rid: 6447708957307830834
       type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         pass:
           rid: -2
-        actionIndex: 20
-    - rid: 6447708885710013181
+        actionIndex: 15
+    - rid: 6447708957307830835
       type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         pass:
-          rid: 6447708885710013184
-        actionIndex: 21
-    - rid: 6447708885710013182
+          rid: 6447708957307830838
+        actionIndex: 16
+    - rid: 6447708957307830836
       type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         pass:
-          rid: 6447708885710013185
-        actionIndex: 12
-    - rid: 6447708885710013183
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: -2
-        actionIndex: 20
-    - rid: 6447708885710013184
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013186
-        actionIndex: 12
-    - rid: 6447708885710013185
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013187
-        actionIndex: 3
-    - rid: 6447708885710013186
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013188
-        actionIndex: 3
-    - rid: 6447708885710013187
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013189
-        actionIndex: 4
-    - rid: 6447708885710013188
-      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
-      data:
-        pass:
-          rid: 6447708885710013190
-        actionIndex: 4
-    - rid: 6447708885710013189
+          rid: 6447708957307830839
+        actionIndex: 7
+    - rid: 6447708957307830837
       type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         pass:
           rid: -2
-        actionIndex: 20
-    - rid: 6447708885710013190
+        actionIndex: 15
+    - rid: 6447708957307830838
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830840
+        actionIndex: 7
+    - rid: 6447708957307830839
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830841
+        actionIndex: 1
+    - rid: 6447708957307830840
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830842
+        actionIndex: 1
+    - rid: 6447708957307830841
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830843
+        actionIndex: 2
+    - rid: 6447708957307830842
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: 6447708957307830844
+        actionIndex: 2
+    - rid: 6447708957307830843
       type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
       data:
         pass:
           rid: -2
-        actionIndex: 20
+        actionIndex: 15
+    - rid: 6447708957307830844
+      type: {class: ActionNodeTreeData, ns: BehaviourGraph, asm: Assembly-CSharp}
+      data:
+        pass:
+          rid: -2
+        actionIndex: 15
 --- !u!114 &5249035814986942676
 MonoBehaviour:
   m_ObjectHideFlags: 0

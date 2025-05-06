@@ -45,7 +45,7 @@ public class ShooterBotEnemyVisual :MonoBehaviour
             case ShooterBotEnemy.State.Attack:
                 break;
             case ShooterBotEnemy.State.Dead:
-                animator.SetTrigger("Death");
+                animator.SetBool("Dead",true);
                 break;
             default:
                 break;
