@@ -80,7 +80,7 @@ MonoBehaviour:
   zoomSmoothness: 0.8
   followIntensity: {x: 60, y: 30}
   maxFollowSpeed: 100
-  normalSmoothness: 0.9
+  normalSmoothness: 1
   defaultRotation: {x: 0, y: -15}
   lookSensitivity: 0.075
   ghostSmoothnessXZ: 0.7
@@ -115,10 +115,10 @@ MonoBehaviour:
   maxDistance: 6
   zoomSensitivity: -0.01
   zoomFalloff: 5
-  zoomSmoothness: 0
+  zoomSmoothness: 1
   followIntensity: {x: 70, y: 30}
   maxFollowSpeed: 100
-  normalSmoothness: 0.9
+  normalSmoothness: 0.953
   defaultRotation: {x: 0, y: -1}
   lookAngleBounds: {x: -50, y: 20}
   lookSensitivity: 0.075
@@ -1255,7 +1255,7 @@ MonoBehaviour:
   wasActive: 0
   throwForce: 20
   maxPoints: 10
-  scale: 0.07
+  scale: 0.1
   angleMultipler: 1
   angleOffset: -30
   offsetVector: {x: 0, y: 2, z: 0}

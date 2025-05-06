@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace RagdollEngine
 {
@@ -48,6 +49,8 @@ namespace RagdollEngine
             cameraTransform.rotation = Quaternion.Euler(respawnTransformData.rotation);
 
             playerBehaviourTree.Initialize(this);
+
+            
         }
 
         public void Respawn()
@@ -60,14 +63,17 @@ namespace RagdollEngine
 
                 yield return respawnUI.WaitForEnterTransition();
 
-                foreach (GameObject thisUI in uis)
-                    Destroy(thisUI.gameObject);
+                //Reload the scene
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
-                uis.Clear();
+                //foreach (GameObject thisUI in uis)
+                //    Destroy(thisUI.gameObject);
 
-                Spawn();
+                //uis.Clear();
 
-                respawnUI.Exit();
+                //Spawn();
+
+                //respawnUI.Exit();
             }
         }
     }
