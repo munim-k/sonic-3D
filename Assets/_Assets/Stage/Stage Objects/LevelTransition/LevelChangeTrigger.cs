@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class LevelChangeVolumeEditor : Editor
 {
     private string[] sceneNames; // Array to store scene names
-    private int selectedSceneIndex; // Index of the selected scene
+    private int previousSelectedIndex; // Track previous selection
 
     private void OnEnable()
     {
@@ -20,29 +20,60 @@ public class LevelChangeVolumeEditor : Editor
         {
             sceneNames[i] = System.IO.Path.GetFileNameWithoutExtension(scenes[i].path); // Get scene name
         }
+
+        // Get current selection
+        LevelChangeTrigger levelChangeTrigger = (LevelChangeTrigger)target;
+        previousSelectedIndex = levelChangeTrigger.SelectedSceneIndex;
     }
 
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
+        LevelChangeTrigger levelChangeTrigger = (LevelChangeTrigger)target;
 
-        LevelChangeTrigger levelChangeVolume = (LevelChangeTrigger)target;
+        // Ensure the selected index is within bounds
+        if (levelChangeTrigger.SelectedSceneIndex >= sceneNames.Length && sceneNames.Length > 0)
+        {
+            levelChangeTrigger.SelectedSceneIndex = 0;
+        }
+
+        EditorGUI.BeginChangeCheck();
 
         // Dropdown for selecting a scene
-        selectedSceneIndex = EditorGUILayout.Popup("Select Level", selectedSceneIndex, sceneNames);
+        int newSelectedIndex = EditorGUILayout.Popup("Select Level", levelChangeTrigger.SelectedSceneIndex, sceneNames);
 
-        // Button to set the selected scene
-        if (GUILayout.Button("Set Level"))
+        // Only update if the user changed the selection
+        if (EditorGUI.EndChangeCheck())
         {
-            levelChangeVolume.SetLevel(sceneNames[selectedSceneIndex]);
+            // User made a selection change
+            Undo.RecordObject(levelChangeTrigger, "Change Level Selection");
+
+            levelChangeTrigger.SelectedSceneIndex = newSelectedIndex;
+
+            // Only set the level name if we have scenes in the build settings and a valid selection
+            if (sceneNames.Length > 0 && newSelectedIndex >= 0 && newSelectedIndex < sceneNames.Length)
+            {
+                levelChangeTrigger.SetLevel(sceneNames[newSelectedIndex]);
+            }
+
+            // Mark the object as dirty to ensure Unity saves the change
+            EditorUtility.SetDirty(levelChangeTrigger);
+
+            previousSelectedIndex = newSelectedIndex;
         }
     }
 }
-
+#endif
 public class LevelChangeTrigger : Trigger
 {
     [SerializeField] private string levelName; // Selected level name
+    [SerializeField] private int selectedSceneIndex;
 
+    public int SelectedSceneIndex
+    {
+        get => selectedSceneIndex;
+        set => selectedSceneIndex = value;
+    }
     public void SetLevel(string level)
     {
         levelName = level;
@@ -61,4 +92,4 @@ public class LevelChangeTrigger : Trigger
     }
 }
 
-#endif
+
