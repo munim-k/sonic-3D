@@ -12,6 +12,7 @@ public class PlayerBombAttack : MonoBehaviour
     [SerializeField] private GameObject bombParticles;
 
     private float bombTimer;
+    private bool explode = false;
     private List<BaseEnemy> enemiesAttacked;
     public void Start()
     {
@@ -19,11 +20,11 @@ public class PlayerBombAttack : MonoBehaviour
         bombTimer = bombTime;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if(bombTimer > 0)
+        if(bombTimer > 0 && !explode)
         {
-            bombTimer -= Time.deltaTime;
+            bombTimer -= Time.fixedDeltaTime;
         }
         else
         {
@@ -33,13 +34,12 @@ public class PlayerBombAttack : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-        Explode();
+        explode = true;
     }
 
 
     private void Explode()
     {
-        //TODO: Add explosion effect
         //Check all layers except exclude layers
         LayerMask mask = ~excludeLayers;
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange,mask);
@@ -47,7 +47,7 @@ public class PlayerBombAttack : MonoBehaviour
         {
             BaseEnemy enemy = hitCollider.GetComponent<BaseEnemy>();
             if (enemy != null && !enemiesAttacked.Contains(enemy))
-            {
+            {         
                 enemy.DoDamageToEnemy(damage);
                 enemiesAttacked.Add(enemy);
             }

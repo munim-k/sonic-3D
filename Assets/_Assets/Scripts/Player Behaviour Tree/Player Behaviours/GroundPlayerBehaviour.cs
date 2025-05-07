@@ -10,6 +10,8 @@ namespace RagdollEngine
         [SerializeField] float localSlopeLimit; // Maximum local slope angle relative to the player.
         [SerializeField] float slopeCooldownTime; // Time duration for slope cooldown.
         [SerializeField] float loopSpeed; // Speed threshold for slope adjustments.
+        [SerializeField] float platformSpeed; // Speed threshold for platform adjustments.
+       
 
         bool slopeCooldown; // Indicates if the player is in slope cooldown.
         bool initialized; // Tracks if the behavior has been initialized.
@@ -70,7 +72,8 @@ namespace RagdollEngine
                 slope = slope, // Whether the surface is too steep.
                 enter = ground && !wasActive // Whether the player just entered valid ground.
             };
-
+            // Handle moving platform logic.
+           
             // Update the active state of the behavior based on whether the player is on valid ground.
             active = ground;
         }

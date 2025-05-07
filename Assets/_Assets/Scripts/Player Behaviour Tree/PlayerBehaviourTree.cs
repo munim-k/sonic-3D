@@ -113,6 +113,7 @@ namespace RagdollEngine
             RB.isKinematic = false;
 
             base.FixedUpdate();
+          
 
             Cursor.lockState = CursorLockMode.Locked;
 
@@ -124,7 +125,9 @@ namespace RagdollEngine
             {
                 additiveVelocity += accelerationVector;
 
+               
                 RB.linearVelocity += additiveVelocity;
+
 
                 RB.linearVelocity -= Vector3.Project(RB.linearVelocity, plane);
 

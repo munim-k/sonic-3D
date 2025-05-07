@@ -94,7 +94,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1644870160574072585}
-  - component: {fileID: 8614801242264177240}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -119,20 +118,6 @@ Transform:
   - {fileID: 7944808507167760910}
   m_Father: {fileID: 3149328634003436958}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8614801242264177240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2876904075608190274}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 184e0059b21236b469ebc4796a44d7e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemy: {fileID: 8248479864180061743}
-  healthBar: {fileID: 6217791853648923894}
 --- !u!1 &5015039131849997268
 GameObject:
   m_ObjectHideFlags: 0
@@ -416,7 +401,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3149328634003436958}
   - component: {fileID: 4115702546487546775}
-  - component: {fileID: 8248479864180061743}
   m_Layer: 9
   m_Name: BaseEnemy
   m_TagString: Untagged
@@ -461,19 +445,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &8248479864180061743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6557679590549396022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91bedbd198e3b8c4d9e4bf8e07eb82f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
 --- !u!1 &8055863187208726543
 GameObject:
   m_ObjectHideFlags: 0

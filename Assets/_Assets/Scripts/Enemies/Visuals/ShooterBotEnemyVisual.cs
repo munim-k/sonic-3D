@@ -12,7 +12,7 @@ public class ShooterBotEnemyVisual :MonoBehaviour
     private void Start()
     {
         animator.SetTrigger("Idle");
-        enemy.onDamage += OnDamage;
+        enemy.OnDamage += OnDamage;
         enemy.OnAttack += OnAttack;
         enemy.OnStateChange += OnStateChange;
     }
@@ -54,7 +54,7 @@ public class ShooterBotEnemyVisual :MonoBehaviour
 
     private  void OnDamage()
     {
-        healthBar.fillAmount = (float)enemy.GetHealth() / 100f;
+        healthBar.fillAmount = enemy.GetHealthNormalized() ;
         animator.SetTrigger("Damage");
     }
     private void OnAttack()
@@ -64,7 +64,7 @@ public class ShooterBotEnemyVisual :MonoBehaviour
 
     private void OnDestroy()
     {
-        enemy.onDamage -= OnDamage;
+        enemy.OnDamage -= OnDamage;
     }
 
 }

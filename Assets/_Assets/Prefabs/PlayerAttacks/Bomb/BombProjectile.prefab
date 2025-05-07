@@ -111,7 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 20
   attackRange: 5
-  bombTime: 1
+  bombTime: 2
   excludeLayers:
     serializedVersion: 2
     m_Bits: 8

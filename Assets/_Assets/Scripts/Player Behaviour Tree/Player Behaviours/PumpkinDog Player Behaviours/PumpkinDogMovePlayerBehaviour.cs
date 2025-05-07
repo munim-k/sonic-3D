@@ -6,7 +6,10 @@ namespace RagdollEngine
     public class PumpkinDogMovePlayerBehaviour : PlayerBehaviour
     {
         [SerializeField] float maxSpeed; // Maximum speed the player can move
-        
+        [SerializeField] float platformSpeed; // Speed of the moving platform
+        private Transform currentPlatform;
+        private Vector3 previousPlatformPosition;
+
         bool wasMoving; // Tracks whether the player was moving in the previous frame
 
         public override void Execute()
@@ -56,6 +59,32 @@ namespace RagdollEngine
             finalVel.y = 0;
             additiveVelocity += finalVel;
             // Update the movement state for the next frame
+
+            if (groundInformation.ground && groundInformation.hit.collider.CompareTag("MovingPlatform"))
+            {
+                Transform platformTransform = groundInformation.hit.collider.transform;
+
+                // If the platform has changed, reset the previous position
+                if (currentPlatform != platformTransform)
+                {
+                    currentPlatform = platformTransform;
+                    previousPlatformPosition = platformTransform.position;
+                }
+
+                // Calculate the platform's velocity based on its position change
+                Vector3 platformVelocity = (platformTransform.position - previousPlatformPosition) / Time.fixedDeltaTime;
+
+                // Update the previous position for the next frame
+                previousPlatformPosition = platformTransform.position;
+                platformVelocity *= platformSpeed;
+                // Add the platform's velocity to the player's additive velocity
+                additiveVelocity += platformVelocity;
+            }
+            else
+            {
+                // Reset platform tracking if the player is no longer on a moving platform
+                currentPlatform = null;
+            }
             wasMoving = moving;
         }
     }
