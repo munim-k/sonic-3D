@@ -13,7 +13,7 @@ public class LollipopUI : MonoBehaviour
             //If behaviour is of type LollipopCollectionPlayerBehaviour
             if (b is LollipopCollectionPlayerBehaviour lollipopBehaviour)
             {
-                lollipopBehaviour.onLollipopCollection += SetLollipopNum;
+                lollipopBehaviour.onLollipopChange += SetLollipopNum;
                 break;
             }
 

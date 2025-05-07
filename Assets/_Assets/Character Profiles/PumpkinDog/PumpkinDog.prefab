@@ -118,9 +118,9 @@ MonoBehaviour:
   zoomSmoothness: 1
   followIntensity: {x: 70, y: 30}
   maxFollowSpeed: 100
-  normalSmoothness: 0.953
+  normalSmoothness: 1
   defaultRotation: {x: 0, y: -1}
-  lookAngleBounds: {x: -50, y: 20}
+  lookAngleBounds: {x: -80, y: 50}
   lookSensitivity: 0.075
   ghostSmoothnessXZ: 0.7
   ghostSmoothnessY: 0.9
