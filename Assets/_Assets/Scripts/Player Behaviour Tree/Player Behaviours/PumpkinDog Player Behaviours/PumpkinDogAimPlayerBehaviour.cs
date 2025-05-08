@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
@@ -17,11 +18,23 @@ namespace RagdollEngine
         [SerializeField] private float projectileSpeed=1f;
         [SerializeField] private Transform Projectile; // Prefab of the projectile to be fired
 
+        [SerializeField] private Transform playerBombUI;
+
         private float cooldownTimer = 0;
         private List<Vector3> points;// List to store points for projectile motion
         private Vector3 launchOrigin;
         private Vector3 launchVector;
+
+        public Action OnFire;
         bool aiming;
+
+        private void Start()
+        {
+            Transform p = Instantiate(playerBombUI,character.canvas.transform);
+            character.uis.Add(p.gameObject);
+            p.GetComponent<PlayerBombUI>().Initialize(this);
+
+        }
         public override bool Evaluate()
         {
             aiming = inputHandler.aim.hold;
@@ -40,7 +53,7 @@ namespace RagdollEngine
 
             CalculatePath();
             //If user has left clicked then fire and start cooldown
-            if (inputHandler.fire.pressed && cooldownTimer <= 0)
+            if (inputHandler.fire.pressed && inputHandler.aim.hold && cooldownTimer <= 0)
             {
                 //Fire the projectile
                 FireProjectile();
@@ -57,6 +70,7 @@ namespace RagdollEngine
         private void FireProjectile()
         {
             //Instantiate projectile and set the starting velocity
+            OnFire?.Invoke();
             GameObject projectile = Instantiate(Projectile.gameObject, launchOrigin, Quaternion.identity);
             Rigidbody rb = projectile.GetComponent<Rigidbody>();
             projectile.GetComponent<SetProjectileGravity>().SetGravityScale(projectileSpeed * projectileSpeed);
@@ -137,7 +151,10 @@ namespace RagdollEngine
             }
         }
 
-
+        public float GetCooldownNormalized()
+        {
+            return cooldownTimer/cooldown;
+        }
 
         
 

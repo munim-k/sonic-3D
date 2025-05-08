@@ -1,3 +1,4 @@
+
 Shader "Ragdoll Engine/Metallic (URP)"
 {
     Properties
@@ -48,6 +49,7 @@ Shader "Ragdoll Engine/Metallic (URP)"
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Fog.hlsl"
 
             struct Attributes
             {
@@ -65,6 +67,7 @@ Shader "Ragdoll Engine/Metallic (URP)"
                 float4 tangentWS    : TEXCOORD3;
                 float3 viewDirWS    : TEXCOORD4;
                 float3 vertexSH     : TEXCOORD5;
+                float3 fogCoord	    : TEXCOORD6;
                 float4 positionCS   : SV_POSITION;
             };
 
@@ -189,6 +192,8 @@ Shader "Ragdoll Engine/Metallic (URP)"
 
                 // Final Color
                 half4 color = UniversalFragmentPBR(inputData, surfaceData);
+
+                color.rgb = ApplyFog(input.fogCoord,color.rgb);
                 return color;
             }
             ENDHLSL

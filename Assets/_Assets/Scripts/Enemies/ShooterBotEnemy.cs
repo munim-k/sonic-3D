@@ -100,6 +100,12 @@ public class ShooterBotEnemy : MonoBehaviour, BaseEnemy
         if (health <= 0)
         {
             OnDeath?.Invoke();
+            //Turn off the colldier on this gameObject
+            Collider col = this.GetComponent<Collider>();
+            if (col != null)
+            {
+                col.enabled = false;
+            }
             state = State.Dead;
             OnStateChange?.Invoke(state);
         }

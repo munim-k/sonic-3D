@@ -64,16 +64,17 @@ namespace RagdollEngine
                 yield return respawnUI.WaitForEnterTransition();
 
                 //Reload the scene
+                //Find lollipop behaviour if it exists and reset lollipops
+                foreach(PlayerBehaviour thisBehaviour in playerBehaviourTree.behaviours)
+                {
+                    if (thisBehaviour is LollipopCollectionPlayerBehaviour)
+                    {
+                        LollipopCollectionPlayerBehaviour lollipopBehaviour = thisBehaviour as LollipopCollectionPlayerBehaviour;
+                        lollipopBehaviour.ResetLollipops();
+                    }
+                }
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
-                //foreach (GameObject thisUI in uis)
-                //    Destroy(thisUI.gameObject);
-
-                //uis.Clear();
-
-                //Spawn();
-
-                //respawnUI.Exit();
             }
         }
     }

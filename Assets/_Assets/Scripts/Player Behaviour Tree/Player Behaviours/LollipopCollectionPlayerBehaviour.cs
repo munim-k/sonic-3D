@@ -41,5 +41,12 @@ namespace RagdollEngine
             PlayerPrefs.SetInt("Lollipops", lollipops);
             PlayerPrefs.Save();
         }
+
+        public void ResetLollipops()
+        {
+            lollipops = 0;
+            PlayerPrefs.SetInt("Lollipops", lollipops);
+            PlayerPrefs.Save();
+        }
     }
 }
