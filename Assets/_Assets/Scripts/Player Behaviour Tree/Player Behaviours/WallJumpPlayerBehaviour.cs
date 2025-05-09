@@ -12,6 +12,7 @@ namespace RagdollEngine
         [SerializeField] LayerMask wallLayerMask; // Layer mask to identify walls.
 
         float speed = 0;
+        private float wallJumpCooldownTimer; // Timer for the wall jump cooldown.
         Vector3 goalPosition; // The target position the player moves toward during the wall jump.
         Vector3 jumpVector;
         Vector3 wallPoint;
@@ -187,9 +188,9 @@ namespace RagdollEngine
             // Iterate through all stage objects in the scene
 
             // Check if the stage object is a spring
-            if (wallJumpCooldown >= 0)
+            if (wallJumpCooldownTimer >= 0)
             {
-                wallJumpCooldown -= Time.fixedDeltaTime;
+                wallJumpCooldownTimer -= Time.fixedDeltaTime;
 
             }
             else
@@ -249,6 +250,7 @@ namespace RagdollEngine
                     jumpVector += Vector3.up * wallJumpForceVertical;
                     additiveVelocity = -RB.linearVelocity + jumpVector;
                     goalPosition = playerTransform.position + jumpVector;
+                    wallJumpCooldownTimer = wallJumpCooldown;
                     return true; // The player can interact with the spring
                 }
 

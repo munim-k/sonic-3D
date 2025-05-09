@@ -1431,11 +1431,11 @@ MonoBehaviour:
   behaviourTree: {fileID: 0}
   active: 0
   wasActive: 0
-  wallJumpCooldown: 0.3
+  wallJumpCooldown: 0.5
   wallJumpForceHorizontal: 15
-  wallJumpForceVertical: 10
+  wallJumpForceVertical: 15
   wallJumpTime: 0.2
-  wallJumpDecreaseSpeed: 0.04
+  wallJumpDecreaseSpeed: 0.03
   wallLayerMask:
     serializedVersion: 2
     m_Bits: 256
