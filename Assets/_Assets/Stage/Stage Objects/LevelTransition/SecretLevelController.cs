@@ -4,6 +4,7 @@ using UnityEngine;
 public class SecretLevelController : MonoBehaviour
 {
     private LollipopCollectionPlayerBehaviour lollipopBehaviour;
+    [SerializeField] private int lollipopThreshold = 50;
     [SerializeField] private Transform secretLevelTransform;
     void Start()
     {
@@ -21,7 +22,7 @@ public class SecretLevelController : MonoBehaviour
 
     private void OnLollipopCollected(int lollipops)
     {
-        if (lollipops >= 50)
+        if (lollipops >= lollipopThreshold)
         {
             secretLevelTransform.gameObject.SetActive(true);
         }
