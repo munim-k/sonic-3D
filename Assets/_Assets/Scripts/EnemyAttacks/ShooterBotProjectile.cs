@@ -3,7 +3,6 @@ using UnityEngine;
 public class ShooterBotProjectile : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    [SerializeField] private LayerMask playerLayer;
     [SerializeField] private float timeToLive=1f;
     [SerializeField]private float speed=5f;
     [SerializeField] private Rigidbody rb;

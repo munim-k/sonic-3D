@@ -147,7 +147,7 @@ public class World1Boss : MonoBehaviour, BaseEnemy
     public void InitializePillars()
     {
         List<int> randomIndexes = new List<int>();
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 3; i++)
         {
             int randomIndex = UnityEngine.Random.Range(0, pillars.Length);
             while (randomIndexes.Contains(randomIndex))
@@ -169,14 +169,15 @@ public class World1Boss : MonoBehaviour, BaseEnemy
     {
         if (activePillars.Contains(pillar))
         {
-            pillar.Activate(false);
-            activePillars.Remove(pillar);
-            if (activePillars.Count == 0)
+            foreach(World1BossPillar p in activePillars)
             {
-                state = State.Stunned;
-                stunTimer = stunDuration;
-                OnStateChange?.Invoke(state);
+                p.Activate(false);
             }
+            activePillars.Clear();
+            state = State.Stunned;
+            stunTimer = stunDuration;
+            OnStateChange?.Invoke(state);
+            
         }
 
     }

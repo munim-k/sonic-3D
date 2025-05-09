@@ -1431,7 +1431,6 @@ MonoBehaviour:
   behaviourTree: {fileID: 0}
   active: 0
   wasActive: 0
-  maxJumps: 2
   wallJumpCooldown: 0.1
   wallJumpForce: 5
   wallJumpSpeed: 5
@@ -13104,7 +13103,7 @@ Animator:
   m_GameObject: {fileID: 1714305970460649230}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 80b404d0ab5105241aaf972ec685c655, type: 2}
+  m_Controller: {fileID: 9100000, guid: 80f12d134511d5f438685e552514837d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
