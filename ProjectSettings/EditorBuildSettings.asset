@@ -17,5 +17,14 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Stages/Levels/World1 (GrassHills)/World1Boss.unity
     guid: 83b3dba5b48a6c04595e083b74f3a63d
+  - enabled: 1
+    path: Assets/Stages/Levels/World2 (Snow)/World2Level1.unity
+    guid: 1f3da437e6e70d14880307a3c628f42d
+  - enabled: 1
+    path: Assets/Stages/Levels/World2 (Snow)/World2Level2.unity
+    guid: e7ce07aa6e7409d40954b4b7c5b05e13
+  - enabled: 1
+    path: Assets/Stages/Levels/World2 (Snow)/World2Boss.unity
+    guid: 1fb7bc9523e959c45a2d37809f72038c
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

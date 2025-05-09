@@ -7168,7 +7168,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 127
   m_IsActive: 1
 --- !u!64 &350676620
 MeshCollider:
@@ -20153,11 +20153,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6695489051614882999, guid: 1397966936eceb240a27049a03182851, type: 3}
       propertyPath: levelName
-      value: World1Level2
+      value: World2Level2
       objectReference: {fileID: 0}
     - target: {fileID: 6695489051614882999, guid: 1397966936eceb240a27049a03182851, type: 3}
       propertyPath: selectedSceneIndex
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6840787674012636349, guid: 1397966936eceb240a27049a03182851, type: 3}
       propertyPath: m_Mesh

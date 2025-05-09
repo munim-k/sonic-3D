@@ -4,13 +4,11 @@ namespace RagdollEngine
 {
     public class WallJumpPlayerBehaviour : PlayerBehaviour
     {
-        [SerializeField] int maxJumps; //Maximum number of consecutive jumps allowed
         [SerializeField] float wallJumpCooldown; // Cooldown time between wall jumps.
         [SerializeField] float wallJumpForce; // Force applied during a wall jump.
         [SerializeField] float wallJumpSpeed;
         [SerializeField] LayerMask wallLayerMask; // Layer mask to identify walls.
        
-        int currentWallJumps = 0;
         float wallJumpCooldownTimer = 0;
         bool wallJumping; // Indicates if the player is currently wall jumping.
         Vector3 wallNormal; // Stores the normal of the wall the player is in contact with.
@@ -71,7 +69,7 @@ namespace RagdollEngine
             {
                 // Store the wall normal and reset the wall jump timer.
                 wallNormal = hit.normal;
-                if (inputHandler.jump.pressed && wallJumpCooldownTimer <= 0 && currentWallJumps < maxJumps)
+                if (inputHandler.jump.pressed && wallJumpCooldownTimer <= 0)
                 {
                     StartWallJump();
                 }
@@ -84,8 +82,6 @@ namespace RagdollEngine
             //If the player is on the ground
             if (groundInformation.ground)
             {
-                // Reset the wall jump counter.
-                currentWallJumps = 0;
                 wallJumping = false; // Exit wall jump state.
                 kinematic = false; // Exit kinematic mode.
                 overrideModelTransform = false; // Allow other behaviors to control the model transform.
@@ -105,7 +101,6 @@ namespace RagdollEngine
             kinematic = true;
             wallJumping = true;
             overrideModelTransform = true; // Override the model transform to control the player's position.
-            currentWallJumps++;
             wallJumpCooldownTimer = wallJumpCooldown;
         }
 
