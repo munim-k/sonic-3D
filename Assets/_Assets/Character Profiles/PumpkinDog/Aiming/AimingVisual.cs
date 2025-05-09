@@ -7,11 +7,7 @@ public class AimingVisual : MonoBehaviour
     [SerializeField] private PumpkinDogAimPlayerBehaviour aimBehaviour;
     [SerializeField] private LineRenderer lineRenderer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
-
+  
     private void LateUpdate()
     {
         if (aimBehaviour != null)
@@ -23,8 +19,16 @@ public class AimingVisual : MonoBehaviour
             {
                 if (points.Count > 0)
                 {
-                    aimTarget.transform.position = points[points.Count - 1];
-                    lineRenderer.positionCount = points.Count;
+                    if (points.Count != aimBehaviour.GetMaxPoints())
+                    {
+                        aimTarget.SetActive(true);
+                        aimTarget.transform.position = points[points.Count - 1];
+                    }
+                    else
+                    {
+                        aimTarget.SetActive(false);
+                    }
+                        lineRenderer.positionCount = points.Count;
                     for (int i = 0; i < points.Count; i++)
                     {
                         lineRenderer.SetPosition(i, points[i]);

@@ -150,7 +150,10 @@ namespace RagdollEngine
                 return Vector3.zero;
             }
         }
-
+        public int GetMaxPoints()
+        {
+            return maxPoints;
+        }
         public float GetCooldownNormalized()
         {
             return cooldownTimer/cooldown;
