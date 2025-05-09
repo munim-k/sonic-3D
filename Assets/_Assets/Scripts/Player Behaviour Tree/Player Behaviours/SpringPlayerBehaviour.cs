@@ -67,7 +67,6 @@ namespace RagdollEngine
             // If the spring has fully compressed, deactivate the behavior
             if (currentLength <= 0)
                 return false;
-
             return true; // The behavior remains active
         }
 
