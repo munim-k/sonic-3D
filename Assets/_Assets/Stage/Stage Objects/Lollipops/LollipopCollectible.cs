@@ -3,6 +3,7 @@ using UnityEngine;
 public class LollipopCollectible : Trigger
 {
     [SerializeField] private AnimationCurve positionCurve;
+    [SerializeField] private Transform visualTransform;
     [SerializeField] private float positionSpeed = 1f;
     [SerializeField] private AnimationCurve rotationCurve;
     [SerializeField] private float rotationSpeed = 1f;
@@ -13,8 +14,8 @@ public class LollipopCollectible : Trigger
 
     private void Awake()
     {
-        originalPos = transform.position;
-        originalRot = transform.rotation;
+        originalPos = visualTransform.position;
+        originalRot = visualTransform.rotation;
     }
     private void FixedUpdate()
     {
@@ -22,8 +23,8 @@ public class LollipopCollectible : Trigger
         rotationLerp += Time.fixedDeltaTime * rotationSpeed;
         positionLerp %= 1;
         rotationLerp %= 1;
-        transform.position = Vector3.Lerp(originalPos, originalPos + Vector3.up * 1f, positionCurve.Evaluate(positionLerp));
-        transform.rotation = originalRot * Quaternion.Euler(0, rotationCurve.Evaluate(rotationLerp) * 360f, 0);
+        visualTransform.position = Vector3.Lerp(originalPos, originalPos + Vector3.up * 1f, positionCurve.Evaluate(positionLerp));
+        visualTransform.rotation = originalRot * Quaternion.Euler(0, rotationCurve.Evaluate(rotationLerp) * 360f, 0);
     }
     public void Consume()
     {
