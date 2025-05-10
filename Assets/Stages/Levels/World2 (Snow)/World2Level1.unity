@@ -31319,7 +31319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94f20fc761861064e8ed435e7deb5c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SnowParticlePrefab: {fileID: 4045515260159777657, guid: 08af81954763a4d4581564b24e970729, type: 3}
+  particlePrefab: {fileID: 4045515260159777657, guid: 08af81954763a4d4581564b24e970729, type: 3}
 --- !u!1 &1567813511
 GameObject:
   m_ObjectHideFlags: 0
