@@ -5,10 +5,10 @@ using NUnit.Framework;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class World2Boss : MonoBehaviour,BaseEnemy
+public class World2Boss : MonoBehaviour, BaseEnemy
 {
 
-    [SerializeField] private int maxHealth=100;
+    [SerializeField] private int maxHealth = 100;
     private int currentHealth = 100;
     [SerializeField] private float attack1Cooldown;
     [SerializeField] private float attack1Duration;
@@ -17,9 +17,11 @@ public class World2Boss : MonoBehaviour,BaseEnemy
     [SerializeField] private float attack1RotationSpeed;
     private float attack1Lerp = 0f;
     private float attack1Timer = 0f;
+    private int attack1Dir = 1;
 
     [SerializeField] private float attack2Cooldown;
     [SerializeField] private float attack2Duration;
+    [SerializeField] private float attack2Height = 10f;
     [SerializeField] private float attack2Step = 0.1f;
     [SerializeField] private float playerVelocityAdjustmentScaling = 0.5f;
     [SerializeField] private Transform attack2Projectiles;
@@ -27,12 +29,14 @@ public class World2Boss : MonoBehaviour,BaseEnemy
     private float attack2StepTimer = 0f;
     [SerializeField] private float stunDuration;
 
+    [SerializeField] private GameObject levelExit;
+
 
     [SerializeField] private World2BossCrystal[] crystals;
 
-    private float attackCooldownTimer=0f;
+    private float attackCooldownTimer = 0f;
 
-    private float stunCooldownTimer=0f;
+    private float stunCooldownTimer = 0f;
     public enum State
     {
         Idle,
@@ -51,6 +55,7 @@ public class World2Boss : MonoBehaviour,BaseEnemy
         state = State.Idle;
         currentHealth = maxHealth;
         attackCooldownTimer = attack1Cooldown;
+        levelExit.SetActive(false);
         InitializeCrystals();
     }
 
@@ -90,15 +95,16 @@ public class World2Boss : MonoBehaviour,BaseEnemy
             if (UnityEngine.Random.Range(0f, 1f) > 0.5f)
             {
                 state = State.Attack1;
-                attack1Timer=attack1Duration;
+                attack1Timer = attack1Duration;
+                attack1Dir = attack1Dir == 1 ? -1 : 1;
                 attack1Transform.gameObject.SetActive(true);
             }
             else
             {
                 state = State.Attack2;
-                attack2Timer=attack2Duration;
+                attack2Timer = attack2Duration;
             }
-         OnStateChange?.Invoke(state);
+            OnStateChange?.Invoke(state);
         }
     }
     private void Attack1()
@@ -108,14 +114,14 @@ public class World2Boss : MonoBehaviour,BaseEnemy
             attack1Timer -= Time.fixedDeltaTime;
             attack1Lerp += Time.fixedDeltaTime * attack1RotationSpeed;
             attack1Lerp %= 1f;
-            attack1Transform.rotation = Quaternion.Euler(0f, attack1RotationCurve.Evaluate(attack1Lerp) * 360f, 0f);
+            attack1Transform.rotation = Quaternion.Euler(0f, attack1RotationCurve.Evaluate(attack1Lerp) * attack1Dir * 360f, 0f);
         }
         else
         {
             attack1Transform.gameObject.SetActive(false);
             state = State.Idle;
             attack1Lerp = 0f;
-            attackCooldownTimer=attack1Cooldown;
+            attackCooldownTimer = attack1Cooldown;
         }
 
     }
@@ -131,8 +137,9 @@ public class World2Boss : MonoBehaviour,BaseEnemy
                 attack2StepTimer = 0f;
                 Vector3 pos = Player.CharacterInstance.playerBehaviourTree.playerTransform.position;
                 pos += Player.CharacterInstance.playerBehaviourTree.moveVelocity * playerVelocityAdjustmentScaling;
+                pos.y = attack2Height;
                 Transform projectile = Instantiate(attack2Projectiles, pos, Quaternion.identity);
-                projectile.gameObject.SetActive(true);            
+                projectile.gameObject.SetActive(true);
             }
         }
         else
@@ -159,8 +166,9 @@ public class World2Boss : MonoBehaviour,BaseEnemy
     public void StunBoss()
     {
         state = State.Stunned;
+        attack1Transform.gameObject.SetActive(false);
         OnStateChange?.Invoke(state);
-        stunCooldownTimer= stunDuration;
+        stunCooldownTimer = stunDuration;
     }
 
     private void InitializeCrystals()
@@ -183,12 +191,13 @@ public class World2Boss : MonoBehaviour,BaseEnemy
         if (currentHealth <= 0)
         {
             state = State.Dead;
+            levelExit.SetActive(true);
             OnStateChange?.Invoke(state);
         }
     }
 
     public float GetHealthNormalized()
     {
-        return (float)currentHealth/ maxHealth;
+        return (float)currentHealth / maxHealth;
     }
 }

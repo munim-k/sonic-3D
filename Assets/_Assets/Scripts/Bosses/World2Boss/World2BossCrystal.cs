@@ -11,7 +11,6 @@ public class World2BossCrystal : MonoBehaviour,BaseEnemy
 
     private void Awake()
     {
-        crystalRenderer.material = crystalMaterialCracked;
     }
     public void SetCrystalMaterial(bool cracked)
     {
@@ -31,6 +30,7 @@ public class World2BossCrystal : MonoBehaviour,BaseEnemy
         if (!isCracked)
         {
             boss.StunBoss();
+            SetCrystalMaterial(true);
         }
     }
 
