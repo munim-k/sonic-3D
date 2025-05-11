@@ -147,6 +147,10 @@ public class World1Boss : MonoBehaviour, BaseEnemy
     public void InitializePillars()
     {
         List<int> randomIndexes = new List<int>();
+        foreach(World1BossPillar p in pillars)
+        {
+            p.Activate(false);
+        }
         for (int i = 0; i < 3; i++)
         {
             int randomIndex = UnityEngine.Random.Range(0, pillars.Length);

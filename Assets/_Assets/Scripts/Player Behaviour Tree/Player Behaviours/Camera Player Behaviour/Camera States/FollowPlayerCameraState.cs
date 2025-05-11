@@ -22,11 +22,7 @@ namespace RagdollEngine
 
         float currentDistance;
 
-        [Header("Follow")]
 
-        [SerializeField] Vector2 followIntensity;
-
-        [SerializeField] float maxFollowSpeed;
 
         [Header("Normal")]
 
@@ -83,7 +79,7 @@ namespace RagdollEngine
         public override void Execute()
         {
             // Input
-
+            Vector3 modelPosition = modelTransform.position;
             if (transition <= 0)
                 look += inputHandler.look / Time.fixedDeltaTime;
 
@@ -95,14 +91,7 @@ namespace RagdollEngine
 
             // Follow
 
-            if (transition <= 0 && look.magnitude == 0)
-            {
-                float followPercent = Mathf.Min(RB.linearVelocity.magnitude / maxFollowSpeed, 1);
-
-                look.x += Vector3.Dot(Vector3.ProjectOnPlane(cameraTransform.right, normal).normalized, RB.linearVelocity.normalized) * followPercent * followIntensity.x;
-
-                look.y += Mathf.Max((Vector3.Dot(cameraTransform.up, normal) + defaultRotation.y) * followPercent * followIntensity.y, Mathf.Min(-lookRotation.y, 0));
-            }
+            
 
             // Normal
             normal = Vector3.Lerp(normal,
@@ -167,6 +156,11 @@ namespace RagdollEngine
             cameraTransform.rotation = Quaternion.Slerp(oldRotation,
                 goalRotation,
                 1 - Mathf.Sin(Mathf.SmoothStep(0, 1, transition / transitionTime) * Mathf.PI / 2));
+
+
+
+
+
         }
 
         public override void Enable()

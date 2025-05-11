@@ -5,10 +5,10 @@ namespace RagdollEngine
 {
     public class SoundEffect : PlayerBehaviour
     {
-        [SerializeField] Effect[] effects;
+        [SerializeField] protected Effect[] effects;
 
         [Serializable]
-        struct Effect
+        protected struct Effect
         {
             public AudioSource audioSource;
 

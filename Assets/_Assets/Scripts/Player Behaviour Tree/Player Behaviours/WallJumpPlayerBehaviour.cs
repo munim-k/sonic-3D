@@ -17,6 +17,7 @@ namespace RagdollEngine
         Vector3 jumpVector;
         Vector3 wallPoint;
         Vector3 wallNormal;
+        private int prevWallID = -1; // ID of the previous wall hit by the player.
         RaycastHit hit;
 
         // Tracks the current length of the spring
@@ -165,7 +166,7 @@ namespace RagdollEngine
             kinematic = true;
 
             // Align the player's model to face the wall's direction
-            modelTransform.rotation = Quaternion.LookRotation(jumpVector,modelTransform.up);
+            modelTransform.rotation = Quaternion.LookRotation(jumpVector, modelTransform.up);
 
             // Position the player's model at the calculated goal position
             modelTransform.position = goal - (modelTransform.up * height);
@@ -174,7 +175,7 @@ namespace RagdollEngine
             overrideModelTransform = true;
 
             // Reduce the current length of the spring based on speed and velocity
-            currentLength = Mathf.Max(currentLength - speed,0);
+            currentLength = Mathf.Max(currentLength - speed, 0);
 
             // If the spring has fully compressed, deactivate the behavior
             if (currentLength <= 0)
@@ -195,70 +196,78 @@ namespace RagdollEngine
             }
             else
             {
+                if (inputHandler.jump.pressed)
+                {
 
-                bool wallContact = false;
-                wallContact = Physics.Raycast(
-                   playerTransform.position, // Start position of the raycast.
-                   playerTransform.forward, // Direction of the raycast (forward).
-                   out hit, // Stores information about the object hit by the raycast.
-                   height + Physics.defaultContactOffset, // Raycast distance.
-                   wallLayerMask, // Layer mask to filter walls.
-                   QueryTriggerInteraction.Ignore // Ignore trigger colliders.
-               );
-                if (!wallContact)
-                {
+                    bool wallContact = false;
                     wallContact = Physics.Raycast(
-                        playerTransform.position, // Start position of the raycast.
-                        -playerTransform.forward, // Direction of the raycast (backward).
-                        out hit, // Stores information about the object hit by the raycast.
-                        height + Physics.defaultContactOffset, // Raycast distance.
-                        wallLayerMask, // Layer mask to filter walls.
-                        QueryTriggerInteraction.Ignore // Ignore trigger colliders.
-                    );
-                }
-                if (!wallContact)
-                {
-                    wallContact = Physics.Raycast(
-                        playerTransform.position, // Start position of the raycast.
-                        playerTransform.right, // Direction of the raycast (right).
-                        out hit, // Stores information about the object hit by the raycast.
-                        height + Physics.defaultContactOffset, // Raycast distance.
-                        wallLayerMask, // Layer mask to filter walls.
-                        QueryTriggerInteraction.Ignore // Ignore trigger colliders.
-                    );
-                }
-                if (!wallContact)
-                {
-                    wallContact = Physics.Raycast(
-                        playerTransform.position, // Start position of the raycast.
-                        -playerTransform.right, // Direction of the raycast (left).
-                        out hit, // Stores information about the object hit by the raycast.
-                        height + Physics.defaultContactOffset, // Raycast distance.
-                        wallLayerMask, // Layer mask to filter walls.
-                        QueryTriggerInteraction.Ignore // Ignore trigger colliders.
-                    );
-                }
-                if (wallContact && inputHandler.jump.pressed)
-                {
-                    // Set the current length of the spring
-                    currentLength = wallJumpTime;
-                    speed = wallJumpDecreaseSpeed;
-                    // Calculate the additive velocity to apply to the player
-                    wallPoint = hit.point;
-                    wallNormal = hit.normal;
-                    jumpVector = wallNormal.normalized * wallJumpForceHorizontal;
-                    jumpVector += Vector3.up * wallJumpForceVertical;
-                    additiveVelocity = -RB.linearVelocity + jumpVector;
-                    goalPosition = playerTransform.position + jumpVector;
-                    wallJumpCooldownTimer = wallJumpCooldown;
-                    return true; // The player can interact with the spring
+                       playerTransform.position, // Start position of the raycast.
+                       playerTransform.forward, // Direction of the raycast (forward).
+                       out hit, // Stores information about the object hit by the raycast.
+                       height + Physics.defaultContactOffset, // Raycast distance.
+                       wallLayerMask, // Layer mask to filter walls.
+                       QueryTriggerInteraction.Ignore // Ignore trigger colliders.
+                   );
+                    if (!wallContact)
+                    {
+                        wallContact = Physics.Raycast(
+                            playerTransform.position, // Start position of the raycast.
+                            -playerTransform.forward, // Direction of the raycast (backward).
+                            out hit, // Stores information about the object hit by the raycast.
+                            height + Physics.defaultContactOffset, // Raycast distance.
+                            wallLayerMask, // Layer mask to filter walls.
+                            QueryTriggerInteraction.Ignore // Ignore trigger colliders.
+                        );
+                    }
+                    if (!wallContact)
+                    {
+                        wallContact = Physics.Raycast(
+                            playerTransform.position, // Start position of the raycast.
+                            playerTransform.right, // Direction of the raycast (right).
+                            out hit, // Stores information about the object hit by the raycast.
+                            height + Physics.defaultContactOffset, // Raycast distance.
+                            wallLayerMask, // Layer mask to filter walls.
+                            QueryTriggerInteraction.Ignore // Ignore trigger colliders.
+                        );
+                    }
+                    if (!wallContact)
+                    {
+                        wallContact = Physics.Raycast(
+                            playerTransform.position, // Start position of the raycast.
+                            -playerTransform.right, // Direction of the raycast (left).
+                            out hit, // Stores information about the object hit by the raycast.
+                            height + Physics.defaultContactOffset, // Raycast distance.
+                            wallLayerMask, // Layer mask to filter walls.
+                            QueryTriggerInteraction.Ignore // Ignore trigger colliders.
+                        );
+                    }
+                    if (wallContact)
+                    {
+                        int wallID = hit.collider.gameObject.GetInstanceID();
+                        if (prevWallID != wallID)
+                        {
+                            prevWallID = wallID;
+                            // Set the current length of the spring
+                            currentLength = wallJumpTime;
+                            speed = wallJumpDecreaseSpeed;
+                            // Calculate the additive velocity to apply to the player
+                            wallPoint = hit.point;
+                            wallNormal = hit.normal;
+                            jumpVector = wallNormal.normalized * wallJumpForceHorizontal;
+                            jumpVector += Vector3.up * wallJumpForceVertical;
+                            additiveVelocity = -RB.linearVelocity + jumpVector;
+                            goalPosition = playerTransform.position + jumpVector;
+                            wallJumpCooldownTimer = wallJumpCooldown;
+                            return true; // The player can interact with the wall
+                        }
+                    }
                 }
 
             }
-            // If the player was previously active and the spring is still compressing, return true
+            // If the player was previously active and the player is still jumping, return true
             if (wasActive && currentLength > 0) return true;
 
-            return false; // The player cannot interact with a spring
+            return false; // The player cannot interact with a wall
         }
     }
 }

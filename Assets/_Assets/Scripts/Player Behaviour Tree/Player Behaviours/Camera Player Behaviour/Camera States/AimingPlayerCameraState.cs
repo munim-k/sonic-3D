@@ -17,11 +17,7 @@ namespace RagdollEngine
         float distance; // Current target distance for the camera.
         float currentDistance; // Smoothed distance for the camera.
 
-        // Follow-related variables
-        [Header("Follow")]
-        [SerializeField] Vector2 followIntensity; // Intensity of the camera's follow behavior in X and Y axes.
-        [SerializeField] float maxFollowSpeed; // Maximum speed at which the camera can follow the player.
-
+     
         // Normal-related variables
         [Header("Normal")]
         [SerializeField, Range(0, 1)] float normalSmoothness; // Smoothness of the camera's alignment with the ground normal.
@@ -36,16 +32,7 @@ namespace RagdollEngine
         Vector2 lookRotation; // Accumulated rotation values (X for yaw, Y for pitch).
         Vector2 look; // Input-based rotation delta.
 
-        // Ghost offset variables (used to smooth camera movement)
-        [Header("Ghost")]
-        [SerializeField, Range(0, 1)] float ghostSmoothnessXZ; // Smoothness of ghost offset in XZ plane.
-        [SerializeField, Range(0, 1)] float ghostSmoothnessY; // Smoothness of ghost offset in Y axis.
-        [SerializeField] float maxGhostDistanceMinXZ; // Minimum ghost offset distance in XZ plane.
-        [SerializeField] float maxGhostDistanceMinY; // Minimum ghost offset distance in Y axis.
-        [SerializeField] float maxGhostDistanceMaxXZ; // Maximum ghost offset distance in XZ plane.
-        [SerializeField] float maxGhostDistanceMaxY; // Maximum ghost offset distance in Y axis.
-        Vector3 ghostOffset; // Current ghost offset applied to the camera.
-        Vector3 ghostPosition; // Position of the ghost (used for smoothing).
+       
 
         // Offset-related variables
         [Header("Offset")]
@@ -130,8 +117,6 @@ namespace RagdollEngine
             lookRotation = defaultRotation; // Reset rotation to default.
             normal = groundInformation.ground ? groundInformation.hit.normal : Vector3.up; // Align with ground normal or default to upward direction.
             rotation = cameraTransform.rotation; // Set initial rotation.
-            ghostOffset = Vector3.zero; // Reset ghost offset.
-            ghostPosition = modelTransform.position; // Initialize ghost position.
             distance = defaultDistance; // Reset distance to default.
             currentDistance = distance; // Initialize smoothed distance.
         }

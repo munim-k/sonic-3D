@@ -7,7 +7,7 @@ namespace RagdollEngine
     {
         private int lollipops = 0;
         public Action<int> onLollipopChange;
-
+        public bool collectedLollipop = false;
 
         public void Awake()
         {
@@ -16,14 +16,16 @@ namespace RagdollEngine
             onLollipopChange?.Invoke(lollipops);
         }
         public override void Execute()
-        { 
+        {
             //Check if any overlapping volumes are lollipops
-            foreach(Volume thisVolume in volumes)
+            collectedLollipop = false;
+            foreach (Volume thisVolume in volumes)
             {
                 LollipopCollectible lollipop = thisVolume.GetComponent<LollipopCollectible>();
                 if (lollipop != null)
                 {
                     lollipops++;
+                    collectedLollipop = true;
                     onLollipopChange?.Invoke(lollipops);
                     lollipop.Consume();
                 }

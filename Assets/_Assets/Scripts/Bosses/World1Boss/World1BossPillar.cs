@@ -9,11 +9,7 @@ public class World1BossPillar : MonoBehaviour
     [SerializeField] private Material activePillarMaterial;
 
 
-    private void Start()
-    {
-
-        pillarRenderer.material = pillarMaterial;
-    }
+    
     public void Activate(bool active)
     {
         
