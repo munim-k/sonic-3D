@@ -29,5 +29,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Stages/Levels/World3 (Lava)/World3Level1.unity
     guid: 8a04595c1cbc3174f9ea01e959dcb421
+  - enabled: 1
+    path: Assets/Stages/Levels/World3 (Lava)/World3Level2.unity
+    guid: e63e45d75ae9c76419aedb6a572d05fe
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
