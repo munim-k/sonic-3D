@@ -25,12 +25,15 @@ EditorBuildSettings:
     guid: e7ce07aa6e7409d40954b4b7c5b05e13
   - enabled: 1
     path: Assets/Stages/Levels/World2 (Snow)/World2Boss.unity
-    guid: 1fb7bc9523e959c45a2d37809f72038c
+    guid: 4540fc14abfe84440b6d10ffd589829d
   - enabled: 1
     path: Assets/Stages/Levels/World3 (Lava)/World3Level1.unity
     guid: 8a04595c1cbc3174f9ea01e959dcb421
   - enabled: 1
     path: Assets/Stages/Levels/World3 (Lava)/World3Level2.unity
     guid: e63e45d75ae9c76419aedb6a572d05fe
+  - enabled: 1
+    path: Assets/Stages/Levels/World3 (Lava)/World3Boss.unity
+    guid: 0e7fea5b1319c42499b6cf3ffbadb2f1
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
