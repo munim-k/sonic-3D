@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using NUnit.Framework;
-using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class World1Boss : MonoBehaviour, BaseEnemy

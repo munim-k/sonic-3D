@@ -1,8 +1,8 @@
-#if UNITY_EDITOR
-
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+#if UNITY_EDITOR
+
 
 [CustomEditor(typeof(LevelChangeTrigger))]
 public class LevelChangeVolumeEditor : Editor
