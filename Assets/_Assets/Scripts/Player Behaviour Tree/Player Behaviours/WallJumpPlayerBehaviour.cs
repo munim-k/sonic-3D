@@ -17,7 +17,7 @@ namespace RagdollEngine
         Vector3 jumpVector;
         Vector3 wallPoint;
         Vector3 wallNormal;
-        private int prevWallID = -1; // ID of the previous wall hit by the player.
+        //private int prevWallID = -1; // ID of the previous wall hit by the player.
         RaycastHit hit;
 
         // Tracks the current length of the spring
@@ -243,10 +243,7 @@ namespace RagdollEngine
                     }
                     if (wallContact)
                     {
-                        int wallID = hit.collider.gameObject.GetInstanceID();
-                        if (prevWallID != wallID)
-                        {
-                            prevWallID = wallID;
+                       
                             // Set the current length of the spring
                             currentLength = wallJumpTime;
                             speed = wallJumpDecreaseSpeed;
@@ -259,7 +256,7 @@ namespace RagdollEngine
                             goalPosition = playerTransform.position + jumpVector;
                             wallJumpCooldownTimer = wallJumpCooldown;
                             return true; // The player can interact with the wall
-                        }
+                        
                     }
                 }
 
