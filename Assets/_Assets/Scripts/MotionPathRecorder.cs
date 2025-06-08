@@ -139,7 +139,7 @@ public class MotionPathRecorder : MonoBehaviour
     void CreatePathDataAsset()
     {
         pathData = ScriptableObject.CreateInstance<MotionPathData>();
-        string path = "Assets/MotionPathData.asset";
+        string path = "Assets/MotionPath/MotionPathData.asset";
         AssetDatabase.CreateAsset(pathData, path);
         AssetDatabase.SaveAssets();
         Debug.Log("Created path data asset at: " + path);
