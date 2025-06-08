@@ -35,5 +35,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Stages/Levels/World3 (Lava)/World3Boss.unity
     guid: 0e7fea5b1319c42499b6cf3ffbadb2f1
+  - enabled: 1
+    path: Assets/Stages/Levels/World4 (Beach)/World4Level1.unity
+    guid: 4b2b26e4363ca82438bc44ab2fc27d40
+  - enabled: 1
+    path: Assets/Stages/Levels/World4 (Beach)/World4Level2.unity
+    guid: 9c68212811b1a2d4d8cd9689cad113d3
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
