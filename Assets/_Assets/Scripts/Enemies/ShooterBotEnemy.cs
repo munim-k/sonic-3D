@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class ShooterBotEnemy : MonoBehaviour, BaseEnemy
+public class ShooterBotEnemy : MonoBehaviour, BaseEnemy, IHittable
 {
 
     public enum State
@@ -93,14 +93,25 @@ public class ShooterBotEnemy : MonoBehaviour, BaseEnemy
 
     }
 
-    public void DoDamageToEnemy(int damage)
+  
+    public float GetHealthNormalized()
+    {
+        return (float)health/maxHealth;
+    }
+    private void Dead()
+    {
+        //Do nothing, enemy is dead
+
+    }
+
+    public void DoHit(int damage)
     {
         health -= damage;
         OnDamage?.Invoke();
         if (health <= 0)
         {
             OnDeath?.Invoke();
-            //Turn off the colldier on this gameObject
+            //Turn off the collider on this gameObject
             Collider col = this.GetComponent<Collider>();
             if (col != null)
             {
@@ -110,13 +121,9 @@ public class ShooterBotEnemy : MonoBehaviour, BaseEnemy
             OnStateChange?.Invoke(state);
         }
     }
-    public float GetHealthNormalized()
-    {
-        return (float)health/maxHealth;
-    }
-    private void Dead()
-    {
-        //Do nothing, enemy is dead
 
+    HittableType IHittable.GetType()
+    {
+      return HittableType.Enemy;
     }
 }

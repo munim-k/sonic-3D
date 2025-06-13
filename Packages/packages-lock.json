@@ -1,5 +1,15 @@
 {
   "dependencies": {
+     "com.josh.spline-importer": {
+      "version": "https://github.com/Josh4359/Spline-Importer.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.mathematics": "1.0.0",
+        "com.unity.splines": "1.0.0"
+      },
+      "hash": "79c538c5e095daa1810f98c0ce11660bdfdd58e8"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

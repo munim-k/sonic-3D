@@ -13,10 +13,10 @@ public class PlayerBombAttack : MonoBehaviour
 
     private float bombTimer;
     private bool explode = false;
-    private List<BaseEnemy> enemiesAttacked;
+    private List<IHittable> enemiesAttacked;
     public void Start()
     {
-        enemiesAttacked = new List<BaseEnemy>();
+        enemiesAttacked = new List<IHittable>();
         bombTimer = bombTime;
     }
 
@@ -45,10 +45,10 @@ public class PlayerBombAttack : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange,mask);
         foreach (Collider hitCollider in hitColliders)
         {
-            BaseEnemy enemy = hitCollider.GetComponent<BaseEnemy>();
+            IHittable enemy = hitCollider.GetComponent<IHittable>();
             if (enemy != null && !enemiesAttacked.Contains(enemy))
             {         
-                enemy.DoDamageToEnemy(damage);
+                enemy.DoHit(damage);
                 enemiesAttacked.Add(enemy);
             }
         }
