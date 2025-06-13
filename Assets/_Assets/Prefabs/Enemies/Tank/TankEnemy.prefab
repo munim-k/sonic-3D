@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eb8789905149b54aa13cb5d4c5f377c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 40
   playerDetectionDistance: 30
   chaseDetectionDistance: 100
   backupDistance: 10
