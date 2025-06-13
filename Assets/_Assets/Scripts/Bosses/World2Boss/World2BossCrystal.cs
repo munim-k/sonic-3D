@@ -1,12 +1,19 @@
+using System;
 using UnityEngine;
 
-public class World2BossCrystal : MonoBehaviour,BaseEnemy
+public class World2BossCrystal : MonoBehaviour,IHittable
 {
     [SerializeField] private World2Boss boss;
     [SerializeField] private MeshRenderer crystalRenderer;
     [SerializeField] private Material crystalMaterial;
     [SerializeField] private Material crystalMaterialCracked;
-
+    private Action OnHit;
+  
+    Action IHittable.OnHit
+    {
+        get => OnHit;
+        set => OnHit = value;
+    }
     bool isCracked = false;
 
     private void Awake()
@@ -25,13 +32,18 @@ public class World2BossCrystal : MonoBehaviour,BaseEnemy
         }
     }
 
-    public void DoDamageToEnemy(int damage)
+    public void DoHit(int damage)
     {
+        OnHit?.Invoke();
         if (!isCracked)
         {
             boss.StunBoss();
             SetCrystalMaterial(true);
         }
+    }
+    HittableType IHittable.GetType()
+    {
+        return HittableType.Obstacle;
     }
 
     public float GetHealthNormalized()

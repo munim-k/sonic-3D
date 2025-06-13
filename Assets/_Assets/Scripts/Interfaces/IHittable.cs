@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum HittableType
@@ -7,7 +8,7 @@ public enum HittableType
 }
 public interface IHittable
 {
-
+    public Action OnHit { get; set; }
     public void DoHit(int damage);
 
     public HittableType GetType();

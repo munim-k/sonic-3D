@@ -13,7 +13,7 @@ public class World1BossVisuals : MonoBehaviour
     void Start()
     {
         boss.OnStateChange += OnStateChange;
-        boss.OnDamage += OnDamage;
+        ((IHittable)boss).OnHit += OnDamage;
     }
 
 
@@ -41,7 +41,7 @@ public class World1BossVisuals : MonoBehaviour
     {
         if (healthBar != null)
         {
-            healthBar.fillAmount =boss.GetHealthNormalized();
+            healthBar.fillAmount = boss.GetHealthNormalized() ;
         }
     }
 

@@ -215,6 +215,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4935983665835148797, guid: 33222cb6941d1ee4383aebe47e091d22, type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 6421864721220952395}
     - target: {fileID: 6557679590549396022, guid: 33222cb6941d1ee4383aebe47e091d22, type: 3}
       propertyPath: m_Name
       value: ShooterBotEnemy
@@ -345,6 +349,11 @@ MonoBehaviour:
   healthBar: {fileID: 2657593254254385187}
   model: {fileID: 3333467308553619679}
   animator: {fileID: 1664587216218790165}
+--- !u!4 &6421864721220952395 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3149328634003436958, guid: 33222cb6941d1ee4383aebe47e091d22, type: 3}
+  m_PrefabInstance: {fileID: 8262876356719760597}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7239645212516619228 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1644870160574072585, guid: 33222cb6941d1ee4383aebe47e091d22, type: 3}

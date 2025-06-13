@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class World1Boss : MonoBehaviour, BaseEnemy
+public class World1Boss : MonoBehaviour, BaseEnemy, IHittable
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -38,9 +38,21 @@ public class World1Boss : MonoBehaviour, BaseEnemy
     private float attackCooldownTimer = 0f;
     private float attackStepTimer = 0f;
 
-    public Action OnDamage;
+ 
     public Action<State> OnStateChange;
+    private Action OnHit;
+    private Action OnDeath;
+    Action BaseEnemy.OnDeath
+    {
+        get => OnDeath;
+        set => OnDeath = value;
+    }
 
+    Action IHittable.OnHit
+    {
+        get => OnHit;
+        set => OnHit = value;
+    }
     private State state;
     public enum State
     {
@@ -200,25 +212,33 @@ public class World1Boss : MonoBehaviour, BaseEnemy
         }
     }
 
-    public void DoDamageToEnemy(int damage)
+   
+
+    public float GetHealthNormalized()
+    {
+        return (float)currentHealth/maxHealth;
+    }
+
+    public void DoHit(int damage)
     {
         if (state != State.Stunned)
         {
             return;
         }
         currentHealth -= damage;
-        OnDamage?.Invoke();
+        OnHit?.Invoke();
         if (currentHealth <= 0)
         {
             currentHealth = 0;
             state = State.Dead;
             levelExit.SetActive(true);
+            OnDeath?.Invoke();
             OnStateChange?.Invoke(state);
         }
     }
 
-    public float GetHealthNormalized()
+    HittableType IHittable.GetType()
     {
-        return (float)currentHealth/maxHealth;
+        return HittableType.Enemy;
     }
 }

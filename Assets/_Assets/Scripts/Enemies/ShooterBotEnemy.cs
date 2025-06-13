@@ -20,10 +20,20 @@ public class ShooterBotEnemy : MonoBehaviour, BaseEnemy, IHittable
     [SerializeField] private Transform firePoint;
 
     public Action OnAttack;
-    public Action OnHit;
-    public Action OnDeath;
-    public Action OnDamage;
     public Action<State> OnStateChange;
+    private Action OnHit;
+    private Action OnDeath;
+    Action BaseEnemy.OnDeath
+    {
+        get => OnDeath;
+        set => OnDeath = value;
+    }
+
+    Action IHittable.OnHit
+    {
+        get => OnHit;
+        set => OnHit = value;
+    }
 
     private int health;
     private float attackTimer;
@@ -107,7 +117,7 @@ public class ShooterBotEnemy : MonoBehaviour, BaseEnemy, IHittable
     public void DoHit(int damage)
     {
         health -= damage;
-        OnDamage?.Invoke();
+        OnHit?.Invoke();
         if (health <= 0)
         {
             OnDeath?.Invoke();

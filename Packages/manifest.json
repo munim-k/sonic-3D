@@ -1,7 +1,8 @@
 {
   "dependencies": {
-     "com.josh.spline-importer": "https://github.com/Josh4359/Spline-Importer.git",
+    "com.josh.spline-importer": "https://github.com/Josh4359/Spline-Importer.git",
     "com.unity.2d.sprite": "1.0.0",
+    "com.unity.ai.navigation": "2.0.8",
     "com.unity.collab-proxy": "2.6.0",
     "com.unity.feature.development": "1.0.2",
     "com.unity.inputsystem": "1.12.0",

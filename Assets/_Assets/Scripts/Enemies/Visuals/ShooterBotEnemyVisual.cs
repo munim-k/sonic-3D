@@ -4,7 +4,6 @@ using UnityEngine.UI;
 public class ShooterBotEnemyVisual :MonoBehaviour
 {
     [SerializeField] private  ShooterBotEnemy enemy;
-    [SerializeField] private Image healthBar;
     [SerializeField] private Transform model;
     [SerializeField] private Animator animator;
 
@@ -12,7 +11,7 @@ public class ShooterBotEnemyVisual :MonoBehaviour
     private void Start()
     {
         animator.SetTrigger("Idle");
-        enemy.OnDamage += OnDamage;
+        ((IHittable)enemy).OnHit += OnDamage;
         enemy.OnAttack += OnAttack;
         enemy.OnStateChange += OnStateChange;
     }
@@ -54,7 +53,6 @@ public class ShooterBotEnemyVisual :MonoBehaviour
 
     private  void OnDamage()
     {
-        healthBar.fillAmount = enemy.GetHealthNormalized() ;
         animator.SetTrigger("Damage");
     }
     private void OnAttack()
@@ -64,7 +62,7 @@ public class ShooterBotEnemyVisual :MonoBehaviour
 
     private void OnDestroy()
     {
-        enemy.OnDamage -= OnDamage;
+        ((IHittable)enemy).OnHit -= OnDamage;
     }
 
 }

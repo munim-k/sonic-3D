@@ -13,7 +13,7 @@ public class World3BossVisuals : MonoBehaviour
     void Start()
     {
         boss.OnStateChange += OnStateChange;
-        boss.OnDamage += OnDamage;
+        ((IHittable)boss).OnHit += OnDamage;
     }
 
 

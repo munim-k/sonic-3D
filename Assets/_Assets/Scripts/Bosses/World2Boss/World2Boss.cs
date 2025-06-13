@@ -48,8 +48,19 @@ public class World2Boss : MonoBehaviour, BaseEnemy
     private State state;
 
     public Action<State> OnStateChange;
-    public Action OnDamage;
+    private Action OnHit;
+    private Action OnDeath;
+    Action BaseEnemy.OnDeath
+    {
+        get => OnDeath;
+        set => OnDeath = value;
+    }
 
+    Action IHittable.OnHit
+    {
+        get => OnHit;
+        set => OnHit = value;
+    }
     private void Awake()
     {
         state = State.Idle;
@@ -182,22 +193,31 @@ public class World2Boss : MonoBehaviour, BaseEnemy
         int randomIndex = UnityEngine.Random.Range(0, crystals.Length);
         crystals[randomIndex].SetCrystalMaterial(false);
     }
-    public void DoDamageToEnemy(int damage)
-    {
-        if (state != State.Stunned)
-            return;
-        currentHealth -= damage;
-        OnDamage?.Invoke();
-        if (currentHealth <= 0)
-        {
-            state = State.Dead;
-            levelExit.SetActive(true);
-            OnStateChange?.Invoke(state);
-        }
-    }
+    
 
     public float GetHealthNormalized()
     {
         return (float)currentHealth / maxHealth;
+    }
+
+    public void DoHit(int damage)
+    {
+       if (state != State.Stunned)
+            return;
+        currentHealth -= damage;
+        OnHit?.Invoke();
+        if (currentHealth <= 0)
+        {
+            state = State.Dead;
+
+            levelExit.SetActive(true);
+            OnDeath?.Invoke();
+            OnStateChange?.Invoke(state);
+        }
+    }
+
+    HittableType IHittable.GetType()
+    {
+       return HittableType.Enemy;
     }
 }
