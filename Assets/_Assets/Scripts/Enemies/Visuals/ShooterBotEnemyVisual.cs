@@ -1,24 +1,19 @@
 using UnityEngine;
-using UnityEngine.UI;
 
-public class ShooterBotEnemyVisual :MonoBehaviour
-{
-    [SerializeField] private  ShooterBotEnemy enemy;
+public class ShooterBotEnemyVisual : MonoBehaviour {
+    [SerializeField] private ShooterBotEnemy enemy;
     [SerializeField] private Transform model;
     [SerializeField] private Animator animator;
 
     private ShooterBotEnemy.State state;
-    private void Start()
-    {
+    private void Start() {
         animator.SetTrigger("Idle");
         ((IHittable)enemy).OnHit += OnDamage;
         enemy.OnAttack += OnAttack;
         enemy.OnStateChange += OnStateChange;
     }
-    private void Update()
-    {
-        switch (state)
-        {
+    private void Update() {
+        switch (state) {
             case ShooterBotEnemy.State.Attack:
 
                 Vector3 targetDirection = Player.CharacterInstance.playerBehaviourTree.modelTransform.transform.position - transform.position;
@@ -26,42 +21,37 @@ public class ShooterBotEnemyVisual :MonoBehaviour
                 targetDirection.Normalize();
                 Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
                 model.rotation = Quaternion.Slerp(model.rotation, targetRotation, Time.deltaTime * 5f);
-                
+
                 break;
             default:
                 break;
         }
     }
-    private void OnStateChange(ShooterBotEnemy.State s)
-    {
+    private void OnStateChange(ShooterBotEnemy.State s) {
         state = s;
 
-        switch (state)
-        {
+        switch (state) {
             case ShooterBotEnemy.State.Idle:
                 animator.SetTrigger("Idle");
                 break;
             case ShooterBotEnemy.State.Attack:
                 break;
             case ShooterBotEnemy.State.Dead:
-                animator.SetBool("Dead",true);
+                animator.SetBool("Dead", true);
                 break;
             default:
                 break;
         }
     }
 
-    private  void OnDamage()
-    {
+    private void OnDamage() {
         animator.SetTrigger("Damage");
     }
-    private void OnAttack()
-    {
+    private void OnAttack() {
         animator.SetTrigger("Attack");
     }
 
-    private void OnDestroy()
-    {
+    private void OnDestroy() {
         ((IHittable)enemy).OnHit -= OnDamage;
     }
 

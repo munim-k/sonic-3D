@@ -5,14 +5,12 @@ using UnityEditor;
 #endif
 
 // ScriptableObject to store persistent path data
-public class MotionPathData : ScriptableObject
-{
+public class MotionPathData : ScriptableObject {
     public List<Vector3> positions = new List<Vector3>();
 }
 
 [ExecuteInEditMode]
-public class MotionPathRecorder : MonoBehaviour
-{
+public class MotionPathRecorder : MonoBehaviour {
     public Transform target;
 
     [Header("Recording Settings")]
@@ -31,101 +29,90 @@ public class MotionPathRecorder : MonoBehaviour
     private List<Vector3> runtimePositions = new List<Vector3>();
     private float timer;
 
-    private void Start()
-    {
+    private void Start() {
         target = Player.CharacterInstance.playerBehaviourTree.modelTransform;
-        if (Application.isPlaying && target != null)
-        {
+        if (Application.isPlaying && target != null) {
             StartRecording();
         }
     }
-    void OnEnable()
-    {
+    void OnEnable() {
 #if UNITY_EDITOR
         // Auto-create path data if none exists
-        if (pathData == null)
-        {
+        if (pathData == null) {
             CreatePathDataAsset();
         }
 #endif
 
-        if (Application.isPlaying && target != null)
-        {
+        if (Application.isPlaying && target != null) {
             StartRecording();
         }
     }
-    private void OnApplicationQuit()
-    {
-        if (isRecording)
-        {
+    private void OnApplicationQuit() {
+        if (isRecording) {
             StopRecording();
         }
         // Save path data when the application quits
         SavePathData();
     }
-    
-    void Update()
-    {
-        if (!isRecording || target == null) return;
+
+    void Update() {
+        if (!isRecording || target == null)
+            return;
 
         timer += Time.deltaTime;
-        if (timer >= recordInterval)
-        {
+        if (timer >= recordInterval) {
             runtimePositions.Add(target.position);
             timer = 0;
         }
     }
 
-    public void StartRecording()
-    {
+    public void StartRecording() {
         runtimePositions.Clear();
         isRecording = true;
         timer = 0;
         runtimePositions.Add(target.position);
     }
 
-    public void StopRecording()
-    {
+    public void StopRecording() {
         isRecording = false;
 
         // Save to persistent data when stopping
         SavePathData();
     }
 
-    void OnDrawGizmos()
-    {
-        if (!showPath) return;
+    void OnDrawGizmos() {
+        if (!showPath)
+            return;
 
         List<Vector3> positionsToDraw = Application.isPlaying ?
             runtimePositions :
             (pathData != null ? pathData.positions : new List<Vector3>());
 
-        if (positionsToDraw.Count < 2) return;
+        if (positionsToDraw.Count < 2)
+            return;
 
         Gizmos.color = pathColor;
 
         // Draw path lines
-        for (int i = 0; i < positionsToDraw.Count - 1; i++)
-        {
+        for (int i = 0; i < positionsToDraw.Count - 1; i++) {
             Gizmos.DrawLine(positionsToDraw[i], positionsToDraw[i + 1]);
         }
 
         // Draw points
-        foreach (Vector3 pos in positionsToDraw)
-        {
+        foreach (Vector3 pos in positionsToDraw) {
             Gizmos.DrawSphere(pos, pointSize);
         }
     }
 
-    public void ClearPath()
-    {
+    public void ClearPath() {
         runtimePositions.Clear();
-        if (pathData != null) pathData.positions.Clear();
+        if (pathData != null)
+            pathData.positions.Clear();
     }
 
-    void SavePathData()
-    {
-        if (pathData == null) return;
+    void SavePathData() {
+        if (pathData == null)
+            return;
 
         pathData.positions.Clear();
         pathData.positions.AddRange(runtimePositions);
@@ -136,8 +123,7 @@ public class MotionPathRecorder : MonoBehaviour
     }
 
 #if UNITY_EDITOR
-    void CreatePathDataAsset()
-    {
+    void CreatePathDataAsset() {
         pathData = ScriptableObject.CreateInstance<MotionPathData>();
         string path = "Assets/MotionPath/MotionPathData.asset";
         AssetDatabase.CreateAsset(pathData, path);
@@ -149,38 +135,30 @@ public class MotionPathRecorder : MonoBehaviour
 
 #if UNITY_EDITOR
 [CustomEditor(typeof(MotionPathRecorder))]
-public class MotionPathRecorderEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
+public class MotionPathRecorderEditor : Editor {
+    public override void OnInspectorGUI() {
         DrawDefaultInspector();
 
         MotionPathRecorder recorder = (MotionPathRecorder)target;
 
         GUILayout.Space(10);
 
-        using (new EditorGUILayout.HorizontalScope())
-        {
-            if (GUILayout.Button("Start Recording"))
-            {
-                if (recorder.target != null)
-                {
+        using (new EditorGUILayout.HorizontalScope()) {
+            if (GUILayout.Button("Start Recording")) {
+                if (recorder.target != null) {
                     recorder.StartRecording();
                 }
-                else
-                {
+                else {
                     Debug.LogWarning("Assign a target before recording!");
                 }
             }
 
-            if (GUILayout.Button("Stop Recording"))
-            {
+            if (GUILayout.Button("Stop Recording")) {
                 recorder.StopRecording();
             }
         }
 
-        if (GUILayout.Button("Clear Path"))
-        {
+        if (GUILayout.Button("Clear Path")) {
             recorder.ClearPath();
         }
 

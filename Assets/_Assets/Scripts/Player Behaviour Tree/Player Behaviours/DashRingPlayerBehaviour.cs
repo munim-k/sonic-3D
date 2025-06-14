@@ -1,9 +1,7 @@
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class DashRingPlayerBehaviour : PlayerBehaviour
-    {
+namespace RagdollEngine {
+    public class DashRingPlayerBehaviour : PlayerBehaviour {
         DashRingStageObject dashRingStageObject;
 
         bool dashRing;
@@ -12,8 +10,7 @@ namespace RagdollEngine
 
         float speed;
 
-        void LateUpdate()
-        {
+        void LateUpdate() {
             dashRing = active
                 || (dashRing
                     && !groundInformation.ground
@@ -22,9 +19,9 @@ namespace RagdollEngine
             animator.SetBool("Dash Ringing", dashRing);
         }
 
-        public override bool Evaluate()
-        {
-            if (!DashRingCheck()) return false;
+        public override bool Evaluate() {
+            if (!DashRingCheck())
+                return false;
 
             Vector3 goal = dashRingStageObject.transform.position + (dashRingStageObject.transform.forward * (dashRingStageObject.length - currentLength));
 
@@ -46,12 +43,11 @@ namespace RagdollEngine
             return true;
         }
 
-        bool DashRingCheck()
-        {
+        bool DashRingCheck() {
             foreach (StageObject thisStageObject in stageObjects)
-                if (thisStageObject is DashRingStageObject)
-                {
-                    if (wasActive && thisStageObject == dashRingStageObject) return true;
+                if (thisStageObject is DashRingStageObject) {
+                    if (wasActive && thisStageObject == dashRingStageObject)
+                        return true;
 
                     dashRingStageObject = thisStageObject as DashRingStageObject;
 
@@ -80,7 +76,8 @@ namespace RagdollEngine
                     return true;
                 }
 
-            if (wasActive && currentLength > 0) return true;
+            if (wasActive && currentLength > 0)
+                return true;
 
             return false;
         }

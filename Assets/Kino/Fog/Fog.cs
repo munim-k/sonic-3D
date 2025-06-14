@@ -22,13 +22,11 @@
 //
 using UnityEngine;
 
-namespace Kino
-{
+namespace Kino {
     [ExecuteInEditMode]
     [RequireComponent(typeof(Camera))]
     [AddComponentMenu("Kino Image Effects/Fog")]
-    public class Fog : MonoBehaviour
-    {
+    public class Fog : MonoBehaviour {
         #region Public Properties
 
         // Start distance
@@ -70,16 +68,13 @@ namespace Kino
 
         #region MonoBehaviour Functions
 
-        void OnEnable()
-        {
+        void OnEnable() {
             GetComponent<Camera>().depthTextureMode |= DepthTextureMode.Depth;
         }
 
         [ImageEffectOpaque]
-        void OnRenderImage(RenderTexture source, RenderTexture destination)
-        {
-            if (_material == null)
-            {
+        void OnRenderImage(RenderTexture source, RenderTexture destination) {
+            if (_material == null) {
                 _material = new Material(_shader);
                 _material.hideFlags = HideFlags.DontSave;
             }
@@ -88,8 +83,7 @@ namespace Kino
             _material.SetFloat("_DistanceOffset", _startDistance);
 
             var mode = RenderSettings.fogMode;
-            if (mode == FogMode.Linear)
-            {
+            if (mode == FogMode.Linear) {
                 var start = RenderSettings.fogStartDistance;
                 var end = RenderSettings.fogEndDistance;
                 var invDiff = 1.0f / Mathf.Max(end - start, 1.0e-6f);
@@ -98,8 +92,7 @@ namespace Kino
                 _material.DisableKeyword("FOG_EXP");
                 _material.DisableKeyword("FOG_EXP2");
             }
-            else if (mode == FogMode.Exponential)
-            {
+            else if (mode == FogMode.Exponential) {
                 const float coeff = 1.4426950408f; // 1/ln(2)
                 var density = RenderSettings.fogDensity;
                 _material.SetFloat("_Density", coeff * density);
@@ -120,8 +113,7 @@ namespace Kino
             else
                 _material.DisableKeyword("RADIAL_DIST");
 
-            if (_fadeToSkybox)
-            {
+            if (_fadeToSkybox) {
                 _material.EnableKeyword("USE_SKYBOX");
                 // Transfer the skybox parameters.
                 var skybox = RenderSettings.skybox;
@@ -130,8 +122,7 @@ namespace Kino
                 _material.SetFloat("_SkyExposure", skybox.GetFloat("_Exposure"));
                 _material.SetFloat("_SkyRotation", skybox.GetFloat("_Rotation"));
             }
-            else
-            {
+            else {
                 _material.DisableKeyword("USE_SKYBOX");
                 _material.SetColor("_FogColor", RenderSettings.fogColor);
             }

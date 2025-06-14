@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public class World3BossHomingProjectile : MonoBehaviour
-{
+public class World3BossHomingProjectile : MonoBehaviour {
     [SerializeField] private float travelSpeed = 10f;
     [SerializeField] private float rotationSpeed = 5f;
     [SerializeField] private float verticalLift = 0.5f;
@@ -9,8 +8,7 @@ public class World3BossHomingProjectile : MonoBehaviour
     [SerializeField] private LayerMask ignoreLayers;
     [SerializeField] private Rigidbody rb;
     private Quaternion rotToPlayer;
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         rb.linearVelocity = transform.forward * travelSpeed;
         Vector3 vecToPlayer = Player.CharacterInstance.playerBehaviourTree.modelTransform.position - transform.position;
         vecToPlayer.Normalize();
@@ -20,22 +18,18 @@ public class World3BossHomingProjectile : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, rotToPlayer, rotationSpeed * Time.deltaTime);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if ((ignoreLayers & (1 << other.gameObject.layer)) != 0)
-        {
+    private void OnTriggerEnter(Collider other) {
+        if ((ignoreLayers & (1 << other.gameObject.layer)) != 0) {
 
         }
-        else
-        {
+        else {
             DetachParticles();
             Destroy(this.gameObject);
         }
 
     }
 
-    public void DetachParticles()
-    {
+    public void DetachParticles() {
         // This splits the particle off so it doesn't get deleted with the parent
         particles.transform.parent = null;
 

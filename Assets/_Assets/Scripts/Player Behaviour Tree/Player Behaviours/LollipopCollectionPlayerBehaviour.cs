@@ -1,29 +1,22 @@
 using System;
-using RagdollEngine;
 using UnityEngine;
-namespace RagdollEngine
-{
-    public class LollipopCollectionPlayerBehaviour : PlayerBehaviour
-    {
+namespace RagdollEngine {
+    public class LollipopCollectionPlayerBehaviour : PlayerBehaviour {
         private int lollipops = 0;
         public Action<int> onLollipopChange;
         public bool collectedLollipop = false;
 
-        public void Awake()
-        {
+        public void Awake() {
             //Get lollipops amount from sharedPrefs
             lollipops = PlayerPrefs.GetInt("Lollipops", 0);
             onLollipopChange?.Invoke(lollipops);
         }
-        public override void Execute()
-        {
+        public override void Execute() {
             //Check if any overlapping volumes are lollipops
             collectedLollipop = false;
-            foreach (Volume thisVolume in volumes)
-            {
+            foreach (Volume thisVolume in volumes) {
                 LollipopCollectible lollipop = thisVolume.GetComponent<LollipopCollectible>();
-                if (lollipop != null)
-                {
+                if (lollipop != null) {
                     lollipops++;
                     collectedLollipop = true;
                     onLollipopChange?.Invoke(lollipops);
@@ -33,19 +26,16 @@ namespace RagdollEngine
             }
 
         }
-        public int GetLollipops()
-        {
+        public int GetLollipops() {
             return lollipops;
         }
-        public void SaveLollipops()
-        {
+        public void SaveLollipops() {
             //Save lollipops amount to sharedPrefs
             PlayerPrefs.SetInt("Lollipops", lollipops);
             PlayerPrefs.Save();
         }
 
-        public void ResetLollipops()
-        {
+        public void ResetLollipops() {
             lollipops = 0;
             PlayerPrefs.SetInt("Lollipops", lollipops);
             PlayerPrefs.Save();

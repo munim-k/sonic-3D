@@ -6,10 +6,8 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace BehaviourGraph
-{
-    public class BehaviourGraphView : GraphView
-    {
+namespace BehaviourGraph {
+    public class BehaviourGraphView : GraphView {
         public InputBehaviourNode updateBehaviourNode;
 
         public InputBehaviourNode lateUpdateBehaviourNode;
@@ -22,8 +20,7 @@ namespace BehaviourGraph
 
         BehaviourGraphSearchWindow behaviourGraphSearchWindow;
 
-        public BehaviourGraphView(BehaviourGraphEditorWindow thisBehaviourGraphEditorWindow)
-        {
+        public BehaviourGraphView(BehaviourGraphEditorWindow thisBehaviourGraphEditorWindow) {
             SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
 
             this.AddManipulator(CreateNodeContextualMenu<CheckBehaviourNode>("Add Check"));
@@ -39,8 +36,7 @@ namespace BehaviourGraph
             if (!behaviourGraphEditorWindow)
                 behaviourGraphEditorWindow = thisBehaviourGraphEditorWindow;
 
-            if (!behaviourGraphSearchWindow)
-            {
+            if (!behaviourGraphSearchWindow) {
                 behaviourGraphSearchWindow = ScriptableObject.CreateInstance<BehaviourGraphSearchWindow>();
 
                 behaviourGraphSearchWindow.Initialize(this, behaviourGraphEditorWindow);
@@ -57,19 +53,16 @@ namespace BehaviourGraph
             CreateInputNodes();
         }
 
-        IManipulator CreateNodeContextualMenu<T>(string title) where T : BehaviourNode, new()
-        {
+        IManipulator CreateNodeContextualMenu<T>(string title) where T : BehaviourNode, new() {
             ContextualMenuManipulator contextualMenuManipulator = new ContextualMenuManipulator(contextualMenuPopulateEvent => contextualMenuPopulateEvent.menu.AppendAction(title, dropdownMenuAction => CreateNode(new T(), dropdownMenuAction.eventInfo.localMousePosition, true)));
 
             return contextualMenuManipulator;
         }
 
-        public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
-        {
+        public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter) {
             List<Port> compatiblePorts = new List<Port>();
 
-            ports.ForEach(port =>
-            {
+            ports.ForEach(port => {
                 if (startPort != port && startPort.node != port.node)
                     compatiblePorts.Add(port);
             });
@@ -77,21 +70,18 @@ namespace BehaviourGraph
             return compatiblePorts;
         }
 
-        public void CreateInputNodes()
-        {
-            if (!nodes.Contains(updateBehaviourNode))
-            {
-                foreach(Node thisNode in nodes)
-                {
-                    if (thisNode is InputBehaviourNode && thisNode.title == "Update")
-                    {
+        public void CreateInputNodes() {
+            if (!nodes.Contains(updateBehaviourNode)) {
+                foreach (Node thisNode in nodes) {
+                    if (thisNode is InputBehaviourNode && thisNode.title == "Update") {
                         updateBehaviourNode = thisNode as InputBehaviourNode;
 
                         goto LateUpdate;
                     }
                 }
 
-                if (nodes.Contains(updateBehaviourNode)) return;
+                if (nodes.Contains(updateBehaviourNode))
+                    return;
 
                 updateBehaviourNode = new InputBehaviourNode();
 
@@ -100,21 +90,19 @@ namespace BehaviourGraph
                 CreateNode(updateBehaviourNode, new Vector2(100, 100));
             }
 
-            LateUpdate:
+LateUpdate:
 
-            if (!nodes.Contains(lateUpdateBehaviourNode))
-            {
-                foreach (Node thisNode in nodes)
-                {
-                    if (thisNode is InputBehaviourNode && thisNode.title == "Late Update")
-                    {
+            if (!nodes.Contains(lateUpdateBehaviourNode)) {
+                foreach (Node thisNode in nodes) {
+                    if (thisNode is InputBehaviourNode && thisNode.title == "Late Update") {
                         lateUpdateBehaviourNode = thisNode as InputBehaviourNode;
 
                         goto FixedUpdate;
                     }
                 }
 
-                if (nodes.Contains(lateUpdateBehaviourNode)) return;
+                if (nodes.Contains(lateUpdateBehaviourNode))
+                    return;
 
                 lateUpdateBehaviourNode = new InputBehaviourNode();
 
@@ -123,14 +111,11 @@ namespace BehaviourGraph
                 CreateNode(lateUpdateBehaviourNode, new Vector2(100, 500));
             }
 
-        FixedUpdate:
+FixedUpdate:
 
-            if (!nodes.Contains(fixedUpdateBehaviourNode))
-            {
-                foreach (Node thisNode in nodes)
-                {
-                    if (thisNode is InputBehaviourNode && thisNode.title == "Fixed Update")
-                    {
+            if (!nodes.Contains(fixedUpdateBehaviourNode)) {
+                foreach (Node thisNode in nodes) {
+                    if (thisNode is InputBehaviourNode && thisNode.title == "Fixed Update") {
                         fixedUpdateBehaviourNode = thisNode as InputBehaviourNode;
 
                         goto LateFixedUpdate;
@@ -144,14 +129,11 @@ namespace BehaviourGraph
                 CreateNode(fixedUpdateBehaviourNode, new Vector2(100, 900));
             }
 
-            LateFixedUpdate:
+LateFixedUpdate:
 
-            if (!nodes.Contains(lateFixedUpdateBehaviourNode))
-            {
-                foreach (Node thisNode in nodes)
-                {
-                    if (thisNode is InputBehaviourNode && thisNode.title == "Late Fixed Update")
-                    {
+            if (!nodes.Contains(lateFixedUpdateBehaviourNode)) {
+                foreach (Node thisNode in nodes) {
+                    if (thisNode is InputBehaviourNode && thisNode.title == "Late Fixed Update") {
                         lateFixedUpdateBehaviourNode = thisNode as InputBehaviourNode;
 
                         return;
@@ -166,12 +148,11 @@ namespace BehaviourGraph
             }
         }
 
-        public void CreateNode<T>(T behaviourNode, Vector2 position, bool localSpace = false) where T : BehaviourNode
-        {
+        public void CreateNode<T>(T behaviourNode, Vector2 position, bool localSpace = false) where T : BehaviourNode {
             behaviourNode.Initialize();
 
             behaviourNode.SetPosition(new Rect(localSpace ? contentViewContainer.WorldToLocal(position) : position, Vector2.zero));
-            
+
             AddElement(behaviourNode);
         }
     }

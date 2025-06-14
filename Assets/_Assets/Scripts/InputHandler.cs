@@ -1,10 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace RagdollEngine
-{
-    public class InputHandler : MonoBehaviour
-    {
+namespace RagdollEngine {
+    public class InputHandler : MonoBehaviour {
         [HideInInspector] public Vector2 move;
 
         [HideInInspector] public Vector2 lookDelta;
@@ -34,8 +32,7 @@ namespace RagdollEngine
         public Button zoom = new Button();
         public Button fire = new Button();
 
-        public class Button
-        {
+        public class Button {
             public bool hold => Mathf.Abs(value) >= InputSystem.settings.defaultButtonPressPoint;
 
             public bool pressed => Mathf.RoundToInt(Time.unscaledTime / Time.unscaledDeltaTime) == Mathf.RoundToInt((Time.inFixedTimeStep ? fixedPressed : framePressed) / Time.unscaledDeltaTime) + 1;
@@ -65,21 +62,19 @@ namespace RagdollEngine
 
             float fixedReleased = -2;
 
-            public void Set(float value)
-            {
-                if (this.value == value) return;
+            public void Set(float value) {
+                if (this.value == value)
+                    return;
 
                 this.value = value;
 
-                if (hold)
-                {
+                if (hold) {
                     framePressed = Time.unscaledTime;
 
                     if (Time.timeScale > 0)
                         fixedPressed = Time.fixedUnscaledTime;
                 }
-                else
-                {
+                else {
                     frameReleased = Time.unscaledTime;
 
                     if (Time.timeScale > 0)

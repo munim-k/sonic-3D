@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class CheckpointStageObject : StageObject
-    {
+namespace RagdollEngine {
+    public class CheckpointStageObject : StageObject {
         public Transform checkpointTransform;
 
         [SerializeField] GameObject pointLaser;
@@ -22,16 +20,14 @@ namespace RagdollEngine
 
         public static Action<Character> onCheckpoint;
 
-        public void Checkpoint(CheckpointPlayerBehaviour checkpointPlayerBehaviour)
-        {
+        public void Checkpoint(CheckpointPlayerBehaviour checkpointPlayerBehaviour) {
             onCheckpoint?.Invoke(checkpointPlayerBehaviour.character);
 
             characters.Add(checkpointPlayerBehaviour.character);
 
             onCheckpoint += OnCheckpoint;
 
-            void OnCheckpoint(Character character)
-            {
+            void OnCheckpoint(Character character) {
                 if (characters.Contains(character))
                     characters.Remove(character);
             }

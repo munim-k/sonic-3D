@@ -1,9 +1,7 @@
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class FollowPlayerCameraState : PlayerCameraState
-    {
+namespace RagdollEngine {
+    public class FollowPlayerCameraState : PlayerCameraState {
         [Header("Zoom")]
 
         [SerializeField] float defaultDistance;
@@ -64,20 +62,17 @@ namespace RagdollEngine
 
         [SerializeField] float heightOffset;
 
-        void Awake()
-        {
+        void Awake() {
             distance = defaultDistance;
         }
 
-        void Update()
-        {
+        void Update() {
             look += inputHandler.lookDelta;
 
             distance = CalculateDistance(inputHandler.zoomDelta.value);
         }
 
-        public override void Execute()
-        {
+        public override void Execute() {
             // Input
             Vector3 modelPosition = modelTransform.position;
             if (transition <= 0)
@@ -91,7 +86,7 @@ namespace RagdollEngine
 
             // Follow
 
-            
+
 
             // Normal
             normal = Vector3.Lerp(normal,
@@ -163,8 +158,7 @@ namespace RagdollEngine
 
         }
 
-        public override void Enable()
-        {
+        public override void Enable() {
             look = Vector2.zero;
 
             lookRotation = defaultRotation;
@@ -182,8 +176,7 @@ namespace RagdollEngine
             currentDistance = distance;
         }
 
-        public override void Transition()
-        {
+        public override void Transition() {
             base.Transition();
 
             Enable();
@@ -193,8 +186,7 @@ namespace RagdollEngine
             lookRotation.x = Vector3.SignedAngle(modelTransform.forward, Vector3.forward, -Vector3.up);
         }
 
-        float CalculateDistance(float delta)
-        {
+        float CalculateDistance(float delta) {
             return Mathf.Clamp(distance
                     + (delta
                         * zoomSensitivity

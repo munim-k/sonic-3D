@@ -4,12 +4,10 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(ObjectPlacer))]
-public class ObjectPlacerEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
+public class ObjectPlacerEditor : Editor {
+    public override void OnInspectorGUI() {
         DrawDefaultInspector();
-        
+
         ObjectPlacer objectPlacer = target as ObjectPlacer;
 
         if (GUILayout.Button("Place"))
@@ -20,10 +18,9 @@ public class ObjectPlacerEditor : Editor
     }
 }
 
-public class ObjectPlacer : MonoBehaviour
-{
+public class ObjectPlacer : MonoBehaviour {
     public PlacementType placementType;
-    
+
     [SerializeField] Transform target;
 
     [SerializeField] Transform reference;
@@ -32,14 +29,12 @@ public class ObjectPlacer : MonoBehaviour
 
     [SerializeField] Vector3 rotationOffset;
 
-    public enum PlacementType
-    {
+    public enum PlacementType {
         GroundSnap,
         ObjectOffset
     }
 
-    public void Place()
-    {
+    public void Place() {
         CalculateTransform(out Vector3 position, out Quaternion rotation);
 
         target.position = position;
@@ -49,17 +44,14 @@ public class ObjectPlacer : MonoBehaviour
         EditorUtility.SetDirty(target.gameObject);
     }
 
-    public void MoveToTarget()
-    {
+    public void MoveToTarget() {
         transform.position = target.position;
 
         transform.rotation = target.rotation;
     }
 
-    void CalculateTransform(out Vector3 position, out Quaternion rotation)
-    {
-        switch (placementType)
-        {
+    void CalculateTransform(out Vector3 position, out Quaternion rotation) {
+        switch (placementType) {
             case PlacementType.GroundSnap:
                 target.gameObject.SetActive(false);
 
@@ -93,8 +85,7 @@ public class ObjectPlacer : MonoBehaviour
         }
     }
 
-    void OnDrawGizmosSelected()
-    {
+    void OnDrawGizmosSelected() {
         CalculateTransform(out Vector3 position, out _);
 
         Gizmos.DrawWireSphere(position, 1);

@@ -1,16 +1,13 @@
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class BoostRailExtension : RailExtension
-    {
+namespace RagdollEngine {
+    public class BoostRailExtension : RailExtension {
         [SerializeField] BoostPlayerBehaviour boostPlayerBehaviour;
 
-        public override void Execute()
-        {
-            if (inputHandler.boost.hold)
-            {
-                if (boostPlayerBehaviour.boostPercent <= 0) return;
+        public override void Execute() {
+            if (inputHandler.boost.hold) {
+                if (boostPlayerBehaviour.boostPercent <= 0)
+                    return;
 
                 boostPlayerBehaviour.hold = true;
 

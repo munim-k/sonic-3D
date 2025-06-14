@@ -1,9 +1,7 @@
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class DriftPlayerBehaviour : PlayerBehaviour
-    {
+namespace RagdollEngine {
+    public class DriftPlayerBehaviour : PlayerBehaviour {
         [SerializeField] float minTurnSpeed;
 
         [SerializeField] float maxTurnSpeed;
@@ -14,26 +12,23 @@ namespace RagdollEngine
 
         int driftDirection;
 
-        void LateUpdate()
-        {
+        void LateUpdate() {
             animator.SetBool("Drifting", active);
         }
 
-        public override bool Evaluate()
-        {
+        public override bool Evaluate() {
             return (inputHandler.aim.pressed || (wasActive && inputHandler.aim.hold)) && !(plane.magnitude > 0);
         }
 
-        public override void Execute()
-        {
-            if (!active) return;
+        public override void Execute() {
+            if (!active)
+                return;
 
             Vector3 moveForwardNormal = Quaternion.AngleAxis(Mathf.Lerp(minTurnSpeed, maxTurnSpeed, Mathf.Abs((inputHandler.move.x + driftDirection) / 2)) * driftDirection * Time.fixedDeltaTime, Vector3.up) * moveVelocity.normalized;
 
             Vector3 moveRightNormal = Vector3.Cross(playerTransform.up, moveForwardNormal).normalized;
 
-            if (!wasActive)
-            {
+            if (!wasActive) {
                 animator.SetTrigger("Drift");
 
                 driftDirection = Mathf.RoundToInt(Mathf.Sign(inputHandler.move.x * Vector3.Dot(cameraTransform.forward, moveForwardNormal)));

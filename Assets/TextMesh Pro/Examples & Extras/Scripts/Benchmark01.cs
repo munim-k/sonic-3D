@@ -1,12 +1,10 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 
-namespace TMPro.Examples
-{
+namespace TMPro.Examples {
 
-    public class Benchmark01 : MonoBehaviour
-    {
+    public class Benchmark01 : MonoBehaviour {
 
         public int BenchmarkType = 0;
 
@@ -28,8 +26,7 @@ namespace TMPro.Examples
 
 
 
-        IEnumerator Start()
-        {
+        IEnumerator Start() {
 
 
 
@@ -68,13 +65,11 @@ namespace TMPro.Examples
             {
                 m_textMesh = gameObject.AddComponent<TextMesh>();
 
-                if (TextMeshFont != null)
-                {
+                if (TextMeshFont != null) {
                     m_textMesh.font = TextMeshFont;
                     m_textMesh.GetComponent<Renderer>().sharedMaterial = m_textMesh.font.material;
                 }
-                else
-                {
+                else {
                     m_textMesh.font = Resources.Load("Fonts/ARIAL", typeof(Font)) as Font;
                     m_textMesh.GetComponent<Renderer>().sharedMaterial = m_textMesh.font.material;
                 }
@@ -87,10 +82,8 @@ namespace TMPro.Examples
 
 
 
-            for (int i = 0; i <= 1000000; i++)
-            {
-                if (BenchmarkType == 0)
-                {
+            for (int i = 0; i <= 1000000; i++) {
+                if (BenchmarkType == 0) {
                     m_textMeshPro.SetText(label01, i % 1000);
                     if (i % 1000 == 999)
                         m_textMeshPro.fontSharedMaterial = m_textMeshPro.fontSharedMaterial == m_material01 ? m_textMeshPro.fontSharedMaterial = m_material02 : m_textMeshPro.fontSharedMaterial = m_material01;

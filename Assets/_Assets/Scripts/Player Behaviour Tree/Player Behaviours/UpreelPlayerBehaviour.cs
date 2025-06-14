@@ -1,9 +1,7 @@
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class UpreelPlayerBehaviour : PlayerBehaviour
-    {
+namespace RagdollEngine {
+    public class UpreelPlayerBehaviour : PlayerBehaviour {
         [SerializeField] float cooldown;
 
         UpreelStageObject upreelStageObject;
@@ -12,12 +10,9 @@ namespace RagdollEngine
 
         float currentCooldown;
 
-        public override bool Evaluate()
-        {
-            if (upreel)
-            {
-                if (!upreelStageObject.extended)
-                {
+        public override bool Evaluate() {
+            if (upreel) {
+                if (!upreelStageObject.extended) {
                     upreel = false;
 
                     currentCooldown = cooldown;
@@ -35,8 +30,7 @@ namespace RagdollEngine
                 return true;
             }
 
-            if (currentCooldown > 0)
-            {
+            if (currentCooldown > 0) {
                 currentCooldown = groundInformation.ground ? 0 : Mathf.Max(currentCooldown - Time.fixedDeltaTime, 0);
 
                 if (currentCooldown > 0)
@@ -44,8 +38,7 @@ namespace RagdollEngine
             }
 
             foreach (StageObject thisStageObject in stageObjects)
-                if (thisStageObject is UpreelStageObject)
-                {
+                if (thisStageObject is UpreelStageObject) {
                     UpreelStageObject thisUpreelStageObject = thisStageObject as UpreelStageObject;
 
                     Enter(thisUpreelStageObject);
@@ -56,8 +49,7 @@ namespace RagdollEngine
             return false;
         }
 
-        void Upreel()
-        {
+        void Upreel() {
             upreelStageObject.UpdatePosition();
 
             kinematic = true;
@@ -69,9 +61,9 @@ namespace RagdollEngine
             modelTransform.rotation = upreelStageObject.transform.rotation;
         }
 
-        public void Enter(UpreelStageObject upreelStageObject)
-        {
-            if (!upreelStageObject.extended) return;
+        public void Enter(UpreelStageObject upreelStageObject) {
+            if (!upreelStageObject.extended)
+                return;
 
             this.upreelStageObject = upreelStageObject;
 

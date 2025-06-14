@@ -1,11 +1,9 @@
 using System;
 using UnityEngine;
 
-public class ShooterBotEnemy : MonoBehaviour, BaseEnemy, IHittable
-{
+public class ShooterBotEnemy : MonoBehaviour, BaseEnemy, IHittable {
 
-    public enum State
-    {
+    public enum State {
         Idle,
         Attack,
         Dead
@@ -23,14 +21,12 @@ public class ShooterBotEnemy : MonoBehaviour, BaseEnemy, IHittable
     public Action<State> OnStateChange;
     private Action OnHit;
     private Action OnDeath;
-    Action BaseEnemy.OnDeath
-    {
+    Action BaseEnemy.OnDeath {
         get => OnDeath;
         set => OnDeath = value;
     }
 
-    Action IHittable.OnHit
-    {
+    Action IHittable.OnHit {
         get => OnHit;
         set => OnHit = value;
     }
@@ -38,15 +34,12 @@ public class ShooterBotEnemy : MonoBehaviour, BaseEnemy, IHittable
     private int health;
     private float attackTimer;
 
-    private void Start()
-    {
+    private void Start() {
         state = State.Idle;
         health = maxHealth;
     }
-    private void Update()
-    {
-        switch (state)
-        {
+    private void Update() {
+        switch (state) {
             case State.Idle:
                 Idle();
                 break;
@@ -62,24 +55,20 @@ public class ShooterBotEnemy : MonoBehaviour, BaseEnemy, IHittable
 
     }
 
-    private void Idle()
-    {
+    private void Idle() {
         //If player is within attackRange then go to attack mode
-        if (Vector3.SqrMagnitude(transform.position - Player.CharacterInstance.playerBehaviourTree.modelTransform.transform.position) <= attackRange * attackRange)
-        {
+        if (Vector3.SqrMagnitude(transform.position - Player.CharacterInstance.playerBehaviourTree.modelTransform.transform.position) <= attackRange * attackRange) {
             state = State.Attack;
             OnStateChange?.Invoke(state);
         }
 
     }
 
-    private void Attack()
-    {
+    private void Attack() {
         //Rotate the enemy to face the player
 
 
-        if (attackTimer <= 0)
-        {
+        if (attackTimer <= 0) {
             //Attack
             OnAttack?.Invoke();
             //Set players current position as the target to fire at
@@ -89,12 +78,10 @@ public class ShooterBotEnemy : MonoBehaviour, BaseEnemy, IHittable
             projectile.GetComponent<ShooterBotProjectile>().SetLaunchDir(targetPosition - firePoint.position);
             attackTimer = attackCooldown;
         }
-        else
-        {
+        else {
             attackTimer -= Time.deltaTime;
             //If player is out of attackRange then go to idle mode
-            if (Vector3.SqrMagnitude(transform.position - Player.CharacterInstance.playerBehaviourTree.modelTransform.transform.position) > attackRange * attackRange)
-            {
+            if (Vector3.SqrMagnitude(transform.position - Player.CharacterInstance.playerBehaviourTree.modelTransform.transform.position) > attackRange * attackRange) {
                 state = State.Idle;
                 OnStateChange?.Invoke(state);
             }
@@ -103,28 +90,23 @@ public class ShooterBotEnemy : MonoBehaviour, BaseEnemy, IHittable
 
     }
 
-  
-    public float GetHealthNormalized()
-    {
-        return (float)health/maxHealth;
+
+    public float GetHealthNormalized() {
+        return (float)health / maxHealth;
     }
-    private void Dead()
-    {
+    private void Dead() {
         //Do nothing, enemy is dead
 
     }
 
-    public void DoHit(int damage)
-    {
+    public void DoHit(int damage) {
         health -= damage;
         OnHit?.Invoke();
-        if (health <= 0)
-        {
+        if (health <= 0) {
             OnDeath?.Invoke();
             //Turn off the collider on this gameObject
             Collider col = this.GetComponent<Collider>();
-            if (col != null)
-            {
+            if (col != null) {
                 col.enabled = false;
             }
             state = State.Dead;
@@ -132,8 +114,7 @@ public class ShooterBotEnemy : MonoBehaviour, BaseEnemy, IHittable
         }
     }
 
-    HittableType IHittable.GetType()
-    {
-      return HittableType.Enemy;
+    HittableType IHittable.GetType() {
+        return HittableType.Enemy;
     }
 }

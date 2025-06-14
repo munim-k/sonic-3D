@@ -1,9 +1,7 @@
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class WallJumpPlayerBehaviour : PlayerBehaviour
-    {
+namespace RagdollEngine {
+    public class WallJumpPlayerBehaviour : PlayerBehaviour {
         [SerializeField] float wallJumpCooldown; // Cooldown time between wall jumps.
         [SerializeField] float wallJumpForceHorizontal; // Force applied during a wall jump.
         [SerializeField] float wallJumpForceVertical; // Force applied during a wall jump.
@@ -150,10 +148,10 @@ namespace RagdollEngine
         //    Debug.DrawLine(origPos, goalPosition, Color.red); // Draw a line in the editor for visualization.
         //}
 
-        public override bool Evaluate()
-        {
+        public override bool Evaluate() {
             // Check if the player can interact with a spring
-            if (!WallCheck()) return false;
+            if (!WallCheck())
+                return false;
 
             // Calculate the goal position for the player based on the spring's position and length
             Vector3 goal = wallPoint +
@@ -184,20 +182,16 @@ namespace RagdollEngine
         }
 
         // Checks if the player can interact with a Wall
-        bool WallCheck()
-        {
+        bool WallCheck() {
             // Iterate through all stage objects in the scene
 
             // Check if the stage object is a spring
-            if (wallJumpCooldownTimer >= 0)
-            {
+            if (wallJumpCooldownTimer >= 0) {
                 wallJumpCooldownTimer -= Time.fixedDeltaTime;
 
             }
-            else
-            {
-                if (inputHandler.jump.pressed)
-                {
+            else {
+                if (inputHandler.jump.pressed) {
 
                     bool wallContact = false;
                     wallContact = Physics.Raycast(
@@ -208,8 +202,7 @@ namespace RagdollEngine
                        wallLayerMask, // Layer mask to filter walls.
                        QueryTriggerInteraction.Ignore // Ignore trigger colliders.
                    );
-                    if (!wallContact)
-                    {
+                    if (!wallContact) {
                         wallContact = Physics.Raycast(
                             playerTransform.position, // Start position of the raycast.
                             -playerTransform.forward, // Direction of the raycast (backward).
@@ -219,8 +212,7 @@ namespace RagdollEngine
                             QueryTriggerInteraction.Ignore // Ignore trigger colliders.
                         );
                     }
-                    if (!wallContact)
-                    {
+                    if (!wallContact) {
                         wallContact = Physics.Raycast(
                             playerTransform.position, // Start position of the raycast.
                             playerTransform.right, // Direction of the raycast (right).
@@ -230,8 +222,7 @@ namespace RagdollEngine
                             QueryTriggerInteraction.Ignore // Ignore trigger colliders.
                         );
                     }
-                    if (!wallContact)
-                    {
+                    if (!wallContact) {
                         wallContact = Physics.Raycast(
                             playerTransform.position, // Start position of the raycast.
                             -playerTransform.right, // Direction of the raycast (left).
@@ -241,28 +232,28 @@ namespace RagdollEngine
                             QueryTriggerInteraction.Ignore // Ignore trigger colliders.
                         );
                     }
-                    if (wallContact)
-                    {
-                       
-                            // Set the current length of the spring
-                            currentLength = wallJumpTime;
-                            speed = wallJumpDecreaseSpeed;
-                            // Calculate the additive velocity to apply to the player
-                            wallPoint = hit.point;
-                            wallNormal = hit.normal;
-                            jumpVector = wallNormal.normalized * wallJumpForceHorizontal;
-                            jumpVector += Vector3.up * wallJumpForceVertical;
-                            additiveVelocity = -RB.linearVelocity + jumpVector;
-                            goalPosition = playerTransform.position + jumpVector;
-                            wallJumpCooldownTimer = wallJumpCooldown;
-                            return true; // The player can interact with the wall
-                        
+                    if (wallContact) {
+
+                        // Set the current length of the spring
+                        currentLength = wallJumpTime;
+                        speed = wallJumpDecreaseSpeed;
+                        // Calculate the additive velocity to apply to the player
+                        wallPoint = hit.point;
+                        wallNormal = hit.normal;
+                        jumpVector = wallNormal.normalized * wallJumpForceHorizontal;
+                        jumpVector += Vector3.up * wallJumpForceVertical;
+                        additiveVelocity = -RB.linearVelocity + jumpVector;
+                        goalPosition = playerTransform.position + jumpVector;
+                        wallJumpCooldownTimer = wallJumpCooldown;
+                        return true; // The player can interact with the wall
+
                     }
                 }
 
             }
             // If the player was previously active and the player is still jumping, return true
-            if (wasActive && currentLength > 0) return true;
+            if (wasActive && currentLength > 0)
+                return true;
 
             return false; // The player cannot interact with a wall
         }

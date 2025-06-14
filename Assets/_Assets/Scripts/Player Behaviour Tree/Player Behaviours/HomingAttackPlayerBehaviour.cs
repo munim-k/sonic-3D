@@ -1,9 +1,7 @@
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class HomingAttackPlayerBehaviour : PlayerBehaviour
-    {
+namespace RagdollEngine {
+    public class HomingAttackPlayerBehaviour : PlayerBehaviour {
         [SerializeField] float speed;
 
         [SerializeField] float peak;
@@ -28,19 +26,19 @@ namespace RagdollEngine
 
         float currentTime;
 
-        void LateUpdate()
-        {
+        void LateUpdate() {
             animator.SetBool("Homing Attacking", active);
 
             if (active)
                 animator.SetFloat("World Speed", speed);
         }
 
-        public override bool Evaluate()
-        {
-            if (!wasActive && !inputHandler.attack.pressed) return false;
+        public override bool Evaluate() {
+            if (!wasActive && !inputHandler.attack.pressed)
+                return false;
 
-            if (wasActive) goto Home;
+            if (wasActive)
+                goto Home;
 
             HomingTarget thisTarget = null;
 
@@ -50,15 +48,16 @@ namespace RagdollEngine
 
             float largestRatio = 0;
 
-            foreach (HomingTarget thisHomingTarget in FindObjectsOfType<HomingTarget>())
-            {
-                if (!thisHomingTarget.Target(playerBehaviourTree, maxDistance, viewDot, maxHeight, out Vector3 thisPoint1)) continue;
+            foreach (HomingTarget thisHomingTarget in FindObjectsOfType<HomingTarget>()) {
+                if (!thisHomingTarget.Target(playerBehaviourTree, maxDistance, viewDot, maxHeight, out Vector3 thisPoint1))
+                    continue;
 
                 Vector3 difference = thisPoint1 - playerTransform.position;
 
                 float thisDistance = difference.magnitude;
 
-                if (thisDistance > maxDistance || Vector3.Dot(difference.normalized, modelTransform.forward) < viewDot || difference.y / maxDistance > maxHeight) continue;
+                if (thisDistance > maxDistance || Vector3.Dot(difference.normalized, modelTransform.forward) < viewDot || difference.y / maxDistance > maxHeight)
+                    continue;
 
                 bool obstructed = Physics.Raycast(playerTransform.position, difference.normalized, out RaycastHit hit, difference.magnitude - safeZone, layerMask, QueryTriggerInteraction.Ignore);
 
@@ -69,8 +68,7 @@ namespace RagdollEngine
                 float directionToDistanceRatio = (directionFactor * directionToDistancePrioritization) + (distanceFactor * (1 - directionToDistancePrioritization));
 
                 if (directionToDistanceRatio > largestRatio//thisDistance < distance
-                    && (!obstructed || hit.collider.gameObject == thisHomingTarget.gameObject))
-                {
+                    && (!obstructed || hit.collider.gameObject == thisHomingTarget.gameObject)) {
                     thisTarget = thisHomingTarget;
 
                     thisPoint = thisPoint1;
@@ -81,8 +79,7 @@ namespace RagdollEngine
                 }
             }
 
-            if (thisTarget)
-            {
+            if (thisTarget) {
                 target = thisTarget;
 
                 start = playerTransform.position;
@@ -100,7 +97,7 @@ namespace RagdollEngine
 
             target = thisTarget;
 
-        Home:
+Home:
 
             float timePercent = Mathf.Clamp01(1 - (currentTime / time));
 
@@ -108,10 +105,10 @@ namespace RagdollEngine
 
             Vector3 difference1 = goal - playerTransform.position;
 
-            if (Physics.Raycast(playerTransform.position, difference1.normalized, difference1.magnitude, layerMask, QueryTriggerInteraction.Ignore)) return false;
+            if (Physics.Raycast(playerTransform.position, difference1.normalized, difference1.magnitude, layerMask, QueryTriggerInteraction.Ignore))
+                return false;
 
-            if (timePercent >= 1)
-            {
+            if (timePercent >= 1) {
                 target.OnTarget(playerBehaviourTree);
 
                 return false;

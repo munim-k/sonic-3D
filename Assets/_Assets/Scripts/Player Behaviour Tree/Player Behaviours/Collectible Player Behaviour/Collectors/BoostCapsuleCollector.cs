@@ -1,19 +1,16 @@
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class BoostCapsuleCollector : Collector
-    {
+namespace RagdollEngine {
+    public class BoostCapsuleCollector : Collector {
         [SerializeField] BoostPlayerBehaviour boostPlayerBehaviour;
 
-        public override void Execute()
-        {
+        public override void Execute() {
             foreach (StageObject thisStageObject in stageObjects)
-                if (thisStageObject is BoostCapsuleCollectible)
-                {
+                if (thisStageObject is BoostCapsuleCollectible) {
                     BoostCapsuleCollectible thisBoostCapsuleCollectible = thisStageObject as BoostCapsuleCollectible;
 
-                    if (thisBoostCapsuleCollectible.collected) continue;
+                    if (thisBoostCapsuleCollectible.collected)
+                        continue;
 
                     thisBoostCapsuleCollectible.Collect();
 

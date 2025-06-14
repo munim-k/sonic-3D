@@ -2,10 +2,8 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
 
-namespace RagdollEngine
-{
-    public class _2DPlayerCameraState : PlayerCameraState
-    {
+namespace RagdollEngine {
+    public class _2DPlayerCameraState : PlayerCameraState {
         [SerializeField] _2DPlayerBehaviour _2DPlayerBehaviour;
 
         [SerializeField] Vector2 cameraOffset;
@@ -48,11 +46,11 @@ namespace RagdollEngine
 
         float rotationOffsetTransition;
 
-        public override void Execute()
-        {
+        public override void Execute() {
             _2D = _2DCameraCheck();
 
-            if (!_2D) return;
+            if (!_2D)
+                return;
 
             if (respawnTrigger)
                 transition = 0;
@@ -67,7 +65,7 @@ namespace RagdollEngine
 
             Quaternion cameraGoalRotation = matrixRotation
                 * currentRotationOffset;
-                //Quaternion.Euler(Vector3.Lerp(oldRotationOffset, rotationOffset, Mathf.SmoothStep(1, 0, rotationOffsetTransition / rotationOffsetTransitionTime)));
+            //Quaternion.Euler(Vector3.Lerp(oldRotationOffset, rotationOffset, Mathf.SmoothStep(1, 0, rotationOffsetTransition / rotationOffsetTransitionTime)));
 
             currentCameraOffset = CalculateCameraOffset(matrix);
 
@@ -87,13 +85,11 @@ namespace RagdollEngine
             base.Execute();
         }
 
-        public override bool Check()
-        {
+        public override bool Check() {
             return _2DCameraCheck();
         }
 
-        public override void Enable()
-        {
+        public override void Enable() {
             matrix = EvaluateSpline();
 
             cameraTangent = 0;
@@ -105,15 +101,13 @@ namespace RagdollEngine
             rotationOffsetTransition = 0;
         }
 
-        public override void Transition()
-        {
+        public override void Transition() {
             base.Transition();
 
             Enable();
         }
 
-        Vector3 CalculateCameraOffset(float3x3 currentMatrix)
-        {
+        Vector3 CalculateCameraOffset(float3x3 currentMatrix) {
             float tangentDot = Vector3.Dot(moveVelocity, Vector3.Cross(currentMatrix.c0, Vector3.up));
 
             float upDot = Vector3.Dot(playerTransform.up, Vector3.up);
@@ -131,32 +125,28 @@ namespace RagdollEngine
                     + -Vector3.forward * depth;
         }
 
-        float3x3 EvaluateSpline()
-        {
+        float3x3 EvaluateSpline() {
             SplineUtility.GetNearestPoint(splineContainer.Spline, Utility.DivideVector3(playerTransform.position - splineContainer.transform.position, splineContainer.transform.lossyScale), out float3 _, out float t);
 
             float3x3 matrix;
 
             splineContainer.Evaluate(t, out float3 _, out matrix.c2, out matrix.c1);
 
-            return new float3x3()
-            {
+            return new float3x3() {
                 c0 = Vector3.Cross(matrix.c1, matrix.c2).normalized,
                 c1 = Vector3.Normalize(matrix.c1),
                 c2 = Vector3.Normalize(matrix.c2)
             };
         }
 
-        bool _2DCameraCheck()
-        {
+        bool _2DCameraCheck() {
             if (_2D)
                 foreach (Volume thisVolume in volumes)
                     if (thisVolume is _2DCameraVolume && thisVolume == volume)
                         return true;
 
             foreach (Volume thisVolume in volumes)
-                if (thisVolume is _2DCameraVolume)
-                {
+                if (thisVolume is _2DCameraVolume) {
                     _2DCameraVolume this2DCameraVolume = thisVolume as _2DCameraVolume;
 
                     splineContainer = this2DCameraVolume.splineContainer;

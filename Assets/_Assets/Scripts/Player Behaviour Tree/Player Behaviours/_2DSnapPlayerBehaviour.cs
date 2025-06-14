@@ -1,10 +1,8 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class _2DSnapPlayerBehaviour : PlayerBehaviour
-    {
+namespace RagdollEngine {
+    public class _2DSnapPlayerBehaviour : PlayerBehaviour {
         [SerializeField] _2DPlayerBehaviour _2DPlayerBehaviour;
 
         [SerializeField] float transitionTime;
@@ -23,10 +21,8 @@ namespace RagdollEngine
 
         bool wasAir;
 
-        public override void Execute()
-        {
-            if (!_2D)
-            {
+        public override void Execute() {
+            if (!_2D) {
                 oldPosition = playerTransform.position;
 
                 transition = transitionTime;
@@ -39,10 +35,10 @@ namespace RagdollEngine
             if (respawnTrigger)
                 transition = 0;
 
-            if (kinematic) return;
+            if (kinematic)
+                return;
 
-            if (!air && wasAir)
-            {
+            if (!air && wasAir) {
                 oldPosition = playerTransform.position;
 
                 transition = transitionTime;
@@ -56,8 +52,7 @@ namespace RagdollEngine
 
             Vector3 difference = goal - playerTransform.position;
 
-            if (!Physics.Raycast(playerTransform.position, difference.normalized, difference.magnitude, layerMask, QueryTriggerInteraction.Ignore))
-            {
+            if (!Physics.Raycast(playerTransform.position, difference.normalized, difference.magnitude, layerMask, QueryTriggerInteraction.Ignore)) {
                 playerTransform.position = goal;
 
                 transition = t;

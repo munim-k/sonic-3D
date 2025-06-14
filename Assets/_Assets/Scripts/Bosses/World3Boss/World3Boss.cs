@@ -1,8 +1,7 @@
 using System;
 using UnityEngine;
 
-public class World3Boss : MonoBehaviour, BaseEnemy, IHittable
-{
+public class World3Boss : MonoBehaviour, BaseEnemy, IHittable {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     [SerializeField] private int maxHealth = 200;
@@ -34,27 +33,23 @@ public class World3Boss : MonoBehaviour, BaseEnemy, IHittable
     public Action<State> OnStateChange;
     private Action OnHit;
     private Action OnDeath;
-    Action BaseEnemy.OnDeath
-    {
+    Action BaseEnemy.OnDeath {
         get => OnDeath;
         set => OnDeath = value;
     }
 
-    Action IHittable.OnHit
-    {
+    Action IHittable.OnHit {
         get => OnHit;
         set => OnHit = value;
     }
     private State state;
-    public enum State
-    {
+    public enum State {
         Flamethrower,
         HomingAttacks,
         Dead
     }
 
-    void Awake()
-    {
+    void Awake() {
         currentHealth = maxHealth;
         state = State.Flamethrower;
         OnStateChange?.Invoke(state);
@@ -64,10 +59,8 @@ public class World3Boss : MonoBehaviour, BaseEnemy, IHittable
     }
 
     // Update is called once per frame
-    void FixedUpdate()
-    {
-        switch (state)
-        {
+    void FixedUpdate() {
+        switch (state) {
             case State.Flamethrower:
                 Flamethrower();
                 break;
@@ -82,28 +75,21 @@ public class World3Boss : MonoBehaviour, BaseEnemy, IHittable
 
     }
 
-    private void Flamethrower()
-    {
-        if (attackCooldownTimer > 0f)
-        {
+    private void Flamethrower() {
+        if (attackCooldownTimer > 0f) {
             attackCooldownTimer -= Time.fixedDeltaTime;
-            if (attackCooldownTimer <= 0f)
-            {
+            if (attackCooldownTimer <= 0f) {
                 attackTimer = flamethrowerDuration;
-                foreach (Flamethrower flamethrower in flameThrowers)
-                {
+                foreach (Flamethrower flamethrower in flameThrowers) {
                     flamethrower.ToggleFire(true);
                 }
             }
         }
 
-        if (attackTimer > 0f)
-        {
+        if (attackTimer > 0f) {
             attackTimer -= Time.fixedDeltaTime;
-            if (attackTimer <= 0f)
-            {
-                foreach (Flamethrower flamethrower in flameThrowers)
-                {
+            if (attackTimer <= 0f) {
+                foreach (Flamethrower flamethrower in flameThrowers) {
                     flamethrower.ToggleFire(false);
                 }
                 attackCooldownTimer = flamethrowerCooldown;
@@ -114,8 +100,7 @@ public class World3Boss : MonoBehaviour, BaseEnemy, IHittable
 
         //Spin the attack points
         flamethrowerRotationLerp += Time.fixedDeltaTime * flamethrowerRotationSpeed;
-        if (flamethrowerRotationLerp > 1f)
-        {
+        if (flamethrowerRotationLerp > 1f) {
             flamethrowerRotationLerp = 0f;
         }
         Vector3 eulerAngles = flamethrowerRotationOriginal.eulerAngles;
@@ -123,37 +108,29 @@ public class World3Boss : MonoBehaviour, BaseEnemy, IHittable
         flamethrowerPointCentre.transform.localRotation = Quaternion.Euler(0f, eulerAngles.y + (l * 360f), 0f);
     }
 
-    private void HomingAttacks()
-    {
-        if (attackCooldownTimer > 0f)
-        {
+    private void HomingAttacks() {
+        if (attackCooldownTimer > 0f) {
             attackCooldownTimer -= Time.fixedDeltaTime;
-            if (attackCooldownTimer <= 0f)
-            {
+            if (attackCooldownTimer <= 0f) {
                 attackTimer = homingAttackDuration;
                 homingAttackTimer = homingAttackStep;
             }
         }
 
-        if (attackTimer > 0f)
-        {
+        if (attackTimer > 0f) {
             attackTimer -= Time.fixedDeltaTime;
-            if (homingAttackTimer > 0f)
-            {
+            if (homingAttackTimer > 0f) {
                 homingAttackTimer -= Time.fixedDeltaTime;
             }
-            if (homingAttackTimer <= 0f)
-            {
+            if (homingAttackTimer <= 0f) {
                 //Instantiate one homing attack on each transform
-                foreach (Transform homingAttackTransform in homingAttackTransforms)
-                {
+                foreach (Transform homingAttackTransform in homingAttackTransforms) {
                     Instantiate(homingAttackPrefab, homingAttackTransform.position, homingAttackTransform.rotation);
                 }
                 homingAttackTimer = homingAttackStep;
             }
 
-            if (attackTimer <= 0f)
-            {
+            if (attackTimer <= 0f) {
                 attackCooldownTimer = homingAttackCooldown;
                 state = State.Flamethrower;
                 OnStateChange?.Invoke(state);
@@ -167,16 +144,13 @@ public class World3Boss : MonoBehaviour, BaseEnemy, IHittable
 
 
 
-    public void DoHit(int damage)
-    {
-        if (state != State.HomingAttacks)
-        {
+    public void DoHit(int damage) {
+        if (state != State.HomingAttacks) {
             return;
         }
         currentHealth -= damage;
         OnHit?.Invoke();
-        if (currentHealth <= 0)
-        {
+        if (currentHealth <= 0) {
             currentHealth = 0;
             state = State.Dead;
             levelExit.SetActive(true);
@@ -185,13 +159,11 @@ public class World3Boss : MonoBehaviour, BaseEnemy, IHittable
         }
     }
 
-    public float GetHealthNormalized()
-    {
+    public float GetHealthNormalized() {
         return (float)currentHealth / maxHealth;
     }
 
-    HittableType IHittable.GetType()
-    {
+    HittableType IHittable.GetType() {
         return HittableType.Enemy;
     }
 }

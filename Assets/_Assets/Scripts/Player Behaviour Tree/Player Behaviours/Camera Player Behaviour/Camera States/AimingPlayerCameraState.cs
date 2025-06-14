@@ -1,9 +1,7 @@
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class AimingPlayerCameraState : PlayerCameraState
-    {
+namespace RagdollEngine {
+    public class AimingPlayerCameraState : PlayerCameraState {
         // Zoom-related variables
         [Header("Zoom")]
         [SerializeField] float defaultDistance; // Default distance of the camera from the player.
@@ -17,7 +15,7 @@ namespace RagdollEngine
         float distance; // Current target distance for the camera.
         float currentDistance; // Smoothed distance for the camera.
 
-     
+
         // Normal-related variables
         [Header("Normal")]
         [SerializeField, Range(0, 1)] float normalSmoothness; // Smoothness of the camera's alignment with the ground normal.
@@ -32,34 +30,38 @@ namespace RagdollEngine
         Vector2 lookRotation; // Accumulated rotation values (X for yaw, Y for pitch).
         Vector2 look; // Input-based rotation delta.
 
-       
+
 
         // Offset-related variables
         [Header("Offset")]
         [SerializeField] float heightOffset; // Vertical offset of the camera from the player.
 
+        [Header("Behaviour interactions")] //List of behaviours that can turn the camera state off if they are active
+        [SerializeField] PlayerBehaviour[] behaviours;
+
         // Called when the script is initialized
-        void Awake()
-        {
+        void Awake() {
             distance = defaultDistance; // Initialize the camera distance to the default value.
         }
 
         // Called every frame to handle input and update camera state
-        void Update()
-        {
+        void Update() {
             look += inputHandler.lookDelta; // Accumulate rotation input from the player.
             distance = CalculateDistance(inputHandler.zoomDelta.value); // Update the target distance based on zoom input.
         }
 
         // Determines if this camera state should be active
-        public override bool Check()
-        {
+        public override bool Check() {
+            foreach (var behaviour in behaviours) {
+                if (behaviour.active) {
+                    return false; // If any behaviour is active, this camera state should not be active.
+                }
+            }
             return inputHandler.aim.hold; // Activate this state if the player is holding the "roll" input (used for aiming).
         }
 
         // Main logic for updating the camera's position and rotation
-        public override void Execute()
-        {
+        public override void Execute() {
             // Calculate the player's model position with the offset
             Vector3 modelPosition = modelTransform.position + (modelTransform.rotation * positionOffset);
 
@@ -111,8 +113,7 @@ namespace RagdollEngine
 
 
         // Called when this state is enabled
-        public override void Enable()
-        {
+        public override void Enable() {
             look = Vector2.zero; // Reset look input.
             lookRotation = defaultRotation; // Reset rotation to default.
             normal = groundInformation.ground ? groundInformation.hit.normal : Vector3.up; // Align with ground normal or default to upward direction.
@@ -122,8 +123,7 @@ namespace RagdollEngine
         }
 
         // Handles transitions into this state
-        public override void Transition()
-        {
+        public override void Transition() {
             base.Transition(); // Call base transition logic.
             Enable(); // Reinitialize state variables.
             rotation = Quaternion.identity; // Reset rotation.
@@ -131,8 +131,7 @@ namespace RagdollEngine
         }
 
         // Calculates the target zoom distance based on input
-        float CalculateDistance(float delta)
-        {
+        float CalculateDistance(float delta) {
             return Mathf.Clamp(distance
                 + (delta
                     * zoomSensitivity

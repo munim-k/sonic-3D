@@ -1,11 +1,9 @@
 using UnityEngine;
 
-public class BoostCapsuleCollectible : Collectible
-{
+public class BoostCapsuleCollectible : Collectible {
     [SerializeField] AudioSource audioSource;
 
-    public void PlayBreak()
-    {
+    public void PlayBreak() {
         audioSource.Play();
     }
 }

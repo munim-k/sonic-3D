@@ -192,7 +192,7 @@ Shader "Ragdoll Engine/Metallic (URP)"
                 // Final Color
                 half4 color = UniversalFragmentPBR(inputData, surfaceData);
 
-                color.rgb = ApplyFog(input.fogCoord,color.rgb);
+               
                 return color;
             }
             ENDHLSL

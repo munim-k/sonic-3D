@@ -1,13 +1,10 @@
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class AirDragPlayerBehaviour : PlayerBehaviour
-    {
+namespace RagdollEngine {
+    public class AirDragPlayerBehaviour : PlayerBehaviour {
         [SerializeField] float airDrag;
 
-        public override void Execute()
-        {
+        public override void Execute() {
             additiveVelocity -= RB.linearVelocity * airDrag;
         }
     }

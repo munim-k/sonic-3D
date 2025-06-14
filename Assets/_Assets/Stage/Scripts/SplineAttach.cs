@@ -3,8 +3,7 @@ using UnityEngine;
 using UnityEngine.Splines;
 
 [ExecuteInEditMode]
-public class SplineAttach : MonoBehaviour
-{
+public class SplineAttach : MonoBehaviour {
     [SerializeField] SplineContainer splineContainer;
 
     [SerializeField] Vector3 positionOffset;
@@ -15,9 +14,9 @@ public class SplineAttach : MonoBehaviour
 
     [SerializeField] float anchor;
 
-    void Update()
-    {
-        if (!splineContainer) return;
+    void Update() {
+        if (!splineContainer)
+            return;
 
         splineContainer.Evaluate(anchor + (distance / splineContainer.CalculateLength()), out float3 position, out float3 tangent, out float3 upVector);
 

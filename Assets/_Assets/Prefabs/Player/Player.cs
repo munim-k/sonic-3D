@@ -2,8 +2,7 @@ using RagdollEngine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour
-{
+public class Player : MonoBehaviour {
     /*
      * this is a placeholder player script for handling input
      * normally ud instantiate this in the menu when the player connects a controller then instantiate the character
@@ -18,30 +17,26 @@ public class Player : MonoBehaviour
     public static Character CharacterInstance { get; private set; }
     InputHandler inputHandler => character.inputHandler;
 
-    void Awake()
-    {
-        if(CharacterInstance)
+    void Awake() {
+        if (CharacterInstance)
             Destroy(CharacterInstance.gameObject);
         character.Initialize();
         CharacterInstance = character;
     }
 
-    void OnEnable()
-    {
+    void OnEnable() {
         playerInput.onActionTriggered += OnActionTriggered;
     }
 
-    void OnDisable()
-    {
+    void OnDisable() {
         playerInput.onActionTriggered -= OnActionTriggered;
     }
 
-    void OnActionTriggered(InputAction.CallbackContext callbackContext)
-    {
-        if (!inputHandler) return;
+    void OnActionTriggered(InputAction.CallbackContext callbackContext) {
+        if (!inputHandler)
+            return;
 
-        switch (callbackContext.action.name)
-        {
+        switch (callbackContext.action.name) {
             case "Move":
                 inputHandler.move = callbackContext.ReadValue<Vector2>();
                 break;

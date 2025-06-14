@@ -1,22 +1,19 @@
 using UnityEngine;
 
-namespace RagdollEngine
-{
+namespace RagdollEngine {
     [RequireComponent(typeof(UpreelStageObject))]
-    public class UpreelHomingTarget : HomingTarget
-    {
+    public class UpreelHomingTarget : HomingTarget {
         UpreelStageObject upreelStageObject;
 
-        void Awake()
-        {
+        void Awake() {
             upreelStageObject = GetComponent<UpreelStageObject>();
         }
 
-        public override void OnTarget(PlayerBehaviourTree playerBehaviourTree)
-        {
+        public override void OnTarget(PlayerBehaviourTree playerBehaviourTree) {
             UpreelPlayerBehaviour upreelPlayerBehaviour = playerBehaviourTree.GetComponentInChildren<UpreelPlayerBehaviour>();
 
-            if (!upreelPlayerBehaviour) return;
+            if (!upreelPlayerBehaviour)
+                return;
 
             upreelPlayerBehaviour.Enter(upreelStageObject);
         }

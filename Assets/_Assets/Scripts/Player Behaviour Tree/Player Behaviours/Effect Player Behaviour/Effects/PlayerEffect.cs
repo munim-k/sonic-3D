@@ -1,15 +1,11 @@
 using System;
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class PlayerEffect : PlayerBehaviour
-    {
+namespace RagdollEngine {
+    public class PlayerEffect : PlayerBehaviour {
         [Serializable]
-        public struct Interaction
-        {
-            public enum InteractionType
-            {
+        public struct Interaction {
+            public enum InteractionType {
                 Or,
                 Require,
                 Exception
@@ -28,16 +24,13 @@ namespace RagdollEngine
 
         public TrailRenderer[] trailRenderers;
 
-        public override bool Evaluate()
-        {
+        public override bool Evaluate() {
             bool returning = false;
 
             bool or = false;
 
-            foreach (Interaction thisInteraction in interactions)
-            {
-                switch (thisInteraction.interactionType)
-                {
+            foreach (Interaction thisInteraction in interactions) {
+                switch (thisInteraction.interactionType) {
                     case Interaction.InteractionType.Or:
                         or = or || thisInteraction.playerBehaviour.active;
 
@@ -63,13 +56,11 @@ namespace RagdollEngine
             return returning || or;
         }
 
-        public void ToggleEffects(bool value)
-        {
+        public void ToggleEffects(bool value) {
             foreach (GameObject thisGameObject in gameObjects)
                 thisGameObject.SetActive(value);
 
-            foreach (ParticleSystem thisParticleSystem in particleSystems)
-            {
+            foreach (ParticleSystem thisParticleSystem in particleSystems) {
                 ParticleSystem.EmissionModule emissionModule = thisParticleSystem.emission;
 
                 emissionModule.enabled = value;

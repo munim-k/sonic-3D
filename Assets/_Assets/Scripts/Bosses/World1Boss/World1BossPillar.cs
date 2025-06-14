@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public class World1BossPillar : MonoBehaviour
-{
+public class World1BossPillar : MonoBehaviour {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] private World1Boss boss;
     [SerializeField] private MeshRenderer pillarRenderer;
@@ -9,26 +8,21 @@ public class World1BossPillar : MonoBehaviour
     [SerializeField] private Material activePillarMaterial;
 
 
-    
-    public void Activate(bool active)
-    {
-        
-        if (active)
-        {
+
+    public void Activate(bool active) {
+
+        if (active) {
             pillarRenderer.material = activePillarMaterial;
         }
-        else
-        {
+        else {
             pillarRenderer.material = pillarMaterial;
         }
 
     }
 
-    
-    public void Interact()
-    {
-        if (boss != null)
-        {
+
+    public void Interact() {
+        if (boss != null) {
             boss.ActivatePillar(this);
         }
     }

@@ -1,13 +1,10 @@
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class HomingSoundEffect : SoundEffect
-    {
+namespace RagdollEngine {
+    public class HomingSoundEffect : SoundEffect {
         [SerializeField] HomingAttackPlayerBehaviour homingAttackPlayerBehaviour;
 
-        public override bool Evaluate()
-        {
+        public override bool Evaluate() {
             active = homingAttackPlayerBehaviour.active;
 
             return active;

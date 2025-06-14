@@ -2,16 +2,13 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-public class AudioSourceInstance : MonoBehaviour
-{
-    void Awake()
-    {
+public class AudioSourceInstance : MonoBehaviour {
+    void Awake() {
         AudioSource audioSource = GetComponent<AudioSource>();
 
         StartCoroutine(WaitForAudioSource());
 
-        IEnumerator WaitForAudioSource()
-        {
+        IEnumerator WaitForAudioSource() {
             audioSource.Play();
 
             while (audioSource.isPlaying)

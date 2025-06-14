@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace RagdollEngine
-{
-    public class Character : MonoBehaviour
-    {
+namespace RagdollEngine {
+    public class Character : MonoBehaviour {
         public Transform cameraTransform;
 
         public Canvas canvas;
@@ -23,10 +21,8 @@ namespace RagdollEngine
 
         [HideInInspector] public Utility.TransformData respawnTransformData;
 
-        public void Initialize()
-        {
-            respawnTransformData = new Utility.TransformData
-            {
+        public void Initialize() {
+            respawnTransformData = new Utility.TransformData {
                 position = transform.position,
 
                 rotation = transform.rotation.eulerAngles
@@ -35,8 +31,7 @@ namespace RagdollEngine
             Spawn();
         }
 
-        public virtual void Spawn()
-        {
+        public virtual void Spawn() {
             if (playerBehaviourTree)
                 Destroy(playerBehaviourTree.gameObject);
 
@@ -50,25 +45,21 @@ namespace RagdollEngine
 
             playerBehaviourTree.Initialize(this);
 
-            
+
         }
 
-        public void Respawn()
-        {
+        public void Respawn() {
             StartCoroutine(RespawnRoutine());
 
-            IEnumerator RespawnRoutine()
-            {
+            IEnumerator RespawnRoutine() {
                 RespawnUI respawnUI = Instantiate(respawnUIPrefab, canvas.transform);
 
                 yield return respawnUI.WaitForEnterTransition();
 
                 //Reload the scene
                 //Find lollipop behaviour if it exists and reset lollipops
-                foreach(PlayerBehaviour thisBehaviour in playerBehaviourTree.behaviours)
-                {
-                    if (thisBehaviour is LollipopCollectionPlayerBehaviour)
-                    {
+                foreach (PlayerBehaviour thisBehaviour in playerBehaviourTree.behaviours) {
+                    if (thisBehaviour is LollipopCollectionPlayerBehaviour) {
                         LollipopCollectionPlayerBehaviour lollipopBehaviour = thisBehaviour as LollipopCollectionPlayerBehaviour;
                         lollipopBehaviour.ResetLollipops();
                     }

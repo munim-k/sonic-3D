@@ -1,15 +1,14 @@
 using RagdollEngine;
 using UnityEngine;
 
-public class RingCounter : MonoBehaviour
-{
+public class RingCounter : MonoBehaviour {
     [SerializeField] PlayerBehaviourTree playerBehaviourTree;
 
     [SerializeField] RingsUI ringsUIPrefab;
 
-    void Update()
-    {
-        if (!playerBehaviourTree.initialized) return;
+    void Update() {
+        if (!playerBehaviourTree.initialized)
+            return;
 
         RingsUI ringsUI = Instantiate(ringsUIPrefab, playerBehaviourTree.canvas.transform);
 

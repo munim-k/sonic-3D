@@ -1,9 +1,7 @@
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class StompPlayerBehaviour : PlayerBehaviour
-    {
+namespace RagdollEngine {
+    public class StompPlayerBehaviour : PlayerBehaviour {
         // Audio source for playing landing sound
         [SerializeField] AudioSource landAudioSource;
 
@@ -20,8 +18,7 @@ namespace RagdollEngine
         float stompAccelerationTimer;
 
         // Called once per frame, after all Update calls
-        void LateUpdate()
-        {
+        void LateUpdate() {
             // Update the animator's "Stomping" state based on whether the stomp is active
             animator.SetBool("Stomping", active);
 
@@ -31,20 +28,16 @@ namespace RagdollEngine
         }
 
         // Evaluates whether the stomp behavior should be active
-        public override bool Evaluate()
-        {
+        public override bool Evaluate() {
             // Check if the stomp button is pressed or if the player is already stomping and not grounded
             bool stomping = (inputHandler.stomp.pressed || wasActive) && !groundInformation.ground;
 
-            if (stomping)
-            {
-                if (wasActive)
-                {
+            if (stomping) {
+                if (wasActive) {
                     // Decrease the acceleration timer if the stomp is ongoing
                     stompAccelerationTimer -= Time.fixedDeltaTime;
                 }
-                else
-                {
+                else {
                     // Reset the acceleration timer and trigger the stomp animation
                     stompAccelerationTimer = stompAccelerationTime;
                     animator.SetTrigger("Stomp");
@@ -55,8 +48,7 @@ namespace RagdollEngine
         }
 
         // Executes the stomp behavior by applying downward velocity
-        public override void Execute()
-        {
+        public override void Execute() {
             // Calculate the downward velocity based on the stomp force and remaining acceleration time
             additiveVelocity = -RB.linearVelocity
                 + (-Vector3.up * Mathf.Lerp(

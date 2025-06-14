@@ -1,10 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace RagdollEngine
-{
-    public class MovePlayerBehaviour : PlayerBehaviour
-    {
+namespace RagdollEngine {
+    public class MovePlayerBehaviour : PlayerBehaviour {
         [SerializeField] float maxSpeed;
 
         [SerializeField] float baseSpeed;
@@ -23,8 +21,7 @@ namespace RagdollEngine
 
         bool wasMoving;
 
-        public override void Execute()
-        {
+        public override void Execute() {
             active = true;
 
             wasMoving = wasMoving && wasActive;
@@ -54,10 +51,8 @@ namespace RagdollEngine
 
             float speedPercent = Mathf.Min(moveVelocity.magnitude / maxSpeed, 1);
 
-            if (moving)
-            {
-                if (plane.magnitude > 0)
-                {
+            if (moving) {
+                if (plane.magnitude > 0) {
                     Vector3 axis = Vector3.Cross(plane, playerTransform.up);
 
                     moveNormal = axis.normalized * Mathf.Sign(Vector3.Dot(moveNormal, axis)) * moveNormal.magnitude;

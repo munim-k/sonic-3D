@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class World1BossVisuals : MonoBehaviour
-{
+public class World1BossVisuals : MonoBehaviour {
 
     [SerializeField] private World1Boss boss;
     [SerializeField] private GameObject shieldVisual;
@@ -10,18 +9,15 @@ public class World1BossVisuals : MonoBehaviour
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private World1Boss.State state;
-    void Start()
-    {
+    void Start() {
         boss.OnStateChange += OnStateChange;
         ((IHittable)boss).OnHit += OnDamage;
     }
 
 
-    private void OnStateChange(World1Boss.State s)
-    {
+    private void OnStateChange(World1Boss.State s) {
         state = s;
-        switch (state)
-        {
+        switch (state) {
             case World1Boss.State.Spinning:
                 shieldVisual.SetActive(true);
 
@@ -37,11 +33,9 @@ public class World1BossVisuals : MonoBehaviour
         }
     }
 
-    private void OnDamage()
-    {
-        if (healthBar != null)
-        {
-            healthBar.fillAmount = boss.GetHealthNormalized() ;
+    private void OnDamage() {
+        if (healthBar != null) {
+            healthBar.fillAmount = boss.GetHealthNormalized();
         }
     }
 

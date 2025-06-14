@@ -4,23 +4,19 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-namespace BehaviourGraph
-{
-    public class BehaviourGraphSearchWindow : ScriptableObject, ISearchWindowProvider
-    {
+namespace BehaviourGraph {
+    public class BehaviourGraphSearchWindow : ScriptableObject, ISearchWindowProvider {
         BehaviourGraphView behaviourGraphView;
 
         BehaviourGraphEditorWindow behaviourGraphEditorWindow;
 
-        public void Initialize(BehaviourGraphView thisBehaviourGraphView, BehaviourGraphEditorWindow thisBehaviourGraphEditorWindow)
-        {
+        public void Initialize(BehaviourGraphView thisBehaviourGraphView, BehaviourGraphEditorWindow thisBehaviourGraphEditorWindow) {
             behaviourGraphView = thisBehaviourGraphView;
 
             behaviourGraphEditorWindow = thisBehaviourGraphEditorWindow;
         }
 
-        public List<SearchTreeEntry> CreateSearchTree(SearchWindowContext searchWindowContext)
-        {
+        public List<SearchTreeEntry> CreateSearchTree(SearchWindowContext searchWindowContext) {
             return new List<SearchTreeEntry>()
             {
                 new SearchTreeGroupEntry(new GUIContent("Add Behaviour")),
@@ -37,10 +33,8 @@ namespace BehaviourGraph
             };
         }
 
-        public bool OnSelectEntry(SearchTreeEntry searchTreeEntry, SearchWindowContext searchWindowContext)
-        {
-            switch(searchTreeEntry.userData)
-            {
+        public bool OnSelectEntry(SearchTreeEntry searchTreeEntry, SearchWindowContext searchWindowContext) {
+            switch (searchTreeEntry.userData) {
                 case "CheckBehaviourNode":
                     behaviourGraphView.CreateNode(new CheckBehaviourNode(), searchWindowContext.screenMousePosition - behaviourGraphEditorWindow.position.position, true);
 

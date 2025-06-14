@@ -1,18 +1,10 @@
-using RagdollEngine;
-using UnityEngine;
+namespace RagdollEngine {
 
-namespace RagdollEngine
-{
-
-    public class LevelChangePlayerBehaviour : PlayerBehaviour
-    {
-        public override bool Evaluate()
-        {
-            foreach (Volume vol in volumes)
-            {
+    public class LevelChangePlayerBehaviour : PlayerBehaviour {
+        public override bool Evaluate() {
+            foreach (Volume vol in volumes) {
                 LevelChangeTrigger levelChange = vol.GetComponent<LevelChangeTrigger>();
-                if (levelChange != null)
-                {
+                if (levelChange != null) {
                     ChangeLevel(levelChange); // Call the ChangeLevel method with the found levelChange trigger
                     //
                     return true; // Return true if a level change volume is found
@@ -21,14 +13,11 @@ namespace RagdollEngine
             return false;
         }
 
-        private void ChangeLevel(LevelChangeTrigger levelChange)
-        {
+        private void ChangeLevel(LevelChangeTrigger levelChange) {
             //First we run save methods of relevant scripts
-            for (int i = 0; i < playerBehaviourTree.behaviours.Length; i++)
-            {
+            for (int i = 0; i < playerBehaviourTree.behaviours.Length; i++) {
                 //Check if the behaviour has a save method
-                if (playerBehaviourTree.behaviours[i] is LollipopCollectionPlayerBehaviour)
-                {
+                if (playerBehaviourTree.behaviours[i] is LollipopCollectionPlayerBehaviour) {
                     //Call the save method
                     ((LollipopCollectionPlayerBehaviour)playerBehaviourTree.behaviours[i]).SaveLollipops();
                 }

@@ -1,26 +1,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Rendering;
 
-namespace RagdollEngine
-{
-    public class TriggerPlayerBehaviour : PlayerBehaviour
-    {
+namespace RagdollEngine {
+    public class TriggerPlayerBehaviour : PlayerBehaviour {
         [SerializeField] LayerMask triggerLayerMask;
 
         [SerializeField] float minOverlapDistance;
 
-        public override void Execute()
-        {
+        public override void Execute() {
             Collider[] theseColliders = new Collider[0];
 
             Vector3 oldPosition = playerTransform.position - (RB.linearVelocity * Time.fixedDeltaTime);
 
             int resolution = Mathf.Max(Mathf.FloorToInt(RB.linearVelocity.magnitude * Time.fixedDeltaTime / minOverlapDistance), 1);
 
-            for (int i = 1; i < resolution + 1; i++)
-            {
+            for (int i = 1; i < resolution + 1; i++) {
                 Vector3 thisPosition = Vector3.Lerp(oldPosition, playerTransform.position, (float)i / resolution);
 
                 foreach (Collider thisCollider in Physics.OverlapCapsule(thisPosition, thisPosition - (playerTransform.up * (groundInformation.cast ? groundInformation.hit.distance : height)), 0.5f, triggerLayerMask, QueryTriggerInteraction.Collide))
@@ -32,19 +27,15 @@ namespace RagdollEngine
 
             List<Volume> removedVolumes = new List<Volume>();
 
-            foreach (Volume thisVolume in volumes)
-            {
+            foreach (Volume thisVolume in volumes) {
                 bool inVolume = false;
-                if (thisVolume == null)
-                {
+                if (thisVolume == null) {
                     removedVolumes.Add(thisVolume);
                     continue;
                 }
-                    
-                foreach (Trigger thisTrigger in thisVolume.triggers)
-                {
-                    if (theseColliders.Contains(thisTrigger.GetComponent<Collider>()))
-                    {
+
+                foreach (Trigger thisTrigger in thisVolume.triggers) {
+                    if (theseColliders.Contains(thisTrigger.GetComponent<Collider>())) {
                         inVolume = true;
 
                         break;
@@ -58,8 +49,7 @@ namespace RagdollEngine
             foreach (Volume thisVolume in removedVolumes)
                 volumes.Remove(thisVolume);
 
-            foreach (Collider thisCollider in theseColliders)
-            {
+            foreach (Collider thisCollider in theseColliders) {
                 thisCollider.TryGetComponent(out Trigger thisTrigger);
 
                 if (thisTrigger)

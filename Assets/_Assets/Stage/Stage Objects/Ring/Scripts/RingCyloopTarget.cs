@@ -2,17 +2,14 @@ using RagdollEngine;
 using UnityEngine;
 
 [RequireComponent(typeof(RingEntity))]
-public class RingCyloopTarget : CyloopTarget
-{
+public class RingCyloopTarget : CyloopTarget {
     RingEntity ringEntity;
 
-    void Awake()
-    {
+    void Awake() {
         ringEntity = GetComponent<RingEntity>();
     }
 
-    public override void OnTarget(PlayerBehaviourTree playerBehaviourTree)
-    {
+    public override void OnTarget(PlayerBehaviourTree playerBehaviourTree) {
         ringEntity.Collect(playerBehaviourTree);
     }
 }

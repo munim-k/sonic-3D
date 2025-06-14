@@ -1,11 +1,9 @@
 using UnityEngine.Splines;
 
-public class RailStageObject : StageObject
-{
+public class RailStageObject : StageObject {
     public SplineContainer splineContainer;
 
-    void Reset()
-    {
+    void Reset() {
         splineContainer = GetComponentInChildren<SplineContainer>();
     }
 }

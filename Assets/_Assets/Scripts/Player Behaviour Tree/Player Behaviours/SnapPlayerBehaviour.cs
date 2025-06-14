@@ -1,15 +1,12 @@
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class SnapPlayerBehaviour : PlayerBehaviour
-    {
-        public override void Execute()
-        {
-            if (kinematic) return;
+namespace RagdollEngine {
+    public class SnapPlayerBehaviour : PlayerBehaviour {
+        public override void Execute() {
+            if (kinematic)
+                return;
 
-            if (groundInformation.ground)
-            {
+            if (groundInformation.ground) {
                 Vector3 goal = groundInformation.hit.point + (groundInformation.hit.normal * height);
 
                 Vector3 difference = goal - playerTransform.position;

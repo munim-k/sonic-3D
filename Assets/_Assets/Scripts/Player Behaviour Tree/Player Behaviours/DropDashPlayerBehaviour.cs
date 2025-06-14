@@ -1,8 +1,7 @@
 using RagdollEngine;
 using UnityEngine;
 
-public class DropDashPlayerBehaviour : PlayerBehaviour
-{
+public class DropDashPlayerBehaviour : PlayerBehaviour {
     [SerializeField] RollPlayerBehaviour rollPlayerBehaviour;
 
     [SerializeField] float minSpeed;
@@ -13,10 +12,8 @@ public class DropDashPlayerBehaviour : PlayerBehaviour
 
     float chargeTimer;
 
-    void FixedUpdate()
-    {
-        if (!rollPlayerBehaviour.active || (groundInformation.ground && !groundInformation.enter))
-        {
+    void FixedUpdate() {
+        if (!rollPlayerBehaviour.active || (groundInformation.ground && !groundInformation.enter)) {
             chargeTimer = chargeTime;
 
             return;
@@ -26,8 +23,7 @@ public class DropDashPlayerBehaviour : PlayerBehaviour
             chargeTimer -= Time.fixedDeltaTime;
     }
 
-    public override void Execute()
-    {
+    public override void Execute() {
         if (groundInformation.enter)
             additiveVelocity = -RB.linearVelocity
                 + (Vector3.ProjectOnPlane(modelTransform.forward, groundInformation.hit.normal).normalized * Mathf.Max(RB.linearVelocity.magnitude, Mathf.Lerp(minSpeed, maxSpeed, 1 - Mathf.Clamp01(chargeTimer / chargeTime))));

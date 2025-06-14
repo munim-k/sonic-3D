@@ -1,9 +1,7 @@
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class GroundPlayerBehaviour : PlayerBehaviour
-    {
+namespace RagdollEngine {
+    public class GroundPlayerBehaviour : PlayerBehaviour {
         [SerializeField] float groundDistance; // Distance to check for ground below the player.
         [SerializeField] float slopeLimit; // Maximum slope angle the player can stand on.
         [SerializeField] float slopeCooldownLimit; // Slope angle limit during slope cooldown.
@@ -11,17 +9,15 @@ namespace RagdollEngine
         [SerializeField] float slopeCooldownTime; // Time duration for slope cooldown.
         [SerializeField] float loopSpeed; // Speed threshold for slope adjustments.
         [SerializeField] float platformSpeed; // Speed threshold for platform adjustments.
-       
+
 
         bool slopeCooldown; // Indicates if the player is in slope cooldown.
         bool initialized; // Tracks if the behavior has been initialized.
 
         // This method evaluates whether the player is on the ground.
-        public override bool Evaluate()
-        {
+        public override bool Evaluate() {
             // Initialize the behavior if it hasn't been initialized yet.
-            if (!initialized)
-            {
+            if (!initialized) {
                 initialized = true;
                 Execute(); // Perform the ground check immediately upon initialization.
             }
@@ -31,8 +27,7 @@ namespace RagdollEngine
         }
 
         // This method performs the main logic for detecting ground and handling slopes.
-        public override void Execute()
-        {
+        public override void Execute() {
             // Perform a raycast to check for ground below the player.
             bool cast = Physics.Raycast(
                 playerTransform.position, // Start position of the raycast.
@@ -64,8 +59,7 @@ namespace RagdollEngine
                 slopeCooldown = false;
 
             // Update the ground information with the results of the raycast and calculations.
-            groundInformation = new PlayerBehaviourTree.GroundInformation()
-            {
+            groundInformation = new PlayerBehaviourTree.GroundInformation() {
                 hit = hit, // Store the raycast hit information.
                 ground = ground, // Whether the player is on valid ground.
                 cast = cast, // Whether the raycast hit something.
@@ -73,7 +67,7 @@ namespace RagdollEngine
                 enter = ground && !wasActive // Whether the player just entered valid ground.
             };
             // Handle moving platform logic.
-           
+
             // Update the active state of the behavior based on whether the player is on valid ground.
             active = ground;
         }

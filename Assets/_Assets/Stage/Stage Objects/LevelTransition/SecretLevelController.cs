@@ -1,17 +1,13 @@
 using RagdollEngine;
 using UnityEngine;
 
-public class SecretLevelController : MonoBehaviour
-{
+public class SecretLevelController : MonoBehaviour {
     private LollipopCollectionPlayerBehaviour lollipopBehaviour;
     [SerializeField] private int lollipopThreshold = 50;
     [SerializeField] private Transform secretLevelTransform;
-    void Start()
-    {
-        foreach(PlayerBehaviour behaviour in Player.CharacterInstance.playerBehaviourTree.behaviours)
-        {
-            if (behaviour is LollipopCollectionPlayerBehaviour lollipop)
-            {
+    void Start() {
+        foreach (PlayerBehaviour behaviour in Player.CharacterInstance.playerBehaviourTree.behaviours) {
+            if (behaviour is LollipopCollectionPlayerBehaviour lollipop) {
                 lollipopBehaviour = lollipop;
                 break;
             }
@@ -20,14 +16,11 @@ public class SecretLevelController : MonoBehaviour
         OnLollipopCollected(lollipopBehaviour.GetLollipops());
     }
 
-    private void OnLollipopCollected(int lollipops)
-    {
-        if (lollipops >= lollipopThreshold)
-        {
+    private void OnLollipopCollected(int lollipops) {
+        if (lollipops >= lollipopThreshold) {
             secretLevelTransform.gameObject.SetActive(true);
         }
-        else
-        {
+        else {
             secretLevelTransform.gameObject.SetActive(false);
         }
     }

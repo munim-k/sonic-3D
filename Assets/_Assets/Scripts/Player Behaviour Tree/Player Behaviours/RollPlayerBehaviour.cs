@@ -1,10 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace RagdollEngine
-{
-    public class RollPlayerBehaviour : PlayerBehaviour
-    {
+namespace RagdollEngine {
+    public class RollPlayerBehaviour : PlayerBehaviour {
         [SerializeField] float turnSensitivity;
 
         [SerializeField] float uphillSlopeRatio;
@@ -15,13 +13,11 @@ namespace RagdollEngine
 
         bool rollLock;
 
-        void LateUpdate()
-        {
+        void LateUpdate() {
             animator.SetBool("Rolling", active);
         }
 
-        public override bool Evaluate()
-        {
+        public override bool Evaluate() {
             rollLock = roll
                 || (rollLock
                     && wasActive
@@ -30,8 +26,7 @@ namespace RagdollEngine
 
             roll = false;
 
-            if (((moveVelocity + additiveVelocity).magnitude > moveDeadzone) && (inputHandler.aim.pressed || (wasActive && inputHandler.aim.hold) || rollLock || (wasActive && !groundInformation.ground)))
-            {
+            if (((moveVelocity + additiveVelocity).magnitude > moveDeadzone) && (inputHandler.aim.pressed || (wasActive && inputHandler.aim.hold) || rollLock || (wasActive && !groundInformation.ground))) {
                 if (!wasActive)
                     animator.SetTrigger("Roll");
 
@@ -44,11 +39,11 @@ namespace RagdollEngine
             return false;
         }
 
-        public override void Execute()
-        {
+        public override void Execute() {
             additiveVelocity += Vector3.Project(-Vector3.up * (Vector3.Dot(moveVelocity, Vector3.up) >= 0 ? uphillSlopeRatio : downhillSlopeRatio), moveVelocity.normalized);
 
-            if (inputHandler.move.magnitude <= InputSystem.settings.defaultDeadzoneMin) return;
+            if (inputHandler.move.magnitude <= InputSystem.settings.defaultDeadzoneMin)
+                return;
 
             Vector3 moveForwardNormal = Vector3.ProjectOnPlane(cameraTransform.forward, playerTransform.up).normalized;
 

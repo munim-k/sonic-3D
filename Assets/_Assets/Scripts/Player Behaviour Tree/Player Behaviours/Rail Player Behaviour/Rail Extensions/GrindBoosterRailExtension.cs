@@ -1,16 +1,11 @@
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class GrindBoosterRailExtension : RailExtension
-    {
-        public override void Execute()
-        {
+namespace RagdollEngine {
+    public class GrindBoosterRailExtension : RailExtension {
+        public override void Execute() {
             foreach (StageObject thisStageObject in stageObjects)
-                if (thisStageObject is GrindBoosterStageObject)
-                {
-                    if (wasActive)
-                    {
+                if (thisStageObject is GrindBoosterStageObject) {
+                    if (wasActive) {
                         active = true;
 
                         return;

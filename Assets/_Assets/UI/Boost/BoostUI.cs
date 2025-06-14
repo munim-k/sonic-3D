@@ -1,9 +1,7 @@
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class BoostUI : MonoBehaviour
-    {
+namespace RagdollEngine {
+    public class BoostUI : MonoBehaviour {
         [SerializeField] RectTransform guage;
 
         [SerializeField] RectTransform minTransform;
@@ -16,30 +14,28 @@ namespace RagdollEngine
 
         bool active = true;
 
-        void Update()
-        {
-            if (!boostPlayerBehaviour) return;
+        void Update() {
+            if (!boostPlayerBehaviour)
+                return;
 
             if (boostPlayerBehaviour.boostPercent <= 0)
                 animator.SetTrigger("Disable");
 
-            if (!active) return;
+            if (!active)
+                return;
 
             guage.position = Vector3.Lerp(minTransform.position, maxTransform.position, boostPlayerBehaviour.boostPercent);
         }
 
-        public void Initialize(BoostPlayerBehaviour boostPlayerBehaviour)
-        {
+        public void Initialize(BoostPlayerBehaviour boostPlayerBehaviour) {
             this.boostPlayerBehaviour = boostPlayerBehaviour;
         }
 
-        public void Enter()
-        {
+        public void Enter() {
             active = true;
         }
 
-        public void Destoy()
-        {
+        public void Destoy() {
             Destroy(gameObject);
         }
     }

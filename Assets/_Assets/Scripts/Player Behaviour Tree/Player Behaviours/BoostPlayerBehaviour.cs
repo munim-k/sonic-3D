@@ -1,9 +1,7 @@
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class BoostPlayerBehaviour : PlayerBehaviour
-    {
+namespace RagdollEngine {
+    public class BoostPlayerBehaviour : PlayerBehaviour {
         public float speed;
 
         [SerializeField] BoostUI boostUI;
@@ -26,20 +24,16 @@ namespace RagdollEngine
 
         BoostUI currentBoostUI;
 
-        void LateUpdate()
-        {
+        void LateUpdate() {
             animator.SetBool("Boosting", active);
         }
 
-        void FixedUpdate()
-        {
+        void FixedUpdate() {
             boostPercent = Mathf.Max(boostPercent - ((boosting ? activeBoostDepletionSpeed : inactiveBoostDepletionSpeed) * Time.fixedDeltaTime), 0);
         }
 
-        public override bool Evaluate()
-        {
-            if (boostPercent <= 0)
-            {
+        public override bool Evaluate() {
+            if (boostPercent <= 0) {
                 boosting = false;
 
                 return false;
@@ -53,8 +47,7 @@ namespace RagdollEngine
                     || ((boosting || wasBoost) && inputHandler.boost.hold))
                 && (!boosting || RB.linearVelocity.magnitude >= boostDeadzone);
 
-            if (!currentBoostUI && boostPercent > 0)
-            {
+            if (!currentBoostUI && boostPercent > 0) {
                 currentBoostUI = Instantiate(boostUI, canvas.transform);
 
                 character.uis.Add(currentBoostUI.gameObject);
@@ -65,9 +58,9 @@ namespace RagdollEngine
             return boosting;
         }
 
-        public override void Execute()
-        {
-            if (!active) return;
+        public override void Execute() {
+            if (!active)
+                return;
 
             Vector3 moveForwardNormal = moveVelocity.magnitude > moveDeadzone ? moveVelocity.normalized : Vector3.ProjectOnPlane(modelTransform.forward, playerTransform.up);
 

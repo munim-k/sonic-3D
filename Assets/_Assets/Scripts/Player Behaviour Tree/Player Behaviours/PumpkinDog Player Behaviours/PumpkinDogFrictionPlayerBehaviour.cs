@@ -1,9 +1,7 @@
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class PumpkinDogFrictionPlayerBehaviour : PlayerBehaviour
-    {
+namespace RagdollEngine {
+    public class PumpkinDogFrictionPlayerBehaviour : PlayerBehaviour {
 
         [SerializeField] float minFriction;
 
@@ -13,8 +11,7 @@ namespace RagdollEngine
         [SerializeField] float maxSpeed;
 
 
-        public override void Execute()
-        {
+        public override void Execute() {
             if (!moving)
                 Slow();
 
@@ -22,8 +19,7 @@ namespace RagdollEngine
         }
 
 
-        void Slow()
-        {
+        void Slow() {
             additiveVelocity -= moveVelocity * Mathf.Lerp(minFriction, maxFriction, 1 - Mathf.Pow(10, -(moveVelocity.magnitude / maxSpeed)));
         }
 

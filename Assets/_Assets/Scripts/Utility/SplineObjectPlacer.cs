@@ -2,8 +2,7 @@ using UnityEngine;
 using UnityEngine.Splines;
 
 [RequireComponent(typeof(SplineContainer))]
-public class SplineObjectPlacer : MonoBehaviour
-{
+public class SplineObjectPlacer : MonoBehaviour {
     [Header("Placement Settings")]
     public GameObject objectToPlace;
     public int numberOfObjects = 10;
@@ -15,11 +14,9 @@ public class SplineObjectPlacer : MonoBehaviour
     private SplineContainer splineContainer;
     private Spline spline;
 
-    void Start()
-    {
+    void Start() {
         splineContainer = GetComponent<SplineContainer>();
-        if (splineContainer == null || splineContainer.Spline == null)
-        {
+        if (splineContainer == null || splineContainer.Spline == null) {
             Debug.LogError("SplineContainer or Spline not found!");
             return;
         }
@@ -28,26 +25,22 @@ public class SplineObjectPlacer : MonoBehaviour
         PlaceObjects();
     }
 
-    void PlaceObjects()
-    {
+    void PlaceObjects() {
         // Validate input
-        if (objectToPlace == null)
-        {
+        if (objectToPlace == null) {
             Debug.LogError("No object to place assigned!");
             return;
         }
 
-        if (numberOfObjects < 1)
-        {
+        if (numberOfObjects < 1) {
             Debug.LogWarning("Number of objects must be at least 1");
             return;
         }
 
         // Calculate total spline length
-        float splineLength = SplineUtility.CalculateLength(spline,transform.localToWorldMatrix);
+        float splineLength = SplineUtility.CalculateLength(spline, transform.localToWorldMatrix);
         // Handle zero-length spline case
-        if (Mathf.Approximately(splineLength, 0f))
-        {
+        if (Mathf.Approximately(splineLength, 0f)) {
             Debug.LogWarning("Spline has zero length. Placing single object at start position.");
             PlaceSingleObject();
             return;
@@ -58,15 +51,13 @@ public class SplineObjectPlacer : MonoBehaviour
         float stepSize = splineLength / (useClosedSpline ? numberOfObjects : numberOfObjects - 1);
 
         // Place objects along spline
-        for (int i = 0; i < placementCount; i++)
-        {
+        for (int i = 0; i < placementCount; i++) {
             float distance = i * stepSize;
             PlaceObjectAtDistance(distance, splineLength);
         }
     }
 
-    void PlaceSingleObject()
-    {
+    void PlaceSingleObject() {
         Vector3 position = SplineUtility.EvaluatePosition(spline, 0f);
         Quaternion rotation = alignRotation
             ? Quaternion.LookRotation(SplineUtility.EvaluateTangent(spline, 0f))
@@ -74,8 +65,7 @@ public class SplineObjectPlacer : MonoBehaviour
         InstantiateObject(position, rotation);
     }
 
-    void PlaceObjectAtDistance(float distance, float splineLength)
-    {
+    void PlaceObjectAtDistance(float distance, float splineLength) {
         float t = SplineUtility.GetNormalizedInterpolation(spline, distance, PathIndexUnit.Distance);
 
         Vector3 localposition = SplineUtility.EvaluatePosition(spline, t);
@@ -86,14 +76,12 @@ public class SplineObjectPlacer : MonoBehaviour
         InstantiateObject(position, rotation);
     }
 
-    void InstantiateObject(Vector3 position, Quaternion rotation)
-    {
+    void InstantiateObject(Vector3 position, Quaternion rotation) {
         Instantiate(objectToPlace, position, rotation, transform);
     }
 
 #if UNITY_EDITOR
-    void OnDrawGizmosSelected()
-    {
+    void OnDrawGizmosSelected() {
         // Draw instantiation points as spheres in edit mode
         splineContainer = GetComponent<SplineContainer>();
         if (splineContainer == null || splineContainer.Spline == null)
@@ -105,8 +93,7 @@ public class SplineObjectPlacer : MonoBehaviour
             return;
 
         float splineLength = SplineUtility.CalculateLength(spline, transform.localToWorldMatrix);
-        if (Mathf.Approximately(splineLength, 0f))
-        {
+        if (Mathf.Approximately(splineLength, 0f)) {
             // Draw single sphere at start
             Vector3 localPos = SplineUtility.EvaluatePosition(spline, 0f);
             Vector3 worldPos = splineContainer.transform.TransformPoint(localPos);
@@ -119,8 +106,7 @@ public class SplineObjectPlacer : MonoBehaviour
         float stepSize = splineLength / (useClosedSpline ? numberOfObjects : numberOfObjects - 1);
 
         Gizmos.color = Color.cyan;
-        for (int i = 0; i < placementCount; i++)
-        {
+        for (int i = 0; i < placementCount; i++) {
             float distance = i * stepSize;
             float t = SplineUtility.GetNormalizedInterpolation(spline, distance, PathIndexUnit.Distance);
             Vector3 localPos = SplineUtility.EvaluatePosition(spline, t);

@@ -1,11 +1,10 @@
-using RagdollEngine;
 using System.Collections.Generic;
 using System.Linq;
+using RagdollEngine;
 using UnityEngine;
 
 [ExecuteAlways]
-public class CyloopTrail : MonoBehaviour
-{
+public class CyloopTrail : MonoBehaviour {
     public Color color;
 
     [Range(0, 1)] public float colorSlider;
@@ -30,8 +29,7 @@ public class CyloopTrail : MonoBehaviour
 
     MaterialPropertyBlock materialPropertyBlock;
 
-    class Loop
-    {
+    class Loop {
         public int startIndex;
 
         public int endIndex;
@@ -47,9 +45,9 @@ public class CyloopTrail : MonoBehaviour
 
     bool closed;
 
-    public void Initialize(CyloopPlayerBehaviour cyloopPlayerBehaviour)
-    {
-        if (initialized) return;
+    public void Initialize(CyloopPlayerBehaviour cyloopPlayerBehaviour) {
+        if (initialized)
+            return;
 
         this.cyloopPlayerBehaviour = cyloopPlayerBehaviour;
 
@@ -68,14 +66,13 @@ public class CyloopTrail : MonoBehaviour
         active = true;
     }
 
-    void Update()
-    {
-        if (!initialized || !active) goto UpdateMaterials;
+    void Update() {
+        if (!initialized || !active)
+            goto UpdateMaterials;
 
         Vector3[] positions = new Vector3[lineRenderer.positionCount];
 
-        if (!cyloopPlayerBehaviour.active)
-        {
+        if (!cyloopPlayerBehaviour.active) {
             active = false;
 
             lineRenderer.GetPositions(positions);
@@ -93,14 +90,12 @@ public class CyloopTrail : MonoBehaviour
 
         float length = GetLength(positions);
 
-        if (Vector3.Distance(lineRenderer.GetPosition(lineRenderer.positionCount - 2), playerTransform.position) >= minVertexDistance)
-        {
+        if (Vector3.Distance(lineRenderer.GetPosition(lineRenderer.positionCount - 2), playerTransform.position) >= minVertexDistance) {
             lineRenderer.positionCount++;
 
             lineRenderer.SetPosition(lineRenderer.positionCount - 1, playerTransform.position);
 
-            if (length > maxLength)
-            {
+            if (length > maxLength) {
                 positions = new Vector3[lineRenderer.positionCount];
 
                 lineRenderer.GetPositions(positions);
@@ -111,8 +106,7 @@ public class CyloopTrail : MonoBehaviour
 
                 positionsList.RemoveAt(0);
 
-                foreach (Loop thisLoop in loops)
-                {
+                foreach (Loop thisLoop in loops) {
                     thisLoop.startIndex--;
 
                     thisLoop.endIndex--;
@@ -129,8 +123,7 @@ public class CyloopTrail : MonoBehaviour
 
             if (overlapCooldown)
                 overlapCooldown = OverlapCheck(positions);
-            else if (OverlapCheck(positions))
-            {
+            else if (OverlapCheck(positions)) {
                 animator.SetTrigger("Flash");
 
                 overlapCooldown = true;
@@ -139,15 +132,14 @@ public class CyloopTrail : MonoBehaviour
 
         materialPropertyBlock.SetFloat("_Length", length);
 
-    UpdateMaterials:
+UpdateMaterials:
 
         materialPropertyBlock.SetColor("_Color", color);
 
         lineRenderer.SetPropertyBlock(materialPropertyBlock);
     }
 
-    float GetLength(Vector3[] positions)
-    {
+    float GetLength(Vector3[] positions) {
         float length = 0;
 
         for (int i = 1; i < positions.Length; i++)
@@ -156,10 +148,8 @@ public class CyloopTrail : MonoBehaviour
         return length;
     }
 
-    bool OverlapCheck(Vector3[] positions)
-    {
-        for (int i = 1; i < positions.Length - minOverlapLength; i++)
-        {
+    bool OverlapCheck(Vector3[] positions) {
+        for (int i = 1; i < positions.Length - minOverlapLength; i++) {
             Vector3 point0 = positions[i - 1];
 
             Vector3 point1 = positions[i];
@@ -172,10 +162,8 @@ public class CyloopTrail : MonoBehaviour
 
             Vector3 position = Vector3.Lerp(point0, point1, dot / line.magnitude);
 
-            if (Vector3.Distance(position, playerTransform.position) <= overlapDistance)
-            {
-                loops.Add(new()
-                {
+            if (Vector3.Distance(position, playerTransform.position) <= overlapDistance) {
+                loops.Add(new() {
                     startIndex = i - 1,
                     endIndex = positions.Length
                 });
@@ -189,13 +177,13 @@ public class CyloopTrail : MonoBehaviour
         return false;
     }
 
-    void CollisionCheck(Vector3[] positions)
-    {
-        if (!closed) return;
+    void CollisionCheck(Vector3[] positions) {
+        if (!closed)
+            return;
 
-        foreach (Loop thisLoop in loops)
-        {
-            if (thisLoop.startIndex < 0 || thisLoop.endIndex < 0) continue;
+        foreach (Loop thisLoop in loops) {
+            if (thisLoop.startIndex < 0 || thisLoop.endIndex < 0)
+                continue;
 
             LineRenderer lineRenderer1 = new GameObject().AddComponent<LineRenderer>();
 
@@ -232,8 +220,7 @@ public class CyloopTrail : MonoBehaviour
         }
     }
 
-    public void Destroy()
-    {
+    public void Destroy() {
         Destroy(gameObject);
     }
 }

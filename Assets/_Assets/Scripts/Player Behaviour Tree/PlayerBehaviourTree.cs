@@ -5,8 +5,7 @@ using UnityEditor;
 #endif
 using UnityEngine;
 
-namespace RagdollEngine
-{
+namespace RagdollEngine {
     using static PlayerBehaviourTree;
 
 #if UNITY_EDITOR
@@ -16,8 +15,7 @@ namespace RagdollEngine
 
 #endif
 
-    public class PlayerBehaviourTree : BehaviourTree
-    {
+    public class PlayerBehaviourTree : BehaviourTree {
         public Transform playerTransform;
 
         public Transform modelTransform;
@@ -72,8 +70,7 @@ namespace RagdollEngine
 
         [HideInInspector] public bool initialized;
 
-        public struct GroundInformation
-        {
+        public struct GroundInformation {
             public RaycastHit hit;
 
             public bool ground;
@@ -85,10 +82,8 @@ namespace RagdollEngine
             public bool enter;
         }
 
-        public override void FixedUpdate()
-        {
-            if (!initialized)
-            {
+        public override void FixedUpdate() {
+            if (!initialized) {
                 RB.isKinematic = true;
 
                 return;
@@ -113,7 +108,7 @@ namespace RagdollEngine
             RB.isKinematic = false;
 
             base.FixedUpdate();
-          
+
 
             Cursor.lockState = CursorLockMode.Locked;
 
@@ -121,11 +116,10 @@ namespace RagdollEngine
 
             if (kinematic)
                 RB.MovePosition(movePosition);
-            else
-            {
+            else {
                 additiveVelocity += accelerationVector;
 
-               
+
                 RB.linearVelocity += additiveVelocity;
 
 
@@ -141,16 +135,14 @@ namespace RagdollEngine
                 RB.solverIterations = Physics.defaultSolverIterations;
         }
 
-        public void Initialize(Character character)
-        {
+        public void Initialize(Character character) {
             this.character = character;
 
             initialized = true;
         }
     }
 
-    public class PlayerBehaviour : BehaviourGraph.Behaviour
-    {
+    public class PlayerBehaviour : BehaviourGraph.Behaviour {
         public PlayerBehaviourTree playerBehaviourTree => behaviourTree as PlayerBehaviourTree;
 
         public Transform playerTransform => playerBehaviourTree.playerTransform;
@@ -167,20 +159,17 @@ namespace RagdollEngine
 
         public float moveDeadzone => playerBehaviourTree.moveDeadzone;
 
-        public GroundInformation groundInformation
-        {
+        public GroundInformation groundInformation {
             get => playerBehaviourTree.groundInformation;
             set => playerBehaviourTree.groundInformation = value;
         }
 
-        public List<Volume> volumes
-        {
+        public List<Volume> volumes {
             get => playerBehaviourTree.volumes;
             set => playerBehaviourTree.volumes = value;
         }
 
-        public List<StageObject> stageObjects
-        {
+        public List<StageObject> stageObjects {
             get => playerBehaviourTree.stageObjects;
             set => playerBehaviourTree.stageObjects = value;
         }
@@ -193,62 +182,52 @@ namespace RagdollEngine
 
         public InputHandler inputHandler => playerBehaviourTree.inputHandler;
 
-        public Vector3 additiveVelocity
-        {
+        public Vector3 additiveVelocity {
             get => playerBehaviourTree.additiveVelocity;
             set => playerBehaviourTree.additiveVelocity = value;
         }
 
-        public Vector3 movePosition
-        {
+        public Vector3 movePosition {
             get => playerBehaviourTree.movePosition;
             set => playerBehaviourTree.movePosition = value;
         }
 
-        public Vector3 moveVelocity
-        {
+        public Vector3 moveVelocity {
             get => playerBehaviourTree.moveVelocity;
             set => playerBehaviourTree.moveVelocity = value;
         }
 
-        public Vector3 accelerationVector
-        {
+        public Vector3 accelerationVector {
             get => playerBehaviourTree.accelerationVector;
             set => playerBehaviourTree.accelerationVector = value;
         }
 
-        public Vector3 tangent
-        {
+        public Vector3 tangent {
             get => playerBehaviourTree.tangent;
             set => playerBehaviourTree.tangent = value;
         }
 
-        public Vector3 plane
-        {
+        public Vector3 plane {
             get => playerBehaviourTree.plane;
             set => playerBehaviourTree.plane = value;
         }
 
-        public bool overrideModelTransform
-        {
+        public bool overrideModelTransform {
             get => playerBehaviourTree.overrideModelTransform;
             set => playerBehaviourTree.overrideModelTransform = value;
         }
 
-        public bool kinematic
-        {
+        public bool kinematic {
             get => playerBehaviourTree.kinematic;
             set => playerBehaviourTree.kinematic = value;
         }
 
-        public bool respawnTrigger
-        {
+        public bool respawnTrigger {
             get => playerBehaviourTree.respawnTrigger;
             set => playerBehaviourTree.respawnTrigger = value;
         }
 
-        public bool moving
-        {
+        public bool moving {
             get => playerBehaviourTree.moving;
             set => playerBehaviourTree.moving = value;
         }

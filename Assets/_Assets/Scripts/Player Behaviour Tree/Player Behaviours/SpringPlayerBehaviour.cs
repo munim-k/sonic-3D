@@ -1,9 +1,7 @@
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class SpringPlayerBehaviour : PlayerBehaviour
-    {
+namespace RagdollEngine {
+    public class SpringPlayerBehaviour : PlayerBehaviour {
         // Reference to the spring stage object the player interacts with
         SpringStageObject springStageObject;
 
@@ -17,8 +15,7 @@ namespace RagdollEngine
         float speed;
 
         // Called every frame after Update
-        void LateUpdate()
-        {
+        void LateUpdate() {
             // Determine if the player is springing
             spring = active // If the behavior is active
                 || (spring // Or if the player was already springing
@@ -30,10 +27,10 @@ namespace RagdollEngine
         }
 
         // Evaluates whether the spring behavior should be active
-        public override bool Evaluate()
-        {
+        public override bool Evaluate() {
             // Check if the player can interact with a spring
-            if (!SpringCheck()) return false;
+            if (!SpringCheck())
+                return false;
 
             // Calculate the goal position for the player based on the spring's position and length
             Vector3 goal = springStageObject.transform.position +
@@ -71,16 +68,14 @@ namespace RagdollEngine
         }
 
         // Checks if the player can interact with a spring
-        bool SpringCheck()
-        {
+        bool SpringCheck() {
             // Iterate through all stage objects in the scene
-            foreach (StageObject thisStageObject in stageObjects)
-            {
+            foreach (StageObject thisStageObject in stageObjects) {
                 // Check if the stage object is a spring
-                if (thisStageObject is SpringStageObject)
-                {
+                if (thisStageObject is SpringStageObject) {
                     // If the player was already interacting with this spring, return true
-                    if (wasActive && thisStageObject == springStageObject) return true;
+                    if (wasActive && thisStageObject == springStageObject)
+                        return true;
 
                     // Set the current spring stage object
                     springStageObject = thisStageObject as SpringStageObject;
@@ -124,7 +119,8 @@ namespace RagdollEngine
             }
 
             // If the player was previously active and the spring is still compressing, return true
-            if (wasActive && currentLength > 0) return true;
+            if (wasActive && currentLength > 0)
+                return true;
 
             return false; // The player cannot interact with a spring
         }

@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class World3BossVisuals : MonoBehaviour
-{
+public class World3BossVisuals : MonoBehaviour {
     [SerializeField] private World3Boss boss;
     [SerializeField] private Image healthBar;
     [SerializeField] private Material coreActiveMat;
@@ -10,18 +9,15 @@ public class World3BossVisuals : MonoBehaviour
     [SerializeField] private MeshRenderer coreRenderer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private World3Boss.State state;
-    void Start()
-    {
+    void Start() {
         boss.OnStateChange += OnStateChange;
         ((IHittable)boss).OnHit += OnDamage;
     }
 
 
-    private void OnStateChange(World3Boss.State s)
-    {
+    private void OnStateChange(World3Boss.State s) {
         state = s;
-        switch (state)
-        {
+        switch (state) {
             case World3Boss.State.Flamethrower:
                 SetCoreState(false);
                 break;
@@ -36,22 +32,17 @@ public class World3BossVisuals : MonoBehaviour
         }
     }
 
-    private void OnDamage()
-    {
-        if (healthBar != null)
-        {
+    private void OnDamage() {
+        if (healthBar != null) {
             healthBar.fillAmount = boss.GetHealthNormalized();
         }
     }
 
-    private void SetCoreState(bool damageable)
-    {
-        if (damageable)
-        {
+    private void SetCoreState(bool damageable) {
+        if (damageable) {
             coreRenderer.material = coreActiveMat;
         }
-        else
-        {
+        else {
             coreRenderer.material = coreInactiveMat;
         }
     }

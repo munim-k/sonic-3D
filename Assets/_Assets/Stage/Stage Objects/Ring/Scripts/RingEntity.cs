@@ -1,9 +1,8 @@
-using RagdollEngine;
 using System.Collections;
+using RagdollEngine;
 using UnityEngine;
 
-public class RingEntity : Entity
-{
+public class RingEntity : Entity {
     [SerializeField] AudioSourceInstance ringAudioSourceInstance;
 
     [SerializeField] Animator animator;
@@ -16,9 +15,9 @@ public class RingEntity : Entity
 
     bool collected;
 
-    public void Collect(PlayerBehaviourTree playerBehaviourTree)
-    {
-        if (collected) return;
+    public void Collect(PlayerBehaviourTree playerBehaviourTree) {
+        if (collected)
+            return;
 
         collected = true;
 
@@ -30,14 +29,12 @@ public class RingEntity : Entity
 
         StartCoroutine(PlayLerpAnimation());
 
-        IEnumerator PlayLerpAnimation()
-        {
+        IEnumerator PlayLerpAnimation() {
             Vector3 positionOffset = transform.position - playerBehaviourTree.playerTransform.position;
 
             float animationTimer = animationTime;
 
-            while (animationTimer > 0)
-            {
+            while (animationTimer > 0) {
                 animationTimer -= Time.deltaTime;
 
                 float lerp = 1 - (animationTimer / animationTime);
@@ -54,16 +51,14 @@ public class RingEntity : Entity
         }
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        try
-        {
+    void OnTriggerEnter(Collider other) {
+        try {
             PlayerBehaviourTree playerBehaviourTree = other.transform.parent.GetComponentInChildren<PlayerBehaviourTree>();
-            if (!playerBehaviourTree) return;
+            if (!playerBehaviourTree)
+                return;
             Collect(playerBehaviourTree);
         }
-        catch
-        {
+        catch {
 
         }
     }

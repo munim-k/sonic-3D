@@ -2,10 +2,8 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
 
-namespace RagdollEngine
-{
-    public class SplinePlayerCameraState : PlayerCameraState
-    {
+namespace RagdollEngine {
+    public class SplinePlayerCameraState : PlayerCameraState {
         Volume volume;
 
         SplineContainer projectedSplineContainer;
@@ -22,11 +20,11 @@ namespace RagdollEngine
 
         float clampMax;
 
-        public override void Execute()
-        {
+        public override void Execute() {
             spline = SplineCameraCheck();
 
-            if (!spline) return;
+            if (!spline)
+                return;
 
             //cameraTransform.position = Vector3.Lerp(oldPosition + playerTransform.position,
             //ProjectSpline(),
@@ -44,21 +42,18 @@ namespace RagdollEngine
                 1 - Mathf.Sin(Mathf.SmoothStep(0, 1, transition / transitionTime) * Mathf.PI / 2));
         }
 
-        public override bool Check()
-        {
+        public override bool Check() {
             return SplineCameraCheck();
         }
 
-        bool SplineCameraCheck()
-        {
+        bool SplineCameraCheck() {
             if (spline)
                 foreach (Volume thisVolume in volumes)
                     if (thisVolume is SplineCameraVolume && thisVolume == volume)
                         return true;
 
             foreach (Volume thisVolume in volumes)
-                if (thisVolume is SplineCameraVolume)
-                {
+                if (thisVolume is SplineCameraVolume) {
                     volume = thisVolume;
 
                     SplineCameraVolume thisSplineCameraVolume = thisVolume as SplineCameraVolume;
@@ -81,8 +76,7 @@ namespace RagdollEngine
             return false;
         }
 
-        Vector3 ProjectSpline()
-        {
+        Vector3 ProjectSpline() {
             SplineUtility.GetNearestPoint(projectedSplineContainer.Spline, Utility.DivideVector3(playerTransform.position - projectedSplineContainer.transform.position, projectedSplineContainer.transform.lossyScale), out float3 _, out float t);
 
             return cameraSplineContainer.EvaluatePosition(Mathf.Clamp01((t - clampMin) / clampMax));

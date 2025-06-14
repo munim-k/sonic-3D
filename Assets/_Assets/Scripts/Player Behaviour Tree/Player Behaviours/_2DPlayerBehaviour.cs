@@ -2,10 +2,8 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
 
-namespace RagdollEngine
-{
-    public class _2DPlayerBehaviour : PlayerBehaviour
-    {
+namespace RagdollEngine {
+    public class _2DPlayerBehaviour : PlayerBehaviour {
         [HideInInspector] public Vector3 position;
 
         [HideInInspector] public float3x3 matrix;
@@ -22,16 +20,13 @@ namespace RagdollEngine
 
         bool loop;
 
-        public override void Execute()
-        {
-            if (_2DCheck())
-            {
+        public override void Execute() {
+            if (_2DCheck()) {
                 air = _2D && loop && !groundInformation.ground;
 
                 _2D = true;
             }
-            else
-            {
+            else {
                 _2D = false;
 
                 air = false;
@@ -62,11 +57,9 @@ namespace RagdollEngine
             position = air ? (Vector3)nearest + Vector3.Project(position - (Vector3)nearest, plane) : nearest;
         }
 
-        bool _2DCheck()
-        {
+        bool _2DCheck() {
             foreach (Volume thisVolume in volumes)
-                if (thisVolume is LoopVolume)
-                {
+                if (thisVolume is LoopVolume) {
                     volume = thisVolume;
 
                     splineContainer = ((LoopVolume)thisVolume).splineContainer;
@@ -86,8 +79,7 @@ namespace RagdollEngine
                         return true;
 
             foreach (Volume thisVolume in volumes)
-                if (thisVolume is SplineVolume)
-                {
+                if (thisVolume is SplineVolume) {
                     volume = thisVolume;
 
                     splineContainer = ((SplineVolume)thisVolume).splineContainer;

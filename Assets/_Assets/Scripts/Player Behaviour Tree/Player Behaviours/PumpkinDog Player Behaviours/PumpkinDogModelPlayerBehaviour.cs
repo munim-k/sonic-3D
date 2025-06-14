@@ -1,18 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace RagdollEngine
-{
-    public class PumpkinDogModelPlayerBehaviour : PlayerBehaviour
-    {
+namespace RagdollEngine {
+    public class PumpkinDogModelPlayerBehaviour : PlayerBehaviour {
         // Serialized fields for tuning movement and rotation behavior
         [SerializeField] float groundSmoothness; // Smoothness of model alignment when grounded
         [SerializeField] float airSmoothness;    // Smoothness of model alignment when airborne
         [SerializeField] float maxSpeed;         // Maximum speed of the player
 
-        public override void Execute()
-        {
-            
+        public override void Execute() {
+
             // Calculate the player's current speed based on input or velocity
             float speed = inputHandler.move.magnitude > InputSystem.settings.defaultDeadzoneMin || moveVelocity.magnitude > moveDeadzone
                 ? moveVelocity.magnitude
@@ -23,8 +20,7 @@ namespace RagdollEngine
             // Update the animator's "Ground" parameter to indicate whether the player is grounded
             animator.SetBool("Ground", groundInformation.ground);
 
-            if (groundInformation.ground)
-            {
+            if (groundInformation.ground) {
                 // Update animator parameters related to speed when the player is grounded
                 animator.SetFloat("Speed", speed); // Current speed
                 animator.SetFloat("World Speed", RB.linearVelocity.magnitude); // World-relative speed
@@ -44,7 +40,8 @@ namespace RagdollEngine
             );
 
             // If the model's transform is overridden, exit early
-            if (overrideModelTransform) return ;
+            if (overrideModelTransform)
+                return;
 
             // Update the model's rotation to align with the calculated forward and up directions
 

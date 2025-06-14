@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEngine.Splines;
 
-public class SplineCameraVolume : Volume
-{
+public class SplineCameraVolume : Volume {
     public SplineContainer projectedSplineContainer;
 
     public SplineContainer cameraSplineContainer;
@@ -15,8 +14,7 @@ public class SplineCameraVolume : Volume
 
     [Range(0, 1)] public float clampMax = 1;
 
-    void OnDrawGizmosSelected()
-    {
+    void OnDrawGizmosSelected() {
         Gizmos.color = Color.red;
 
         Gizmos.DrawRay(transform.position, Quaternion.Euler(rotation) * Vector3.right * 10);
@@ -29,7 +27,8 @@ public class SplineCameraVolume : Volume
 
         Gizmos.DrawRay(transform.position, Quaternion.Euler(rotation) * Vector3.forward * 10);
 
-        if (!projectedSplineContainer) return;
+        if (!projectedSplineContainer)
+            return;
 
         Gizmos.color = Color.white;
 

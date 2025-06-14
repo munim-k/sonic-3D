@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public class HintRingEntity : Entity
-{
+public class HintRingEntity : Entity {
     public string[] hint;
 
     [SerializeField] Animator animator;
@@ -10,9 +9,9 @@ public class HintRingEntity : Entity
 
     [HideInInspector] public bool touched;
 
-    public void Touch()
-    {
-        if (touched) return;
+    public void Touch() {
+        if (touched)
+            return;
 
         touched = true;
 

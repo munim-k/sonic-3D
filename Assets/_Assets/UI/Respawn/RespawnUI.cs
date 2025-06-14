@@ -1,33 +1,28 @@
 using System.Collections;
 using UnityEngine;
 
-public class RespawnUI : MonoBehaviour
-{
+public class RespawnUI : MonoBehaviour {
     [SerializeField] Animator animator;
 
     [SerializeField] float delay;
 
     bool active;
 
-    public IEnumerator WaitForEnterTransition()
-    {
+    public IEnumerator WaitForEnterTransition() {
         yield return active;
 
         yield return new WaitForSeconds(delay);
     }
 
-    public void Enter()
-    {
+    public void Enter() {
         active = true;
     }
 
-    public void Exit()
-    {
+    public void Exit() {
         animator.SetTrigger("Disable");
     }
 
-    public void Destroy()
-    {
+    public void Destroy() {
         Destroy(gameObject);
     }
 }

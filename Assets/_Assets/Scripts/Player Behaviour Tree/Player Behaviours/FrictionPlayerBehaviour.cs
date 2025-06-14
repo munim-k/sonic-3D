@@ -1,9 +1,7 @@
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class FrictionPlayerBehaviour : PlayerBehaviour
-    {
+namespace RagdollEngine {
+    public class FrictionPlayerBehaviour : PlayerBehaviour {
         [SerializeField] AnimationCurve handlingOverSpeed = AnimationCurve.Linear(0, 0, 1, 1);
 
         [SerializeField] AnimationCurve airHandlingOverSpeed = AnimationCurve.Linear(0, 0, 1, 1);
@@ -26,24 +24,20 @@ namespace RagdollEngine
 
         bool braking;
 
-        void LateUpdate()
-        {
+        void LateUpdate() {
             animator.SetBool("Braking", braking && active);
         }
 
-        public override void Execute()
-        {
+        public override void Execute() {
             if (braking)
                 braking = wasActive && groundInformation.ground && RB.linearVelocity.magnitude > moveDeadzone;
 
-            if (!braking)
-            {
+            if (!braking) {
                 braking = groundInformation.ground && RB.linearVelocity.magnitude > minBrakeSpeed && moving && Vector3.Dot(accelerationVector.normalized, RB.linearVelocity.normalized) < 0;
 
                 if (braking)
                     animator.SetTrigger("Brake");
-                else
-                {
+                else {
                     if (moving)
                         Turn();
                     else
@@ -57,9 +51,9 @@ namespace RagdollEngine
             active = true;
         }
 
-        void Turn()
-        {
-            if (accelerationVector.magnitude <= Physics.sleepThreshold) return;
+        void Turn() {
+            if (accelerationVector.magnitude <= Physics.sleepThreshold)
+                return;
 
             float handling = Mathf.Lerp(minHandling, maxHandling, (groundInformation.ground ? handlingOverSpeed : airHandlingOverSpeed).Evaluate(1 - Mathf.Pow(10, -(moveVelocity.magnitude / maxSpeed))));
 
@@ -67,13 +61,11 @@ namespace RagdollEngine
                 - (moveVelocity * handling);
         }
 
-        void Slow()
-        {
+        void Slow() {
             additiveVelocity -= moveVelocity * Mathf.Lerp(minFriction, maxFriction, 1 - Mathf.Pow(10, -(moveVelocity.magnitude / maxSpeed)));
         }
 
-        void Brake()
-        {
+        void Brake() {
             additiveVelocity -= moveVelocity * Mathf.Lerp(minBrake, maxBrake, 1 - Mathf.Pow(10, -(moveVelocity.magnitude / maxSpeed)));
 
             accelerationVector = Vector3.zero;

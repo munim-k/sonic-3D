@@ -1,9 +1,7 @@
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class JumpPlayerBehaviour : PlayerBehaviour
-    {
+namespace RagdollEngine {
+    public class JumpPlayerBehaviour : PlayerBehaviour {
         [SerializeField] int jumps;
 
         [SerializeField] float jumpHeight;
@@ -32,51 +30,40 @@ namespace RagdollEngine
 
         float currentCoyoteTime;
 
-        float jumpForce
-        {
-            get
-            {
+        float jumpForce {
+            get {
                 return Mathf.Sqrt(2 * (gravity / Time.fixedDeltaTime) * jumpHeight);
             }
         }
 
-        float airJumpForce
-        {
-            get
-            {
+        float airJumpForce {
+            get {
                 return Mathf.Sqrt(2 * (gravity / Time.fixedDeltaTime) * airJumpHeight);
             }
         }
 
-        float baseJumpForce
-        {
-            get
-            {
+        float baseJumpForce {
+            get {
                 return Mathf.Sqrt(2 * (gravity / Time.fixedDeltaTime) * baseJumpHeight);
             }
         }
 
-        void LateUpdate()
-        {
+        void LateUpdate() {
             animator.ResetTrigger("Jump");
         }
 
-        public override void Execute()
-        {
+        public override void Execute() {
             fixedJump = false;
 
             fixedGroundJump = false;
 
-            if (groundInformation.ground)
-            {
+            if (groundInformation.ground) {
                 currentJumps = jumps;
 
                 currentCoyoteTime = coyoteTime;
             }
-            else
-            {
-                if (currentCoyoteTime > 0)
-                {
+            else {
+                if (currentCoyoteTime > 0) {
                     currentJumps = jumps;
 
                     currentCoyoteTime -= Time.fixedDeltaTime;
@@ -85,10 +72,8 @@ namespace RagdollEngine
                     currentJumps--;
             }
 
-            if (jumping)
-            {
-                if (inputHandler.jump.hold && currentJumpTimer > 0)
-                {
+            if (jumping) {
+                if (inputHandler.jump.hold && currentJumpTimer > 0) {
                     additiveVelocity = currentJumpForce * (Time.fixedDeltaTime / jumpTimer);
 
                     currentJumpTimer -= Time.fixedDeltaTime;
@@ -97,16 +82,13 @@ namespace RagdollEngine
                     jumping = false;
             }
 
-            if (inputHandler.jump.pressed)
-            {
-                if (currentJumps > 0)
-                {
+            if (inputHandler.jump.pressed) {
+                if (currentJumps > 0) {
                     bool groundJump = groundInformation.ground || currentCoyoteTime > 0;
 
                     Jump(groundInformation.ground ? groundInformation.hit.normal : Vector3.up, groundJump);
 
-                    if (groundJump)
-                    {
+                    if (groundJump) {
                         fixedGroundJump = true;
 
                         animator.SetTrigger("Jump");
@@ -117,21 +99,18 @@ namespace RagdollEngine
             }
         }
 
-        public void Jump(Vector3 normal, bool groundJump)
-        {
+        public void Jump(Vector3 normal, bool groundJump) {
             additiveVelocity = -Vector3.Project(RB.linearVelocity, normal)
                 + (normal * Mathf.Max(groundJump ? baseJumpForce : airJumpForce, Vector3.Dot(RB.linearVelocity, normal)));
 
-            if (groundJump)
-            {
+            if (groundJump) {
                 currentJumps = jumps - 1;
 
                 jumping = true;
 
                 currentJumpTimer = jumpTimer;
             }
-            else
-            {
+            else {
                 currentJumps--;
 
                 animator.SetTrigger("Jump");
@@ -144,14 +123,12 @@ namespace RagdollEngine
             fixedJump = true;
         }
 
-        public void ResetJumps()
-        {
+        public void ResetJumps() {
             if (currentJumps == jumps)
                 return;
             currentJumps = jumps;
             currentCoyoteTime = coyoteTime;
-            if (groundInformation.ground)
-            {
+            if (groundInformation.ground) {
                 currentJumpTimer = jumpTimer;
                 additiveVelocity = currentJumpForce * (Time.fixedDeltaTime / jumpTimer);
                 jumping = true;

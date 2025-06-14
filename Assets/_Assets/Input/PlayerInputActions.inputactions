@@ -199,17 +199,6 @@
                 },
                 {
                     "name": "",
-                    "id": "f283c9c0-8282-4ce0-b205-6d75b6236d72",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Aim",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "87a1c080-6675-43d0-a9c6-36eff800d260",
                     "path": "<Keyboard>/ctrl",
                     "interactions": "",

@@ -1,17 +1,14 @@
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class DashPanelPlayerBehaviour : PlayerBehaviour
-    {
+namespace RagdollEngine {
+    public class DashPanelPlayerBehaviour : PlayerBehaviour {
         [SerializeField] float cooldownTime;
 
         DashPanelStageObject dashPanelStageObject;
 
         float cooldownTimer;
 
-        public override bool Evaluate()
-        {
+        public override bool Evaluate() {
             bool dashPanel = DashPanelCheck();
 
             if (dashPanel)
@@ -21,19 +18,19 @@ namespace RagdollEngine
             return dashPanel;
         }
 
-        bool DashPanelCheck()
-        {
+        bool DashPanelCheck() {
             if (!wasActive)
                 cooldownTimer = 0;
 
-            if (!groundInformation.ground) return false;
+            if (!groundInformation.ground)
+                return false;
 
             foreach (StageObject thisStageObject in stageObjects)
-                if (thisStageObject is DashPanelStageObject)
-                {
+                if (thisStageObject is DashPanelStageObject) {
                     cooldownTimer = cooldownTime;
 
-                    if (wasActive) return true;
+                    if (wasActive)
+                        return true;
 
                     dashPanelStageObject = thisStageObject as DashPanelStageObject;
 
@@ -44,7 +41,8 @@ namespace RagdollEngine
 
             cooldownTimer -= Time.fixedDeltaTime;
 
-            if (cooldownTimer > 0) return true;
+            if (cooldownTimer > 0)
+                return true;
 
             return false;
         }

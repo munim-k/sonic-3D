@@ -1,16 +1,13 @@
 using System;
 
-public class Entity : StageObject
-{
+public class Entity : StageObject {
     public event EventHandler Destroyed;
 
-    public virtual void OnDestroy()
-    {
+    public virtual void OnDestroy() {
         Destroyed?.Invoke(this, EventArgs.Empty);
     }
 
-    public void Destroy()
-    {
+    public void Destroy() {
         Destroy(gameObject);
     }
 }

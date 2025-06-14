@@ -1,10 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace RagdollEngine
-{
-    public class PumpkinDogMovePlayerBehaviour : PlayerBehaviour
-    {
+namespace RagdollEngine {
+    public class PumpkinDogMovePlayerBehaviour : PlayerBehaviour {
         [SerializeField] float maxSpeed; // Maximum speed the player can move
         [SerializeField] float platformSpeed; // Speed of the moving platform
         private Transform currentPlatform;
@@ -12,8 +10,7 @@ namespace RagdollEngine
 
         bool wasMoving; // Tracks whether the player was moving in the previous frame
 
-        public override void Execute()
-        {
+        public override void Execute() {
             active = true; // Mark this behavior as active
 
             // Determine if the player was moving in the previous frame and is still active
@@ -41,18 +38,15 @@ namespace RagdollEngine
             // Calculate the percentage of the maximum speed the player is currently moving at
             float speedPercent = Mathf.Min(moveVelocity.magnitude / maxSpeed, 1);
 
-            if (moving)
-            {
+            if (moving) {
                 // Adjust movement direction based on the terrain plane
-                if (plane.magnitude > 0)
-                {
+                if (plane.magnitude > 0) {
                     Vector3 axis = Vector3.Cross(plane, playerTransform.up);
                     moveNormal = axis.normalized * Mathf.Sign(Vector3.Dot(moveNormal, axis)) * moveNormal.magnitude;
                 }
                 moveVelocity = moveNormal * maxSpeed;
             }
-            else
-            {
+            else {
                 moveVelocity = Vector3.zero;
             }
             Vector3 finalVel = moveVelocity - RB.linearVelocity;
@@ -60,13 +54,11 @@ namespace RagdollEngine
             additiveVelocity += finalVel;
             // Update the movement state for the next frame
 
-            if (groundInformation.ground && groundInformation.hit.collider.CompareTag("MovingPlatform"))
-            {
+            if (groundInformation.ground && groundInformation.hit.collider.CompareTag("MovingPlatform")) {
                 Transform platformTransform = groundInformation.hit.collider.transform;
 
                 // If the platform has changed, reset the previous position
-                if (currentPlatform != platformTransform)
-                {
+                if (currentPlatform != platformTransform) {
                     currentPlatform = platformTransform;
                     previousPlatformPosition = platformTransform.position;
                 }
@@ -80,8 +72,7 @@ namespace RagdollEngine
                 // Add the platform's velocity to the player's additive velocity
                 additiveVelocity += platformVelocity;
             }
-            else
-            {
+            else {
                 // Reset platform tracking if the player is no longer on a moving platform
                 currentPlatform = null;
             }

@@ -2,10 +2,8 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
 
-namespace RagdollEngine
-{
-    public class RailPlayerBehaviour : PlayerBehaviour
-    {
+namespace RagdollEngine {
+    public class RailPlayerBehaviour : PlayerBehaviour {
         public LayerMask railLayerMask;
 
         [SerializeField] RailExtension[] preExtensions;
@@ -44,18 +42,15 @@ namespace RagdollEngine
 
         bool railCooldown;
 
-        void LateUpdate()
-        {
+        void LateUpdate() {
             animator.SetBool("Grinding", active);
         }
 
-        public override bool Evaluate()
-        {
+        public override bool Evaluate() {
             return pass;
         }
 
-        public override void Execute()
-        {
+        public override void Execute() {
             pass = false;
 
             if (enter)
@@ -63,14 +58,12 @@ namespace RagdollEngine
             else if (!wasActive)
                 rail = false;
 
-            if (!rail)
-            {
+            if (!rail) {
                 //bool cast = Physics.Raycast(playerTransform.position, -playerTransform.up, out RaycastHit hit, distance + (Mathf.Max(Vector3.Dot(RB.velocity, -playerTransform.up), 0) * Time.fixedDeltaTime), railLayerMask, QueryTriggerInteraction.Ignore);
 
                 bool check = RailCheck(out RailStageObject railStageObject);
 
-                if (!check)
-                {
+                if (!check) {
                     railCooldown = false;
 
                     return;
@@ -85,7 +78,8 @@ namespace RagdollEngine
                     return;
                 }*/
 
-                if (railCooldown && railStageObject.splineContainer == splineContainer) return;
+                if (railCooldown && railStageObject.splineContainer == splineContainer)
+                    return;
 
                 SplineUtility.GetNearestPoint(railStageObject.splineContainer.Spline, Utility.DivideVector3(/*hit.point*/ playerTransform.position - railStageObject.splineContainer.transform.position, railStageObject.splineContainer.transform.lossyScale), out float3 _, out t);
 
@@ -144,8 +138,7 @@ namespace RagdollEngine
                 velocity = matrix.c2 * Mathf.Sign(Vector3.Dot(RB.linearVelocity, matrix.c2)) * RB.linearVelocity.magnitude * Time.fixedDeltaTime;
             }
 
-            if (rail)
-            {
+            if (rail) {
                 splineContainer.Evaluate(t, out float3 nearest, out matrix.c2, out matrix.c1);
 
                 matrix.c1 = Vector3.Normalize(matrix.c1);
@@ -164,7 +157,8 @@ namespace RagdollEngine
 
                 ExecuteExtensions(preExtensions, out rail);
 
-                if (!rail) return;
+                if (!rail)
+                    return;
 
                 t += dot / splineContainer.CalculateLength();
 
@@ -179,15 +173,15 @@ namespace RagdollEngine
 
                 ExecuteExtensions(postExtensions, out rail);
 
-                if (!rail) return;
+                if (!rail)
+                    return;
 
                 Vector3 difference = goal - playerTransform.position;
 
                 Vector3 difference1 = point - playerTransform.position;
 
                 if (Physics.Raycast(playerTransform.position, difference.normalized, difference.magnitude, layerMask, QueryTriggerInteraction.Ignore)
-                    || Physics.Raycast(playerTransform.position, difference1.normalized, difference1.magnitude, layerMask, QueryTriggerInteraction.Ignore))
-                {
+                    || Physics.Raycast(playerTransform.position, difference1.normalized, difference1.magnitude, layerMask, QueryTriggerInteraction.Ignore)) {
                     Exit();
 
                     return;
@@ -206,8 +200,7 @@ namespace RagdollEngine
                 pass = true;
 
                 if ((dot >= 0 && t > 1)
-                    || (dot <= 0 && t < 0))
-                {
+                    || (dot <= 0 && t < 0)) {
                     Exit();
 
                     return;
@@ -220,8 +213,7 @@ namespace RagdollEngine
                 Exit();
         }
 
-        public void Enter(RailStageObject railStageObject)
-        {
+        public void Enter(RailStageObject railStageObject) {
             SplineUtility.GetNearestPoint(railStageObject.splineContainer.Spline, Utility.DivideVector3(playerTransform.position - railStageObject.splineContainer.transform.position, railStageObject.splineContainer.transform.lossyScale), out float3 _, out t);
 
             splineContainer = railStageObject.splineContainer;
@@ -259,28 +251,23 @@ namespace RagdollEngine
             kinematic = true;
         }
 
-        void Exit()
-        {
+        void Exit() {
             rail = false;
 
             railCooldown = true;
         }
 
-        void ExecuteExtensions(RailExtension[] railExtensions, out bool successful)
-        {
-            foreach (RailExtension thisRailExtention in railExtensions)
-            {
+        void ExecuteExtensions(RailExtension[] railExtensions, out bool successful) {
+            foreach (RailExtension thisRailExtention in railExtensions) {
                 thisRailExtention.Execute();
 
-                if (!rail)
-                {
+                if (!rail) {
                     successful = false;
 
                     return;
                 }
 
-                if (!extend)
-                {
+                if (!extend) {
                     successful = true;
 
                     return;
@@ -290,13 +277,11 @@ namespace RagdollEngine
             successful = true;
         }
 
-        bool RailCheck(out RailStageObject railStageObject)
-        {
+        bool RailCheck(out RailStageObject railStageObject) {
             railStageObject = null;
 
             foreach (StageObject thisStageObject in stageObjects)
-                if (thisStageObject is RailStageObject)
-                {
+                if (thisStageObject is RailStageObject) {
                     railStageObject = thisStageObject as RailStageObject;
 
                     return true;
@@ -306,140 +291,105 @@ namespace RagdollEngine
         }
     }
 
-    public class RailExtension : PlayerBehaviour
-    {
-        public RailPlayerBehaviour railPlayerBehaviour
-        {
-            get
-            {
+    public class RailExtension : PlayerBehaviour {
+        public RailPlayerBehaviour railPlayerBehaviour {
+            get {
                 return GetComponentInParent<RailPlayerBehaviour>();
             }
         }
 
-        public LayerMask railLayerMask
-        {
-            get
-            {
+        public LayerMask railLayerMask {
+            get {
                 return railPlayerBehaviour.railLayerMask;
             }
         }
 
-        public SplineContainer splineContainer
-        {
-            get
-            {
+        public SplineContainer splineContainer {
+            get {
                 return railPlayerBehaviour.splineContainer;
             }
-            set
-            {
+            set {
                 railPlayerBehaviour.splineContainer = value;
             }
         }
 
-        public float3x3 matrix
-        {
-            get
-            {
+        public float3x3 matrix {
+            get {
                 return railPlayerBehaviour.matrix;
             }
-            set
-            {
+            set {
                 railPlayerBehaviour.matrix = value;
             }
         }
 
-        public Vector3 point
-        {
-            get
-            {
+        public Vector3 point {
+            get {
                 return railPlayerBehaviour.point;
             }
-            set
-            {
+            set {
                 railPlayerBehaviour.point = value;
             }
         }
 
-        public Vector3 goal
-        {
-            get
-            {
+        public Vector3 goal {
+            get {
                 return railPlayerBehaviour.goal;
             }
-            set
-            {
+            set {
                 railPlayerBehaviour.goal = value;
             }
         }
 
-        public Vector3 velocity
-        {
-            get
-            {
+        public Vector3 velocity {
+            get {
                 return railPlayerBehaviour.velocity;
             }
-            set
-            {
+            set {
                 railPlayerBehaviour.velocity = value;
             }
         }
 
-        public bool rail
-        {
-            get
-            {
+        public bool rail {
+            get {
                 return railPlayerBehaviour.rail;
             }
-            set
-            {
+            set {
                 railPlayerBehaviour.rail = value;
             }
         }
 
-        public bool pass
-        {
-            get
-            {
+        public bool pass {
+            get {
                 return railPlayerBehaviour.pass;
             }
-            set
-            {
+            set {
                 railPlayerBehaviour.pass = value;
             }
         }
 
-        public bool onRail
-        {
-            get
-            {
+        public bool onRail {
+            get {
                 return railPlayerBehaviour.onRail;
             }
-            set
-            {
+            set {
                 railPlayerBehaviour.onRail = value;
             }
         }
 
-        public bool extend
-        {
-            get
-            {
+        public bool extend {
+            get {
                 return railPlayerBehaviour.extend;
             }
-            set
-            {
+            set {
                 railPlayerBehaviour.extend = value;
             }
         }
 
-        public float t
-        {
-            get
-            {
+        public float t {
+            get {
                 return railPlayerBehaviour.t;
             }
-            set
-            {
+            set {
                 railPlayerBehaviour.t = value;
             }
         }

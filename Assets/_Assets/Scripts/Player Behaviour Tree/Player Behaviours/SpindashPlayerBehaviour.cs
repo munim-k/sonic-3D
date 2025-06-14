@@ -1,11 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace RagdollEngine
-{
+namespace RagdollEngine {
     [RequireComponent(typeof(RollPlayerBehaviour))]
-    public class SpindashPlayerBehaviour : PlayerBehaviour
-    {
+    public class SpindashPlayerBehaviour : PlayerBehaviour {
         [SerializeField] AnimationCurve force;
 
         [SerializeField] float forceIntensity;
@@ -16,20 +14,16 @@ namespace RagdollEngine
 
         float currentChargeTime;
 
-        void Awake()
-        {
+        void Awake() {
             rollPlayerBehaviour = GetComponent<RollPlayerBehaviour>();
         }
 
-        void LateUpdate()
-        {
+        void LateUpdate() {
             animator.SetBool("Spindashing", active);
         }
 
-        public override bool Evaluate()
-        {
-            if (inputHandler.stomp.pressed)
-            {
+        public override bool Evaluate() {
+            if (inputHandler.stomp.pressed) {
                 currentChargeTime = chargeTime;
 
                 rollPlayerBehaviour.roll = false;
@@ -39,8 +33,7 @@ namespace RagdollEngine
                 return true;
             }
 
-            if (wasActive && !inputHandler.stomp.hold)
-            {
+            if (wasActive && !inputHandler.stomp.hold) {
                 additiveVelocity = modelTransform.forward *
                     force.Evaluate(Mathf.Clamp01(moveVelocity.magnitude / forceIntensity))
                      * ((chargeTime - currentChargeTime) / chargeTime)
@@ -56,8 +49,7 @@ namespace RagdollEngine
             return wasActive;
         }
 
-        public override void Execute()
-        {
+        public override void Execute() {
             if (currentChargeTime > 0)
                 currentChargeTime -= Time.fixedDeltaTime;
 
@@ -68,8 +60,7 @@ namespace RagdollEngine
 
             modelTransform.position = groundInformation.ground ? groundInformation.hit.point : playerTransform.position - (modelTransform.up * height);
 
-            if (inputHandler.move.magnitude > InputSystem.settings.defaultDeadzoneMin)
-            {
+            if (inputHandler.move.magnitude > InputSystem.settings.defaultDeadzoneMin) {
                 Vector3 moveForwardNormal = Vector3.Cross(cameraTransform.right, playerTransform.up).normalized;
 
                 Vector3 moveRightNormal = Vector3.Cross(playerTransform.up, cameraTransform.forward).normalized;

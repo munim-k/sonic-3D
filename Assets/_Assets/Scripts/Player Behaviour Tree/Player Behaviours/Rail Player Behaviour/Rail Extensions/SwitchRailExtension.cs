@@ -2,10 +2,8 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
 
-namespace RagdollEngine
-{
-    public class SwitchRailExtension : RailExtension
-    {
+namespace RagdollEngine {
+    public class SwitchRailExtension : RailExtension {
         [SerializeField] float switchDistance;
 
         [SerializeField] float switchTransitionTime;
@@ -22,8 +20,7 @@ namespace RagdollEngine
 
         float currentReverseCoyoteTime;
 
-        public override void Execute()
-        {
+        public override void Execute() {
             if (inputHandler.sidestep.pressed)
                 currentSwitchDirection = Mathf.Sign(inputHandler.sidestep.value * Vector3.Dot(cameraTransform.forward, velocity));
 
@@ -32,11 +29,11 @@ namespace RagdollEngine
             if (switchTransition <= 0
                     && Physics.SphereCast(point + rayNormal, 0.5f, rayNormal, out RaycastHit hit, switchDistance - 0.5f, railLayerMask, QueryTriggerInteraction.Ignore)
                     && (inputHandler.sidestep.pressed
-                        || currentReverseCoyoteTime > 0))
-            {
+                        || currentReverseCoyoteTime > 0)) {
                 hit.collider.TryGetComponent(out RailStageObject railStageObject);
 
-                if (!railStageObject) return;
+                if (!railStageObject)
+                    return;
 
                 currentReverseCoyoteTime = 0;
 
@@ -81,8 +78,7 @@ namespace RagdollEngine
             else
                 currentReverseCoyoteTime = Mathf.Max(currentReverseCoyoteTime - Time.fixedDeltaTime, 0);
 
-            if (switchTransition > 0)
-            {
+            if (switchTransition > 0) {
                 goal += Switch();
 
                 switchTransition = Mathf.Max(switchTransition - Time.fixedDeltaTime, 0);
@@ -92,15 +88,13 @@ namespace RagdollEngine
                 extend = false;
             }
 
-            Vector3 Switch()
-            {
+            Vector3 Switch() {
                 return (difference * (switchTransition / switchTransitionTime))
                     + (Vector3)(matrix.c1 * switchTransitionHeight * Mathf.Sin((1 - (switchTransition / switchTransitionTime)) * Mathf.PI));
             }
         }
 
-        public override void Enable()
-        {
+        public override void Enable() {
             switchTransition = 0;
 
             currentReverseCoyoteTime = 0;

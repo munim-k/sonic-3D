@@ -2,8 +2,7 @@ using RagdollEngine;
 using TMPro;
 using UnityEngine;
 
-public class RingsUI : MonoBehaviour
-{
+public class RingsUI : MonoBehaviour {
     [SerializeField] Animator animator;
 
     [SerializeField] TextMeshProUGUI ringsTextbox;
@@ -18,8 +17,7 @@ public class RingsUI : MonoBehaviour
 
     float activeTimer;
 
-    public void Initialize(PlayerBehaviourTree playerBehaviourTree)
-    {
+    public void Initialize(PlayerBehaviourTree playerBehaviourTree) {
         Rings.GetRingCounter(playerBehaviourTree).ringsChangedEvent += (sender, e) => OnRingsChangedEvent(sender as Rings.RingCounter, e as Rings.RingCounter.RingsChangedEventArgs);
 
         rings = Rings.GetRings(playerBehaviourTree);
@@ -27,9 +25,9 @@ public class RingsUI : MonoBehaviour
         initialized = true;
     }
 
-    void Update()
-    {
-        if (!initialized) return;
+    void Update() {
+        if (!initialized)
+            return;
 
         if (rings > 0)
             activeTimer -= Time.deltaTime;
@@ -38,18 +36,15 @@ public class RingsUI : MonoBehaviour
 
         active = activeTimer > 0 || rings == 0;
 
-        if (active != wasActive)
-        {
-            if (active)
-            {
+        if (active != wasActive) {
+            if (active) {
                 activeTimer = activeTime;
 
                 animator.ResetTrigger("Disable");
 
                 animator.SetTrigger("Enable");
             }
-            else
-            {
+            else {
                 animator.ResetTrigger("Enable");
 
                 animator.SetTrigger("Disable");
@@ -61,8 +56,7 @@ public class RingsUI : MonoBehaviour
         animator.SetInteger("Rings", rings);
     }
 
-    void OnRingsChangedEvent(Rings.RingCounter sender, Rings.RingCounter.RingsChangedEventArgs e)
-    {
+    void OnRingsChangedEvent(Rings.RingCounter sender, Rings.RingCounter.RingsChangedEventArgs e) {
         rings = sender.rings;
 
         activeTimer = activeTime;

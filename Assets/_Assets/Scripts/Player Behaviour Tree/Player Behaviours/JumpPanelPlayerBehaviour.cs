@@ -1,31 +1,28 @@
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class JumpPanelPlayerBehaviour : PlayerBehaviour
-    {
+namespace RagdollEngine {
+    public class JumpPanelPlayerBehaviour : PlayerBehaviour {
         [SerializeField] float jumpPanelDeadzone;
 
-        public override bool Evaluate()
-        {
-            if (groundInformation.cast)
-            {
+        public override bool Evaluate() {
+            if (groundInformation.cast) {
                 JumpPanelStageObject jumpPanelStageObject = null;
-                try
-                {
-                jumpPanelStageObject = groundInformation.hit.collider.GetComponentInParent<JumpPanelStageObject>();
+                try {
+                    jumpPanelStageObject = groundInformation.hit.collider.GetComponentInParent<JumpPanelStageObject>();
                 }
                 catch { }
-                
 
-                if (!jumpPanelStageObject || Vector3.Dot(RB.linearVelocity, jumpPanelStageObject.transform.forward) < jumpPanelDeadzone) return false;
+
+                if (!jumpPanelStageObject || Vector3.Dot(RB.linearVelocity, jumpPanelStageObject.transform.forward) < jumpPanelDeadzone)
+                    return false;
 
                 playerBehaviourTree.groundInformation.ground = true;
 
                 additiveVelocity = -RB.linearVelocity
                     + (Quaternion.AngleAxis(jumpPanelStageObject.angle, -jumpPanelStageObject.transform.right) * jumpPanelStageObject.transform.forward * Mathf.Max(jumpPanelStageObject.speed, Vector3.Dot(RB.linearVelocity, jumpPanelStageObject.transform.forward)));
 
-                if (wasActive) return true;
+                if (wasActive)
+                    return true;
 
                 jumpPanelStageObject.audioSource.Play();
 

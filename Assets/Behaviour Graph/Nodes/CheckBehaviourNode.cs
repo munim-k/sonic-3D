@@ -5,10 +5,8 @@ using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 
-namespace BehaviourGraph
-{
-    public class CheckBehaviourNode : BehaviourNode
-    {
+namespace BehaviourGraph {
+    public class CheckBehaviourNode : BehaviourNode {
         public BehaviourPort inputPort;
 
         public BehaviourPort passPort;
@@ -17,8 +15,7 @@ namespace BehaviourGraph
 
         public ObjectField checkObjectField;
 
-        public override void Create()
-        {
+        public override void Create() {
             title = "Check";
 
             inputPort = AddContainer("Input", Orientation.Horizontal, Direction.Input, Port.Capacity.Multi, Guid.NewGuid().ToString());
@@ -38,10 +35,8 @@ namespace BehaviourGraph
             RefreshPorts();
         }
 
-        public override NodeGraphData CreateNodeGraphData(BehaviourTree behaviourTree)
-        {
-            return new CheckNodeGraphData()
-            {
+        public override NodeGraphData CreateNodeGraphData(BehaviourTree behaviourTree) {
+            return new CheckNodeGraphData() {
                 checkIndex = behaviourTree.GetBehaviourIndex(checkObjectField.value as Behaviour),
 
                 inputPortGUID = inputPort.GUID,
@@ -56,10 +51,8 @@ namespace BehaviourGraph
             };
         }
 
-        public override NodeTreeData CreateNodeTreeData(BehaviourTree behaviourTree)
-        {
-            return new CheckNodeTreeData()
-            {
+        public override NodeTreeData CreateNodeTreeData(BehaviourTree behaviourTree) {
+            return new CheckNodeTreeData() {
                 pass = passPort.port.connected ? ((BehaviourNode)passPort.port.connections.First().input.node).CreateNodeTreeData(behaviourTree) : null,
 
                 fail = failPort.port.connected ? ((BehaviourNode)failPort.port.connections.First().input.node).CreateNodeTreeData(behaviourTree) : null,
@@ -68,8 +61,7 @@ namespace BehaviourGraph
             };
         }
 
-        public override BehaviourPort GetContainer(Port port)
-        {
+        public override BehaviourPort GetContainer(Port port) {
             if (inputPort.port == port)
                 return inputPort;
 
@@ -82,8 +74,7 @@ namespace BehaviourGraph
             return null;
         }
 
-        public override BehaviourPort GetContainer(string GUID)
-        {
+        public override BehaviourPort GetContainer(string GUID) {
             if (inputPort.GUID == GUID)
                 return inputPort;
 

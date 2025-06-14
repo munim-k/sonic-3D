@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class World1Boss : MonoBehaviour, BaseEnemy, IHittable
-{
+public class World1Boss : MonoBehaviour, BaseEnemy, IHittable {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     [SerializeField] private int maxHealth = 100;
@@ -38,31 +37,27 @@ public class World1Boss : MonoBehaviour, BaseEnemy, IHittable
     private float attackCooldownTimer = 0f;
     private float attackStepTimer = 0f;
 
- 
+
     public Action<State> OnStateChange;
     private Action OnHit;
     private Action OnDeath;
-    Action BaseEnemy.OnDeath
-    {
+    Action BaseEnemy.OnDeath {
         get => OnDeath;
         set => OnDeath = value;
     }
 
-    Action IHittable.OnHit
-    {
+    Action IHittable.OnHit {
         get => OnHit;
         set => OnHit = value;
     }
     private State state;
-    public enum State
-    {
+    public enum State {
         Spinning,
         Stunned,
         Dead
     }
 
-    void Awake()
-    {
+    void Awake() {
         currentHealth = maxHealth;
         state = State.Spinning;
         attackRotationOriginal = attackPointCentre.localRotation;
@@ -73,10 +68,8 @@ public class World1Boss : MonoBehaviour, BaseEnemy, IHittable
     }
 
     // Update is called once per frame
-    void FixedUpdate()
-    {
-        switch (state)
-        {
+    void FixedUpdate() {
+        switch (state) {
             //If cooldown timer is 0 start attack timer and do attack  until attack timer is 0 then reset cooldown timer
 
             case State.Spinning:
@@ -92,32 +85,26 @@ public class World1Boss : MonoBehaviour, BaseEnemy, IHittable
         }
     }
 
-    private void Spinning()
-    {
-        if (attackCooldownTimer > 0f)
-        {
+    private void Spinning() {
+        if (attackCooldownTimer > 0f) {
             attackCooldownTimer -= Time.fixedDeltaTime;
-            if (attackCooldownTimer <= 0f)
-            {
+            if (attackCooldownTimer <= 0f) {
                 attackTimer = attackDuration;
                 attackStepTimer = attackStep;
             }
         }
 
-        if (attackTimer > 0f)
-        {
+        if (attackTimer > 0f) {
             attackTimer -= Time.fixedDeltaTime;
             Attack();
-            if (attackTimer <= 0f)
-            {
+            if (attackTimer <= 0f) {
                 //Attack
                 attackCooldownTimer = attackCooldown;
             }
         }
         //Spin the pillars
         pillarRotationLerp += Time.fixedDeltaTime * pillarRotationSpeed;
-        if (pillarRotationLerp > 1f)
-        {
+        if (pillarRotationLerp > 1f) {
             pillarRotationLerp = 0f;
         }
         Vector3 eulerAngles = pillarRotationOriginal.eulerAngles;
@@ -126,8 +113,7 @@ public class World1Boss : MonoBehaviour, BaseEnemy, IHittable
 
         //Spin the attack points
         attackRotationLerp += Time.fixedDeltaTime * attackRotationSpeed;
-        if (attackRotationLerp > 1f)
-        {
+        if (attackRotationLerp > 1f) {
             attackRotationLerp = 0f;
         }
         eulerAngles = attackRotationOriginal.eulerAngles;
@@ -135,18 +121,14 @@ public class World1Boss : MonoBehaviour, BaseEnemy, IHittable
         attackPointCentre.transform.localRotation = Quaternion.Euler(0f, eulerAngles.y + (l * 360f), 0f);
     }
 
-    private void Attack()
-    {
-        if (attackStepTimer > 0f)
-        {
+    private void Attack() {
+        if (attackStepTimer > 0f) {
             attackStepTimer -= Time.fixedDeltaTime;
         }
-        else
-        {
+        else {
             attackStepTimer = attackStep;
             //Instantiate projectile
-            foreach (Transform attackPoint in attackPoints)
-            {
+            foreach (Transform attackPoint in attackPoints) {
                 Transform projectile = Instantiate(attackProjectile, attackPoint.position, attackPoint.rotation);
                 projectile.GetComponent<ShooterBotProjectile>().SetLaunchDir(attackPoint.forward);
             }
@@ -154,81 +136,66 @@ public class World1Boss : MonoBehaviour, BaseEnemy, IHittable
     }
 
 
-    public void InitializePillars()
-    {
+    public void InitializePillars() {
         List<int> randomIndexes = new List<int>();
-        foreach(World1BossPillar p in pillars)
-        {
+        foreach (World1BossPillar p in pillars) {
             p.Activate(false);
         }
-        for (int i = 0; i < 3; i++)
-        {
+        for (int i = 0; i < 3; i++) {
             int randomIndex = UnityEngine.Random.Range(0, pillars.Length);
-            while (randomIndexes.Contains(randomIndex))
-            {
+            while (randomIndexes.Contains(randomIndex)) {
                 randomIndex = UnityEngine.Random.Range(0, pillars.Length);
             }
             randomIndexes.Add(randomIndex);
         }
 
-        for (int i = 0; i < randomIndexes.Count; i++)
-        {
+        for (int i = 0; i < randomIndexes.Count; i++) {
             World1BossPillar pillar = pillars[randomIndexes[i]];
             pillar.Activate(true);
             activePillars.Add(pillar);
         }
     }
 
-    public void ActivatePillar(World1BossPillar pillar)
-    {
-        if (activePillars.Contains(pillar))
-        {
-            foreach(World1BossPillar p in activePillars)
-            {
+    public void ActivatePillar(World1BossPillar pillar) {
+        if (activePillars.Contains(pillar)) {
+            foreach (World1BossPillar p in activePillars) {
                 p.Activate(false);
             }
             activePillars.Clear();
             state = State.Stunned;
             stunTimer = stunDuration;
             OnStateChange?.Invoke(state);
-            
+
         }
 
     }
 
 
 
-    private void Stunned()
-    {
-        if (stunTimer > 0f)
-        {
+    private void Stunned() {
+        if (stunTimer > 0f) {
             stunTimer -= Time.fixedDeltaTime;
         }
-        else
-        {
+        else {
             state = State.Spinning;
             InitializePillars();
             OnStateChange?.Invoke(state);
         }
     }
 
-   
 
-    public float GetHealthNormalized()
-    {
-        return (float)currentHealth/maxHealth;
+
+    public float GetHealthNormalized() {
+        return (float)currentHealth / maxHealth;
     }
 
-    public void DoHit(int damage)
-    {
-        if (state != State.Stunned)
-        {
+    public void DoHit(int damage) {
+        if (state != State.Stunned) {
             return;
         }
         currentHealth -= damage;
         OnHit?.Invoke();
-        if (currentHealth <= 0)
-        {
+        if (currentHealth <= 0) {
             currentHealth = 0;
             state = State.Dead;
             levelExit.SetActive(true);
@@ -237,8 +204,7 @@ public class World1Boss : MonoBehaviour, BaseEnemy, IHittable
         }
     }
 
-    HittableType IHittable.GetType()
-    {
+    HittableType IHittable.GetType() {
         return HittableType.Enemy;
     }
 }

@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public class UpreelStageObject : StageObject
-{
+public class UpreelStageObject : StageObject {
     public float extensionSpeed;
 
     public float retractionSpeed;
@@ -24,7 +23,7 @@ public class UpreelStageObject : StageObject
 
     [HideInInspector] public bool extended;
 
-    State state=State.Retracted;
+    State state = State.Retracted;
 
     float goalLength;
 
@@ -32,28 +31,24 @@ public class UpreelStageObject : StageObject
 
     float sign;
 
-    enum State
-    {
+    enum State {
         Extended,
         Retracted,
         Extending,
         Retracting
     }
 
-    void OnEnable()
-    {
+    void OnEnable() {
         lineRenderer.positionCount = 2;
 
         idle = true;
 
-        if (defaultExtended)
-        {
+        if (defaultExtended) {
             currentLength = length;
 
             goalLength = length;
         }
-        else
-        {
+        else {
             currentLength = 0;
 
             goalLength = 0;
@@ -62,9 +57,8 @@ public class UpreelStageObject : StageObject
         UpdatePosition();
     }
 
-    void FixedUpdate()
-    {
-        
+    void FixedUpdate() {
+
         if (currentLength == goalLength)
             SetState(extended ? State.Extended : State.Retracted);
         else if (currentLength < goalLength)
@@ -72,8 +66,7 @@ public class UpreelStageObject : StageObject
         else if (currentLength > goalLength)
             SetState(State.Retracting);
 
-        switch (state)
-        {
+        switch (state) {
             case State.Retracted:
                 goalLength = length;
                 break;
@@ -84,9 +77,9 @@ public class UpreelStageObject : StageObject
 
     }
 
-    void SetState(State state)
-    {
-        if (this.state == state) return;
+    void SetState(State state) {
+        if (this.state == state)
+            return;
 
         audioSourceLoop1.Stop();
 
@@ -94,8 +87,7 @@ public class UpreelStageObject : StageObject
 
         audioSourceLoop2.Stop();
 
-        switch (state)
-        {
+        switch (state) {
             case State.Extending:
                 audioSourceLoop1.Play();
                 break;
@@ -112,8 +104,7 @@ public class UpreelStageObject : StageObject
         this.state = state;
     }
 
-    public void UpdatePosition()
-    {
+    public void UpdatePosition() {
         if (currentLength < goalLength)
             currentLength = Mathf.Min(currentLength + (extensionSpeed * Time.fixedDeltaTime), goalLength);
         else
@@ -128,8 +119,7 @@ public class UpreelStageObject : StageObject
         lineRenderer.SetPosition(1, transform.position);
     }
 
-    public void Retract()
-    {
+    public void Retract() {
         goalLength = 0;
     }
 }

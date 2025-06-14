@@ -1,11 +1,8 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace RagdollEngine
-{
-    public class DamagePlayerBehaviour : PlayerBehaviour
-    {
+namespace RagdollEngine {
+    public class DamagePlayerBehaviour : PlayerBehaviour {
         // Serialized fields for audio and visual effects
         [SerializeField] AudioSource audioSource; // Audio source for playing sound effects
         [SerializeField] AudioClip damageAudioClip;
@@ -16,18 +13,16 @@ namespace RagdollEngine
         [SerializeField] private GameObject HealthUIPrefab;
         //Include current and max health in Action
 
-        public Action<int,int> onDamage; // Action to be invoked when the player takes damage
+        public Action<int, int> onDamage; // Action to be invoked when the player takes damage
         private int currentHealth;
 
-        public enum DamageType
-        {
+        public enum DamageType {
             Single,
             Persistent,
         }
 
-        
-        private void Start()
-        {
+
+        private void Start() {
             GameObject healthUI = Instantiate(HealthUIPrefab, playerBehaviourTree.canvas.transform);
             playerBehaviourTree.character.uis.Add(healthUI);
             healthUI.GetComponent<HealthUI>().Initialize(this);
@@ -36,26 +31,24 @@ namespace RagdollEngine
 
 
         // Evaluates whether the behavior should be activ
-        public override bool Evaluate()
-        {
+        public override bool Evaluate() {
             // Decrease the cooldown timer
             cooldownTimer = Mathf.Max(cooldownTimer - Time.fixedDeltaTime, 0);
             return DamageCheck();
         }
 
         // Checks if the player should take damage
-        bool DamageCheck()
-        {
+        bool DamageCheck() {
             // If the cooldown timer is still active, return false
-            if (cooldownTimer > 0) return false;
+            if (cooldownTimer > 0)
+                return false;
 
             // Iterate through all volumes the player is interacting with
-            foreach (Volume thisVolume in volumes)
-            {
-                if (thisVolume is DamageVolume) { 
+            foreach (Volume thisVolume in volumes) {
+                if (thisVolume is DamageVolume) {
                     DamageVolume thisDamageVolume = thisVolume as DamageVolume;
-                // Deplete health based on the power of the damage volume
-                 int damageAmount = Mathf.FloorToInt(thisDamageVolume.power);
+                    // Deplete health based on the power of the damage volume
+                    int damageAmount = Mathf.FloorToInt(thisDamageVolume.power);
                     currentHealth = Mathf.Max(currentHealth - damageAmount, 0);
 
                     // Play damage sound
@@ -64,13 +57,12 @@ namespace RagdollEngine
 
                     // Set cooldown timer
                     cooldownTimer = cooldownTime;
-                    
+
                     // Check if the player has no health left
-                    if (currentHealth <= 0)
-                    {
+                    if (currentHealth <= 0) {
                         character.Respawn(); // Respawn the player if health is depleted
                     }
-                    onDamage?.Invoke(currentHealth,maxHealth); // Invoke the damage event
+                    onDamage?.Invoke(currentHealth, maxHealth); // Invoke the damage event
                     return true; // Damage was applied
                 }
             }

@@ -1,12 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using NUnit.Framework;
-using Unity.Mathematics;
 using UnityEngine;
 
-public class World2Boss : MonoBehaviour, BaseEnemy
-{
+public class World2Boss : MonoBehaviour, BaseEnemy {
 
     [SerializeField] private int maxHealth = 100;
     private int currentHealth = 100;
@@ -37,8 +32,7 @@ public class World2Boss : MonoBehaviour, BaseEnemy
     private float attackCooldownTimer = 0f;
 
     private float stunCooldownTimer = 0f;
-    public enum State
-    {
+    public enum State {
         Idle,
         Attack1,
         Attack2,
@@ -50,19 +44,16 @@ public class World2Boss : MonoBehaviour, BaseEnemy
     public Action<State> OnStateChange;
     private Action OnHit;
     private Action OnDeath;
-    Action BaseEnemy.OnDeath
-    {
+    Action BaseEnemy.OnDeath {
         get => OnDeath;
         set => OnDeath = value;
     }
 
-    Action IHittable.OnHit
-    {
+    Action IHittable.OnHit {
         get => OnHit;
         set => OnHit = value;
     }
-    private void Awake()
-    {
+    private void Awake() {
         state = State.Idle;
         currentHealth = maxHealth;
         attackCooldownTimer = attack1Cooldown;
@@ -71,10 +62,8 @@ public class World2Boss : MonoBehaviour, BaseEnemy
     }
 
     // Update is called once per frame
-    void FixedUpdate()
-    {
-        switch (state)
-        {
+    void FixedUpdate() {
+        switch (state) {
             case State.Idle:
                 Idle();
                 break;
@@ -94,41 +83,33 @@ public class World2Boss : MonoBehaviour, BaseEnemy
         }
 
     }
-    private void Idle()
-    {
-        if (attackCooldownTimer >= 0f)
-        {
+    private void Idle() {
+        if (attackCooldownTimer >= 0f) {
             attackCooldownTimer -= Time.fixedDeltaTime;
         }
-        else
-        {
+        else {
 
-            if (UnityEngine.Random.Range(0f, 1f) > 0.5f)
-            {
+            if (UnityEngine.Random.Range(0f, 1f) > 0.5f) {
                 state = State.Attack1;
                 attack1Timer = attack1Duration;
                 attack1Dir = attack1Dir == 1 ? -1 : 1;
                 attack1Transform.gameObject.SetActive(true);
             }
-            else
-            {
+            else {
                 state = State.Attack2;
                 attack2Timer = attack2Duration;
             }
             OnStateChange?.Invoke(state);
         }
     }
-    private void Attack1()
-    {
-        if (attack1Timer >= 0f)
-        {
+    private void Attack1() {
+        if (attack1Timer >= 0f) {
             attack1Timer -= Time.fixedDeltaTime;
             attack1Lerp += Time.fixedDeltaTime * attack1RotationSpeed;
             attack1Lerp %= 1f;
             attack1Transform.rotation = Quaternion.Euler(0f, attack1RotationCurve.Evaluate(attack1Lerp) * attack1Dir * 360f, 0f);
         }
-        else
-        {
+        else {
             attack1Transform.gameObject.SetActive(false);
             state = State.Idle;
             attack1Lerp = 0f;
@@ -137,14 +118,11 @@ public class World2Boss : MonoBehaviour, BaseEnemy
 
     }
 
-    private void Attack2()
-    {
-        if (attack2Timer >= 0f)
-        {
+    private void Attack2() {
+        if (attack2Timer >= 0f) {
             attack2Timer -= Time.fixedDeltaTime;
             attack2StepTimer += Time.fixedDeltaTime;
-            if (attack2StepTimer >= attack2Step)
-            {
+            if (attack2StepTimer >= attack2Step) {
                 attack2StepTimer = 0f;
                 Vector3 pos = Player.CharacterInstance.playerBehaviourTree.playerTransform.position;
                 pos += Player.CharacterInstance.playerBehaviourTree.moveVelocity * playerVelocityAdjustmentScaling;
@@ -153,39 +131,32 @@ public class World2Boss : MonoBehaviour, BaseEnemy
                 projectile.gameObject.SetActive(true);
             }
         }
-        else
-        {
+        else {
             state = State.Idle;
             attackCooldownTimer = attack2Cooldown;
         }
     }
 
-    private void Stunned()
-    {
-        if (stunCooldownTimer >= 0f)
-        {
+    private void Stunned() {
+        if (stunCooldownTimer >= 0f) {
             stunCooldownTimer -= Time.fixedDeltaTime;
         }
-        else
-        {
+        else {
             state = State.Idle;
             OnStateChange?.Invoke(state);
             InitializeCrystals();
         }
     }
 
-    public void StunBoss()
-    {
+    public void StunBoss() {
         state = State.Stunned;
         attack1Transform.gameObject.SetActive(false);
         OnStateChange?.Invoke(state);
         stunCooldownTimer = stunDuration;
     }
 
-    private void InitializeCrystals()
-    {
-        foreach (var crystal in crystals)
-        {
+    private void InitializeCrystals() {
+        foreach (var crystal in crystals) {
             crystal.gameObject.SetActive(true);
             crystal.SetCrystalMaterial(true);
         }
@@ -193,21 +164,18 @@ public class World2Boss : MonoBehaviour, BaseEnemy
         int randomIndex = UnityEngine.Random.Range(0, crystals.Length);
         crystals[randomIndex].SetCrystalMaterial(false);
     }
-    
 
-    public float GetHealthNormalized()
-    {
+
+    public float GetHealthNormalized() {
         return (float)currentHealth / maxHealth;
     }
 
-    public void DoHit(int damage)
-    {
-       if (state != State.Stunned)
+    public void DoHit(int damage) {
+        if (state != State.Stunned)
             return;
         currentHealth -= damage;
         OnHit?.Invoke();
-        if (currentHealth <= 0)
-        {
+        if (currentHealth <= 0) {
             state = State.Dead;
 
             levelExit.SetActive(true);
@@ -216,8 +184,7 @@ public class World2Boss : MonoBehaviour, BaseEnemy
         }
     }
 
-    HittableType IHittable.GetType()
-    {
-       return HittableType.Enemy;
+    HittableType IHittable.GetType() {
+        return HittableType.Enemy;
     }
 }

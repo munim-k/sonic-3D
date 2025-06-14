@@ -7,17 +7,14 @@ using UnityEditor;
 #endif
 using UnityEngine;
 
-namespace BehaviourGraph
-{
+namespace BehaviourGraph {
 
 #if UNITY_EDITOR
 
     // Custom editor for the BehaviourTree component in the Unity Inspector
     [CustomEditor(typeof(BehaviourTree))]
-    public class BehaviourTreeEditor : Editor
-    {
-        public override void OnInspectorGUI()
-        {
+    public class BehaviourTreeEditor : Editor {
+        public override void OnInspectorGUI() {
             // Draws the default inspector UI for the BehaviourTree component
             DrawDefaultInspector();
 
@@ -32,8 +29,7 @@ namespace BehaviourGraph
 
 #endif
 
-    public class BehaviourTree : MonoBehaviour
-    {
+    public class BehaviourTree : MonoBehaviour {
 
 #if UNITY_EDITOR
 
@@ -67,10 +63,8 @@ namespace BehaviourGraph
 #if UNITY_EDITOR
 
         // Provides access to the BehaviourTreeLoader component
-        public BehaviourTreeLoader behaviourTreeLoader
-        {
-            get
-            {
+        public BehaviourTreeLoader behaviourTreeLoader {
+            get {
                 return GetComponent<BehaviourTreeLoader>();
             }
         }
@@ -78,20 +72,17 @@ namespace BehaviourGraph
 #endif
 
         // Called every frame to execute the update behavior tree
-        public virtual void Update()
-        {
+        public virtual void Update() {
             update.Run(this);
         }
 
         // Called every frame after Update to execute the late update behavior tree
-        public virtual void LateUpdate()
-        {
+        public virtual void LateUpdate() {
             lateUpdate.Run(this);
         }
 
         // Called at a fixed time interval to execute the fixed update behavior tree
-        public virtual void FixedUpdate()
-        {
+        public virtual void FixedUpdate() {
             // Trigger the Reset event
             Reset?.Invoke(this, EventArgs.Empty);
 
@@ -103,8 +94,7 @@ namespace BehaviourGraph
         }
 
         // Executes the late fixed update behavior tree
-        public virtual void LateFixedUpdate()
-        {
+        public virtual void LateFixedUpdate() {
             lateFixedUpdate.Run(this);
 
             // Trigger the Set event
@@ -112,19 +102,18 @@ namespace BehaviourGraph
         }
 
         // Coroutine to schedule the late fixed update behavior tree after the next FixedUpdate
-        IEnumerator ScheduleLateFixedUpdate()
-        {
+        IEnumerator ScheduleLateFixedUpdate() {
             yield return new WaitForFixedUpdate();
 
             LateFixedUpdate();
         }
 
         // Retrieves the index of a behavior in the behaviors array, adding it if it doesn't exist
-        public int GetBehaviourIndex(Behaviour behaviour)
-        {
+        public int GetBehaviourIndex(Behaviour behaviour) {
             // Check if the behavior already exists in the array
             for (int i = 0; i < behaviours.Length; i++)
-                if (behaviours[i] == behaviour) return i;
+                if (behaviours[i] == behaviour)
+                    return i;
 
             // If not, add the behavior to the array and return its new index
             behaviours = behaviours.Append(behaviour).ToArray();
@@ -134,8 +123,7 @@ namespace BehaviourGraph
     }
 
     // Represents a single behavior in the behavior tree
-    public class Behaviour : MonoBehaviour
-    {
+    public class Behaviour : MonoBehaviour {
         // Reference to the parent BehaviorTree
         [HideInInspector] public BehaviourTree behaviourTree;
 
@@ -146,8 +134,7 @@ namespace BehaviourGraph
         [HideInInspector] public bool wasActive;
 
         // Called when the behavior is enabled
-        public virtual void OnEnable()
-        {
+        public virtual void OnEnable() {
             // Get the parent BehaviorTree
             behaviourTree = GetComponentInParent<BehaviourTree>();
 
@@ -157,16 +144,14 @@ namespace BehaviourGraph
         }
 
         // Called when the behavior is disabled
-        public virtual void OnDisable()
-        {
+        public virtual void OnDisable() {
             // Unsubscribe from the Set and Reset events
             behaviourTree.Set -= OnSet;
             behaviourTree.Reset -= OnReset;
         }
 
         // Evaluates whether the behavior should be active (default implementation always returns false)
-        public virtual bool Evaluate()
-        {
+        public virtual bool Evaluate() {
             return false;
         }
 
@@ -174,14 +159,12 @@ namespace BehaviourGraph
         public virtual void Execute() { }
 
         // Called when the Set event is triggered
-        public virtual void OnSet(object sender, EventArgs e)
-        {
+        public virtual void OnSet(object sender, EventArgs e) {
             wasActive = active;
         }
 
         // Called when the Reset event is triggered
-        public virtual void OnReset(object sender, EventArgs e)
-        {
+        public virtual void OnReset(object sender, EventArgs e) {
             active = false;
         }
     }
@@ -190,27 +173,23 @@ namespace BehaviourGraph
 
 #if UNITY_EDITOR
 
-#region Graph Data
+    #region Graph Data
 
-[Serializable]
-    public class EdgeGraphData
-    {
+    [Serializable]
+    public class EdgeGraphData {
         public string input;
 
         public string output;
     }
 
     [Serializable]
-    public class NodeGraphData
-    {
+    public class NodeGraphData {
         public Vector2 position;
 
         public string GUID;
 
-        public virtual BehaviourNode CreateNode(BehaviourTree behaviourTree)
-        {
-            BehaviourNode behaviourNode = new BehaviourNode()
-            {
+        public virtual BehaviourNode CreateNode(BehaviourTree behaviourTree) {
+            BehaviourNode behaviourNode = new BehaviourNode() {
                 GUID = GUID
             };
 
@@ -223,16 +202,13 @@ namespace BehaviourGraph
     }
 
     [Serializable]
-    public class InputNodeGraphData : NodeGraphData
-    {
+    public class InputNodeGraphData : NodeGraphData {
         public string title;
 
         public string outputPortGUID;
 
-        public override BehaviourNode CreateNode(BehaviourTree behaviourTree)
-        {
-            InputBehaviourNode inputBehaviourNode = new InputBehaviourNode()
-            {
+        public override BehaviourNode CreateNode(BehaviourTree behaviourTree) {
+            InputBehaviourNode inputBehaviourNode = new InputBehaviourNode() {
                 title = title,
 
                 GUID = GUID
@@ -249,8 +225,7 @@ namespace BehaviourGraph
     }
 
     [Serializable]
-    public class CheckNodeGraphData : NodeGraphData
-    {
+    public class CheckNodeGraphData : NodeGraphData {
         public int checkIndex;
 
         public string inputPortGUID;
@@ -259,10 +234,8 @@ namespace BehaviourGraph
 
         public string failPortGUID;
 
-        public override BehaviourNode CreateNode(BehaviourTree behaviourTree)
-        {
-            CheckBehaviourNode checkBehaviourNode = new CheckBehaviourNode()
-            {
+        public override BehaviourNode CreateNode(BehaviourTree behaviourTree) {
+            CheckBehaviourNode checkBehaviourNode = new CheckBehaviourNode() {
                 GUID = GUID
             };
 
@@ -283,18 +256,15 @@ namespace BehaviourGraph
     }
 
     [Serializable]
-    public class ActionNodeGraphData : NodeGraphData
-    {
+    public class ActionNodeGraphData : NodeGraphData {
         public int actionIndex;
 
         public string inputPortGUID;
 
         public string outputPortGUID;
 
-        public override BehaviourNode CreateNode(BehaviourTree behaviourTree)
-        {
-            ActionBehaviourNode actionBehaviourNode = new ActionBehaviourNode()
-            {
+        public override BehaviourNode CreateNode(BehaviourTree behaviourTree) {
+            ActionBehaviourNode actionBehaviourNode = new ActionBehaviourNode() {
                 GUID = GUID
             };
 
@@ -319,8 +289,7 @@ namespace BehaviourGraph
     #region Tree Data
 
     [Serializable]
-    public class NodeTreeData
-    {
+    public class NodeTreeData {
         public virtual void Reset(BehaviourTree behaviourTree) { }
 
         public virtual void Run(BehaviourTree behaviourTree) { }
@@ -329,40 +298,34 @@ namespace BehaviourGraph
     }
 
     [Serializable]
-    public class InputNodeTreeData : NodeTreeData
-    {
+    public class InputNodeTreeData : NodeTreeData {
         [SerializeReference] public NodeTreeData pass;
 
-        public override void Reset(BehaviourTree behaviourTree)
-        {
+        public override void Reset(BehaviourTree behaviourTree) {
             if (pass != null)
                 pass.Reset(behaviourTree);
         }
 
-        public override void Run(BehaviourTree behaviourTree)
-        {
+        public override void Run(BehaviourTree behaviourTree) {
             if (pass != null)
                 pass.Run(behaviourTree);
         }
 
-        public override void Set(BehaviourTree behaviourTree)
-        {
+        public override void Set(BehaviourTree behaviourTree) {
             if (pass != null)
                 pass.Set(behaviourTree);
         }
     }
 
     [Serializable]
-    public class CheckNodeTreeData : NodeTreeData
-    {
+    public class CheckNodeTreeData : NodeTreeData {
         [SerializeReference] public NodeTreeData pass;
 
         [SerializeReference] public NodeTreeData fail;
 
         public int checkIndex;
 
-        public override void Reset(BehaviourTree behaviourTree)
-        {
+        public override void Reset(BehaviourTree behaviourTree) {
             Behaviour thisCheck = behaviourTree.behaviours[checkIndex];
 
             if (thisCheck)
@@ -375,16 +338,13 @@ namespace BehaviourGraph
                 fail.Reset(behaviourTree);
         }
 
-        public override void Run(BehaviourTree behaviourTree)
-        {
+        public override void Run(BehaviourTree behaviourTree) {
             Behaviour thisCheck = behaviourTree.behaviours[checkIndex];
 
-            if (thisCheck)
-            {
+            if (thisCheck) {
                 thisCheck.active = thisCheck.Evaluate();
 
-                if (thisCheck.active)
-                {
+                if (thisCheck.active) {
                     if (pass != null)
                         pass.Run(behaviourTree);
                 }
@@ -393,8 +353,7 @@ namespace BehaviourGraph
             }
         }
 
-        public override void Set(BehaviourTree behaviourTree)
-        {
+        public override void Set(BehaviourTree behaviourTree) {
             Behaviour thisCheck = behaviourTree.behaviours[checkIndex];
 
             if (thisCheck)
@@ -409,20 +368,17 @@ namespace BehaviourGraph
     }
 
     [Serializable]
-    public class ActionNodeTreeData : NodeTreeData
-    {
+    public class ActionNodeTreeData : NodeTreeData {
         [SerializeReference] public NodeTreeData pass;
 
         public int actionIndex;
 
-        public override void Reset(BehaviourTree behaviourTree)
-        {
+        public override void Reset(BehaviourTree behaviourTree) {
             if (pass != null)
                 pass.Reset(behaviourTree);
         }
 
-        public override void Run(BehaviourTree behaviourTree)
-        {
+        public override void Run(BehaviourTree behaviourTree) {
             Behaviour thisAction = behaviourTree.behaviours[actionIndex];
 
             if (thisAction != null)
@@ -432,8 +388,7 @@ namespace BehaviourGraph
                 pass.Run(behaviourTree);
         }
 
-        public override void Set(BehaviourTree behaviourTree)
-        {
+        public override void Set(BehaviourTree behaviourTree) {
             if (pass != null)
                 pass.Set(behaviourTree);
         }
