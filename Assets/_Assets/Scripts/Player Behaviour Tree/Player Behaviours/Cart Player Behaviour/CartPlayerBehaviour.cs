@@ -100,6 +100,8 @@ namespace RagdollEngine {
                     }
                     jumpDir.Normalize();
                     RaycastHit[] hits = Physics.SphereCastAll(modelTransform.position, 2f, jumpDir, cartJumpDistance, cartLayerMask, QueryTriggerInteraction.Collide);
+                    //Sort the results by distance to the player (closest first)
+                    System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
                     foreach (RaycastHit hit in hits) {
                         CartRailStageObject cartObject = hit.collider.GetComponent<CartRailStageObject>();
                         if (cartObject != null && cartObject != currentCart) {
