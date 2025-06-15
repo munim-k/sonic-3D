@@ -1492,7 +1492,7 @@ MonoBehaviour:
     m_Bits: 2048
   cartSpeed: 30
   cartDetectionRadius: 2.5
-  cartJumpDistance: 10
+  cartJumpDistance: 20
   cartJumpTime: 0.5
   cartEndMargins: 1
   cartJumpXTransformCurve:

@@ -7,6 +7,8 @@ public class SplineObjectPlacer : MonoBehaviour {
     public GameObject objectToPlace;
     public int numberOfObjects = 10;
     public bool alignRotation = true;
+    public bool verticalOffsetFollowsCurve = false;
+    public float verticalOffset = 0f;
 
     [Header("Spline Options")]
     public bool useClosedSpline = false;
@@ -69,6 +71,15 @@ public class SplineObjectPlacer : MonoBehaviour {
         float t = SplineUtility.GetNormalizedInterpolation(spline, distance, PathIndexUnit.Distance);
 
         Vector3 localposition = SplineUtility.EvaluatePosition(spline, t);
+        if (verticalOffsetFollowsCurve) {
+            // Adjust vertical offset based on spline tangent
+            Vector3 up = SplineUtility.EvaluateUpVector(spline, t);
+            localposition += up.normalized * verticalOffset;
+        }
+        else {
+            // Apply fixed vertical offset
+            localposition.y += verticalOffset;
+        }
         Vector3 position = splineContainer.transform.TransformPoint(localposition);
         Quaternion rotation = alignRotation
             ? Quaternion.LookRotation(SplineUtility.EvaluateTangent(spline, t))
@@ -110,6 +121,13 @@ public class SplineObjectPlacer : MonoBehaviour {
             float distance = i * stepSize;
             float t = SplineUtility.GetNormalizedInterpolation(spline, distance, PathIndexUnit.Distance);
             Vector3 localPos = SplineUtility.EvaluatePosition(spline, t);
+            if (verticalOffsetFollowsCurve) {
+                Vector3 up = SplineUtility.EvaluateUpVector(spline, t);
+                localPos += up.normalized * verticalOffset;
+            }
+            else {
+                localPos.y += verticalOffset;
+            }
             Vector3 worldPos = splineContainer.transform.TransformPoint(localPos);
             Gizmos.DrawSphere(worldPos, 1f);
         }
