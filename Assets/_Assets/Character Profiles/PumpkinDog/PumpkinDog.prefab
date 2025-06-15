@@ -1464,6 +1464,8 @@ MonoBehaviour:
   cartLayerMask:
     serializedVersion: 2
     m_Bits: 2048
+  cartVisual: {fileID: 0}
+  cartSpeed: 1
   cartDetectionRadius: 2.5
   cartJumpDistance: 10
   cartJumpTime: 0.5

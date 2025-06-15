@@ -3,6 +3,7 @@ using UnityEngine;
 namespace RagdollEngine {
     public class CartPlayerBehaviour : PlayerBehaviour {
         [SerializeField] private LayerMask cartLayerMask;
+        [SerializeField] private float cartSpeed = 1f;
         [SerializeField] private float cartDetectionRadius = 5f;
         [SerializeField] private float cartJumpDistance = 10f;
         [SerializeField] private float cartJumpTime = 0.1f;
@@ -16,8 +17,14 @@ namespace RagdollEngine {
         [SerializeField] private AnimationCurve cartJumpZRotationCurve;
         [SerializeField] private float cartJumpImmunityTime = 1f;
         private float cartJumpImmunityTimer = 0f;
-        private CartStageObject currentCart = null;
-        private CartStageObject nextCart = null;
+        private CartRailStageObject currentCart = null;
+        private CartRailStageObject nextCart = null;
+
+        private float currentCartLerp = 0f;
+        private float nextCartLerp = 0f;
+
+        private bool currentCartDirection = true; // True if the cart is moving in the positive direction, false if negative
+        private bool nextCartDirection = true; // True if the next cart is moving in the positive direction, false if negative
 
         private bool isSidestepping = false;
         private float sideSteppingTimer = 0f;
@@ -42,9 +49,11 @@ namespace RagdollEngine {
                 // If a cart stage object is found, set cart to true
                 if (colliders.Length > 0) {
                     foreach (Collider collider in colliders) {
-                        CartStageObject cartObject = collider.GetComponent<CartStageObject>();
+                        CartRailStageObject cartObject = collider.GetComponent<CartRailStageObject>();
                         if (cartObject != null) {
                             currentCart = cartObject;
+                            //Get the closest position on the cart to set the players position to
+
                             result = true;
                         }
                     }
@@ -65,27 +74,27 @@ namespace RagdollEngine {
                     result = false;
                 }
                 //Player pressed sidestep
-                else if (inputHandler.sidestep.pressed || inputHandler.sidestep.hold) {
-                    //If player pressed sideStep then begin transitioning between carts
-                    Vector3 jumpDir = modelTransform.right * cartJumpDistance;
-                    sideStepDir = true;
-                    if (inputHandler.sidestep.value < 0) {
-                        jumpDir *= -1; // If sidestep is positive, jump to the left
-                        sideStepDir = false;
-                    }
-                    jumpDir.Normalize();
-                    RaycastHit[] hits = Physics.SphereCastAll(modelTransform.position, 2f, jumpDir, cartJumpDistance, cartLayerMask, QueryTriggerInteraction.Collide);
-                    foreach (RaycastHit hit in hits) {
-                        CartStageObject cartObject = hit.collider.GetComponent<CartStageObject>();
-                        if (cartObject != null && cartObject != currentCart) {
-                            nextCart = cartObject;
-                            isSidestepping = true;
-                            sideSteppingTimer = 0f;
-                            PositionPlayer();
-                            result = true;
-                        }
-                    }
-                }
+                //else if (inputHandler.sidestep.pressed || inputHandler.sidestep.hold) {
+                //    //If player pressed sideStep then begin transitioning between carts
+                //    Vector3 jumpDir = modelTransform.right * cartJumpDistance;
+                //    sideStepDir = true;
+                //    if (inputHandler.sidestep.value < 0) {
+                //        jumpDir *= -1; // If sidestep is positive, jump to the left
+                //        sideStepDir = false;
+                //    }
+                //    jumpDir.Normalize();
+                //    RaycastHit[] hits = Physics.SphereCastAll(modelTransform.position, 2f, jumpDir, cartJumpDistance, cartLayerMask, QueryTriggerInteraction.Collide);
+                //    foreach (RaycastHit hit in hits) {
+                //        CartRailStageObject cartObject = hit.collider.GetComponent<CartStageObject>();
+                //        if (cartObject != null && cartObject != currentCart) {
+                //            nextCart = cartObject;
+                //            isSidestepping = true;
+                //            sideSteppingTimer = 0f;
+                //            PositionPlayer();
+                //            result = true;
+                //        }
+                //    }
+                //}
                 result = true;
             }
             if (result) {
@@ -98,49 +107,44 @@ namespace RagdollEngine {
         private void PositionPlayer() {
             //Control the players modelPosition and modelRotation, set player to kinematic
             if (currentCart != null) {
-
-                Transform cartTransform = currentCart.transform;
-
                 overrideModelTransform = true;
                 kinematic = true;
                 moving = true;
                 moveVelocity = Vector3.zero; // Reset move velocity to prevent unwanted movement during sidestep
                 if (isSidestepping) {
                     //If player is sidestepping, lerp between current cart and next cart
-                    Transform nextCartTransform = nextCart.transform;
-                    float lerpVal = sideSteppingTimer / cartJumpTime;
-                    Vector3 targetPosition = Vector3.Lerp(cartTransform.position, nextCartTransform.position, lerpVal);
-                    Quaternion targetRotation = Quaternion.Lerp(cartTransform.rotation, nextCartTransform.rotation, lerpVal);
-                    targetPosition.x += cartJumpXTransformCurve.Evaluate(lerpVal);
-                    targetPosition.y += cartJumpYTransformCurve.Evaluate(lerpVal);
-                    targetPosition.z += cartJumpZTransformCurve.Evaluate(lerpVal);
+                    //Transform nextCartTransform = nextCart.transform;
+                    //float lerpVal = sideSteppingTimer / cartJumpTime;
+                    //Vector3 targetPosition = Vector3.Lerp(cartTransform.position, nextCartTransform.position, lerpVal);
+                    //Quaternion targetRotation = Quaternion.Lerp(cartTransform.rotation, nextCartTransform.rotation, lerpVal);
+                    //targetPosition.x += cartJumpXTransformCurve.Evaluate(lerpVal);
+                    //targetPosition.y += cartJumpYTransformCurve.Evaluate(lerpVal);
+                    //targetPosition.z += cartJumpZTransformCurve.Evaluate(lerpVal);
 
 
-                    Vector3 targetRotationAddition;
-                    targetRotationAddition.x = cartJumpXRotationCurve.Evaluate(lerpVal);
-                    targetRotationAddition.y = cartJumpYRotationCurve.Evaluate(lerpVal);
-                    targetRotationAddition.z = cartJumpZRotationCurve.Evaluate(lerpVal);
-                    if (!sideStepDir) {
-                        targetRotationAddition.x *= -1; // If sidestep is positive, flip the x rotation
-                    }
-                    targetRotation *= Quaternion.Euler(targetRotationAddition);
+                    //Vector3 targetRotationAddition;
+                    //targetRotationAddition.x = cartJumpXRotationCurve.Evaluate(lerpVal);
+                    //targetRotationAddition.y = cartJumpYRotationCurve.Evaluate(lerpVal);
+                    //targetRotationAddition.z = cartJumpZRotationCurve.Evaluate(lerpVal);
+                    //if (!sideStepDir) {
+                    //    targetRotationAddition.x *= -1; // If sidestep is positive, flip the x rotation
+                    //}
+                    //targetRotation *= Quaternion.Euler(targetRotationAddition);
 
-                    modelTransform.position = targetPosition;
-                    modelTransform.rotation = targetRotation;
-                    playerTransform.position = targetPosition;
-                    sideSteppingTimer += Time.fixedDeltaTime;
-                    if (sideSteppingTimer >= cartJumpTime) {
-                        //Once lerp is complete, set currentCart to nextCart and reset sidestepping
-                        currentCart = nextCart;
-                        nextCart = null;
-                        isSidestepping = false;
-                    }
+                    //modelTransform.position = targetPosition;
+                    //modelTransform.rotation = targetRotation;
+                    //playerTransform.position = targetPosition;
+                    //sideSteppingTimer += Time.fixedDeltaTime;
+                    //if (sideSteppingTimer >= cartJumpTime) {
+                    //    //Once lerp is complete, set currentCart to nextCart and reset sidestepping
+                    //    currentCart = nextCart;
+                    //    nextCart = null;
+                    //    isSidestepping = false;
+                    //}
                 }
                 else {
 
-                    playerTransform.position = cartTransform.position;
-                    modelTransform.position = cartTransform.position;
-                    modelTransform.rotation = cartTransform.rotation;
+
                 }
 
             }
