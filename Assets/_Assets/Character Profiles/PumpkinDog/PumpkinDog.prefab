@@ -1464,8 +1464,7 @@ MonoBehaviour:
   cartLayerMask:
     serializedVersion: 2
     m_Bits: 2048
-  cartVisual: {fileID: 0}
-  cartSpeed: 1
+  cartSpeed: 30
   cartDetectionRadius: 2.5
   cartJumpDistance: 10
   cartJumpTime: 0.5
@@ -1622,7 +1621,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  cartJumpImmunityTime: 1
+  cartJumpImmunityTime: 0.2
   jumpPlayerBehaviour: {fileID: 3773458990709628176}
   jumpAudioSource: {fileID: 6494705532546526289}
 --- !u!114 &5536724616008386286
