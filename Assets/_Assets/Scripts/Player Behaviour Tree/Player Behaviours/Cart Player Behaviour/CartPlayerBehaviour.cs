@@ -1,4 +1,6 @@
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Splines;
 
 namespace RagdollEngine {
     public class CartPlayerBehaviour : PlayerBehaviour {
@@ -53,7 +55,11 @@ namespace RagdollEngine {
                         if (cartObject != null) {
                             currentCart = cartObject;
                             //Get the closest position on the cart to set the players position to
-
+                            SplineUtility.GetNearestPoint(currentCart.splineContainer.Spline, currentCart.splineContainer.transform.InverseTransformPoint(modelTransform.position), out float3 _, out float closestT);
+                            currentCartLerp = closestT;
+                            //Set cartDirection according to tangent
+                            Vector3 splineTangent = currentCart.splineContainer.Spline.EvaluateTangent(currentCartLerp);
+                            currentCartDirection = Vector3.Dot(modelTransform.forward, splineTangent) > 0;
                             result = true;
                         }
                     }
@@ -143,13 +149,52 @@ namespace RagdollEngine {
                     //}
                 }
                 else {
-
-
+                    float splineDistance = currentCart.splineContainer.CalculateLength();
+                    float increment = (cartSpeed / splineDistance) * Time.fixedDeltaTime;
+                    if (currentCartDirection) {
+                        currentCartLerp += increment;
+                        if (currentCartLerp > 1f) {
+                            DismountCart();
+                            return;
+                        }
+                    }
+                    else {
+                        currentCartLerp -= increment;
+                        if (currentCartLerp < 0f) {
+                            DismountCart();
+                            return;
+                        }
+                    }
+                    Vector3 targetPos;
+                    Quaternion targetRot;
+                    GetSplinePositionAndRotation(currentCart.splineContainer, currentCartLerp, currentCartDirection, out targetPos, out targetRot);
+                    playerTransform.position = targetPos;
+                    modelTransform.position = targetPos;
+                    modelTransform.rotation = targetRot;
                 }
 
             }
         }
 
+        private void GetSplinePositionAndRotation(SplineContainer spline, float lerp, bool dir, out Vector3 position, out Quaternion rotation) {
+            position = spline.Spline.EvaluatePosition(lerp);
+            position = spline.transform.TransformPoint(position);
+
+            Vector3 splineTangent = spline.Spline.EvaluateTangent(lerp);
+            if (!dir)
+                splineTangent *= -1;
+            Vector3 splineUp = spline.Spline.EvaluateUpVector(lerp);
+
+            rotation = Quaternion.LookRotation(splineTangent, splineUp);
+        }
+
+        private void DismountCart() {
+            overrideModelTransform = false;
+            kinematic = false;
+            playerBehaviourTree.groundInformation.ground = false;
+            currentCart = null;
+            cartJumpImmunityTimer = cartJumpImmunityTime;
+        }
 
     }
 }
