@@ -1494,7 +1494,7 @@ MonoBehaviour:
   cartDetectionRadius: 2.5
   cartJumpDistance: 10
   cartJumpTime: 0.5
-  cartEndMargins: 0.05
+  cartEndMargins: 1
   cartJumpXTransformCurve:
     serializedVersion: 2
     m_Curve:

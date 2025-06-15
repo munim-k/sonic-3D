@@ -58,8 +58,10 @@ namespace RagdollEngine {
                             //Get the closest position on the cart to set the players position to
                             SplineUtility.GetNearestPoint(currentCart.splineContainer.Spline, currentCart.splineContainer.transform.InverseTransformPoint(modelTransform.position), out float3 _, out float closestT);
                             currentCartLerp = closestT;
+                            float maxDist = currentCart.splineContainer.CalculateLength();
+                            float tDist = closestT * maxDist; // Get the distance along the spline at the closest T value
                             //If closestT is within endMargins or 0 and 1 then dont get into the spline
-                            if (closestT >= (1 - cartEndMargins) || closestT <= (0 + cartEndMargins)) {
+                            if (tDist >= (maxDist - cartEndMargins) || tDist <= (0 + cartEndMargins)) {
                                 currentCart = null;
                                 currentCartLerp = 0f;
                                 result = false;
@@ -188,8 +190,11 @@ namespace RagdollEngine {
                     if (sideSteppingTimer >= cartJumpTime) {
                         //Once lerp is complete, set currentCart to nextCart and reset sidestepping
                         currentCart = nextCart;
+                        currentCartDirection = nextCartDirection;
+                        currentCartLerp = nextCartLerp;
                         nextCart = null;
                         nextCartLerp = 0;
+
                         nextCartDirection = false;
                         isSidestepping = false;
                     }
