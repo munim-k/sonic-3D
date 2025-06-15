@@ -10,6 +10,12 @@ public class SplineObjectPlacer : MonoBehaviour {
     public bool verticalOffsetFollowsCurve = false;
     public float verticalOffset = 0f;
 
+    [Header("Placement Range (Normalized 0-1)")]
+    [Range(0f, 1f)]
+    public float placementStart = 0f;
+    [Range(0f, 1f)]
+    public float placementEnd = 1f;
+
     [Header("Spline Options")]
     public bool useClosedSpline = false;
 
@@ -50,13 +56,46 @@ public class SplineObjectPlacer : MonoBehaviour {
 
         // Calculate placement parameters
         int placementCount = numberOfObjects;
-        float stepSize = splineLength / (useClosedSpline ? numberOfObjects : numberOfObjects - 1);
+        float tStart = Mathf.Clamp01(Mathf.Min(placementStart, placementEnd));
+        float tEnd = Mathf.Clamp01(Mathf.Max(placementStart, placementEnd));
 
-        // Place objects along spline
+        //float stepSize = splineLength / (useClosedSpline ? numberOfObjects : numberOfObjects - 1);
+
+        //// Place objects along spline
+        //for (int i = 0; i < placementCount; i++) {
+        //    float distance = i * stepSize;
+        //    PlaceObjectAtDistance(distance, splineLength);
+        //}
         for (int i = 0; i < placementCount; i++) {
-            float distance = i * stepSize;
-            PlaceObjectAtDistance(distance, splineLength);
+            float t;
+            if (useClosedSpline) {
+                t = (float)i / placementCount;
+            }
+            else {
+                if (placementCount == 1) {
+                    t = tStart;
+                }
+                else {
+                    t = Mathf.Lerp(tStart, tEnd, (float)i / (placementCount - 1));
+                }
+            }
+            PlaceObjectAtNormalizedT(t);
         }
+    }
+    void PlaceObjectAtNormalizedT(float t) {
+        Vector3 localposition = SplineUtility.EvaluatePosition(spline, t);
+        if (verticalOffsetFollowsCurve) {
+            Vector3 up = SplineUtility.EvaluateUpVector(spline, t);
+            localposition += up.normalized * verticalOffset;
+        }
+        else {
+            localposition.y += verticalOffset;
+        }
+        Vector3 position = splineContainer.transform.TransformPoint(localposition);
+        Quaternion rotation = alignRotation
+            ? Quaternion.LookRotation(SplineUtility.EvaluateTangent(spline, t))
+            : Quaternion.identity;
+        InstantiateObject(position, rotation);
     }
 
     void PlaceSingleObject() {
@@ -93,7 +132,6 @@ public class SplineObjectPlacer : MonoBehaviour {
 
 #if UNITY_EDITOR
     void OnDrawGizmosSelected() {
-        // Draw instantiation points as spheres in edit mode
         splineContainer = GetComponent<SplineContainer>();
         if (splineContainer == null || splineContainer.Spline == null)
             return;
@@ -105,7 +143,6 @@ public class SplineObjectPlacer : MonoBehaviour {
 
         float splineLength = SplineUtility.CalculateLength(spline, transform.localToWorldMatrix);
         if (Mathf.Approximately(splineLength, 0f)) {
-            // Draw single sphere at start
             Vector3 localPos = SplineUtility.EvaluatePosition(spline, 0f);
             Vector3 worldPos = splineContainer.transform.TransformPoint(localPos);
             Gizmos.color = Color.cyan;
@@ -114,12 +151,23 @@ public class SplineObjectPlacer : MonoBehaviour {
         }
 
         int placementCount = numberOfObjects;
-        float stepSize = splineLength / (useClosedSpline ? numberOfObjects : numberOfObjects - 1);
+        float tStart = Mathf.Clamp01(Mathf.Min(placementStart, placementEnd));
+        float tEnd = Mathf.Clamp01(Mathf.Max(placementStart, placementEnd));
 
         Gizmos.color = Color.cyan;
         for (int i = 0; i < placementCount; i++) {
-            float distance = i * stepSize;
-            float t = SplineUtility.GetNormalizedInterpolation(spline, distance, PathIndexUnit.Distance);
+            float t;
+            if (useClosedSpline) {
+                t = (float)i / placementCount;
+            }
+            else {
+                if (placementCount == 1) {
+                    t = tStart;
+                }
+                else {
+                    t = Mathf.Lerp(tStart, tEnd, (float)i / (placementCount - 1));
+                }
+            }
             Vector3 localPos = SplineUtility.EvaluatePosition(spline, t);
             if (verticalOffsetFollowsCurve) {
                 Vector3 up = SplineUtility.EvaluateUpVector(spline, t);
@@ -133,4 +181,5 @@ public class SplineObjectPlacer : MonoBehaviour {
         }
     }
 #endif
+
 }
