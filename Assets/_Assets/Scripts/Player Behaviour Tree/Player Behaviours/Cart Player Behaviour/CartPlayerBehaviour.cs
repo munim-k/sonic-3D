@@ -201,7 +201,8 @@ namespace RagdollEngine {
                 }
                 else {
                     float splineDistance = currentCart.splineContainer.CalculateLength();
-                    float increment = (cartSpeed / splineDistance) * Time.fixedDeltaTime;
+                    float speedMultiplier = currentCart.SpeedMultiplier;
+                    float increment = (cartSpeed / splineDistance) * Time.fixedDeltaTime * speedMultiplier;
                     if (currentCartDirection) {
                         currentCartLerp += increment;
                         if (currentCartLerp > 1f) {
