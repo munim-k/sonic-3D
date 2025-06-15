@@ -10,23 +10,42 @@ namespace RagdollEngine
         [Header("Fixed Rotation")]
         [SerializeField] Vector3 fixedEulerAngles = new Vector3(30, 0, 0); // Camera will always face this direction
 
+        [Header("References")]
+        [SerializeField] AimingPlayerCameraState aimingState; // Reference to the aiming state
+
         public override void Execute()
         {
-            // Follow only the position of the player
-            cameraTransform.position = modelTransform.position + offset;
+            if (aimingState.Check()) // If aiming input is active
+            {
+                aimingState.Execute(); // Delegate control to the aiming state
+                return;
+            }
 
-            // Apply a fixed rotation
+            // Default fisheye follow behavior
+            cameraTransform.position = modelTransform.position + offset;
             cameraTransform.rotation = Quaternion.Euler(fixedEulerAngles);
         }
 
         public override void Enable()
         {
-            // No initialization needed
+            if (aimingState.Check())
+            {
+                aimingState.Enable();
+                return;
+            }
+
+            // No initialization needed for fisheye
         }
 
         public override void Transition()
         {
-            transition = 0; // No transition behavior
+            if (aimingState.Check())
+            {
+                aimingState.Transition();
+                return;
+            }
+
+            transition = 0; // No transition behavior for fisheye
         }
     }
 }

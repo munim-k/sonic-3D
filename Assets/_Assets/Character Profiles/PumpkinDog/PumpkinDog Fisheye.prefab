@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7279205528556183501}
+  - component: {fileID: 1110556002217541068}
   - component: {fileID: 8502060811418583498}
   - component: {fileID: 7235360732155638641}
   m_Layer: 0
@@ -33,6 +34,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 810846559498169767}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1110556002217541068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593204466047998369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e77047ae6a14dd740854b1cc7bb2f8de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  behaviourTree: {fileID: 0}
+  active: 0
+  wasActive: 0
+  transitionTime: 0.2
+  oldRotation: {x: -0.12955305, y: 0.120843224, z: -0.015909305, w: -0.9840528}
+  oldPosition: {x: 2.014597, y: 3.5882022, z: -8.078894}
+  transition: 0
+  defaultDistance: 6
+  positionOffset: {x: 2, y: 2, z: -2}
+  minDistance: 6
+  maxDistance: 6
+  zoomSensitivity: -0.01
+  zoomFalloff: 5
+  zoomSmoothness: 1
+  normalSmoothness: 1
+  defaultRotation: {x: 0, y: -1}
+  lookAngleBounds: {x: -80, y: 50}
+  lookSensitivity: 0.075
+  heightOffset: 2.63
 --- !u!114 &8502060811418583498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54,6 +86,7 @@ MonoBehaviour:
   transition: 0
   offset: {x: 0, y: 5, z: -10}
   fixedEulerAngles: {x: 20, y: 0, z: 0}
+  aimingState: {fileID: 1110556002217541068}
 --- !u!114 &7235360732155638641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1285,6 +1318,7 @@ MonoBehaviour:
   playerCameraStates:
   - {fileID: 7235360732155638641}
   - {fileID: 8502060811418583498}
+  - {fileID: 1110556002217541068}
 --- !u!114 &826953371461937429
 MonoBehaviour:
   m_ObjectHideFlags: 0
