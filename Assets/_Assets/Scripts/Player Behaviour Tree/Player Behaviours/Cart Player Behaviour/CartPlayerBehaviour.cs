@@ -9,6 +9,7 @@ namespace RagdollEngine {
         [SerializeField] private float cartDetectionRadius = 5f;
         [SerializeField] private float cartJumpDistance = 10f;
         [SerializeField] private float cartJumpTime = 0.1f;
+        [SerializeField] private float cartEndMargins = 0.1f;
         [Header("Cart Jump Additive Transform Curves")]
         [SerializeField] private AnimationCurve cartJumpXTransformCurve;
         [SerializeField] private AnimationCurve cartJumpYTransformCurve;
@@ -57,6 +58,13 @@ namespace RagdollEngine {
                             //Get the closest position on the cart to set the players position to
                             SplineUtility.GetNearestPoint(currentCart.splineContainer.Spline, currentCart.splineContainer.transform.InverseTransformPoint(modelTransform.position), out float3 _, out float closestT);
                             currentCartLerp = closestT;
+                            //If closestT is within endMargins or 0 and 1 then dont get into the spline
+                            if (closestT >= (1 - cartEndMargins) || closestT <= (0 + cartEndMargins)) {
+                                currentCart = null;
+                                currentCartLerp = 0f;
+                                result = false;
+                                continue;
+                            }
                             //Set cartDirection according to tangent
                             Vector3 splineTangent = currentCart.splineContainer.Spline.EvaluateTangent(currentCartLerp);
                             currentCartDirection = Vector3.Dot(modelTransform.forward, splineTangent) > 0;
