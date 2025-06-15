@@ -136,9 +136,9 @@ namespace RagdollEngine {
                 if (isSidestepping) {
                     //If player is sidestepping, lerp between current cart and next cart
                     float splineDistance = currentCart.splineContainer.CalculateLength();
-                    float currentCartIncrement = (cartSpeed / splineDistance) * Time.fixedDeltaTime;
+                    float currentCartIncrement = (cartSpeed / splineDistance) * Time.fixedDeltaTime * currentCart.SpeedMultiplier;
                     splineDistance = nextCart.splineContainer.CalculateLength();
-                    float nextCartIncrement = (cartSpeed / splineDistance) * Time.fixedDeltaTime;
+                    float nextCartIncrement = (cartSpeed / splineDistance) * Time.fixedDeltaTime * nextCart.SpeedMultiplier;
 
                     if (currentCartDirection) {
                         currentCartLerp += currentCartIncrement;
