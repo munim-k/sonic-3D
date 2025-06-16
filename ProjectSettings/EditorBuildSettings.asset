@@ -41,5 +41,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Stages/Levels/World4 (Beach)/World4Level2.unity
     guid: 9c68212811b1a2d4d8cd9689cad113d3
+  - enabled: 1
+    path: Assets/Stages/Fisheye Stages/World1/FisheyeWorld1Level1.unity
+    guid: e29bfc2f209fdf0438d6988e07bde263
+  - enabled: 1
+    path: Assets/Stages/Fisheye Stages/World1/FisheyeWorld1Level2.unity
+    guid: ebadbe69aeb003c42a6fd5a2b40e5b2e
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
