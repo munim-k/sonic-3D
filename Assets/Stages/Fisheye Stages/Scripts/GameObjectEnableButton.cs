@@ -33,6 +33,8 @@ public class GameObjectEnableButton : MonoBehaviour
             {
                 buttonTop.GetComponent<MeshRenderer>().materials[0].color = enable ? enabledColor : disabledColor;
             }
+
+            enable = !enable;
         }
     }
 }
