@@ -1,8 +1,7 @@
 using System;
 using UnityEngine;
 
-public class World4Boss : MonoBehaviour, BaseEnemy
-{
+public class World4Boss : MonoBehaviour, BaseEnemy {
 
     // Movement
     private World4BossMovement movement;
@@ -27,11 +26,9 @@ public class World4Boss : MonoBehaviour, BaseEnemy
     [SerializeField] private float spikeDamage = 10f;
     [SerializeField] private float spikeDuration = 3f;
     [SerializeField] private float spikeCooldown = 5f;
-    void ToggleSpikes()
-    {
+    void ToggleSpikes() {
         spikesActive = !spikesActive;
-        foreach (Spikes spike in spikes)
-        {
+        foreach (Spikes spike in spikes) {
             spike.SetSpikesState(spikesActive);
         }
     }
@@ -39,19 +36,22 @@ public class World4Boss : MonoBehaviour, BaseEnemy
     private float attackTimer = 0f;
     private float attackCooldownTimer = 0f;
 
-    public Action OnDamage;
     public Action<State> OnStateChange;
+    private Action OnHit;
+    private Action OnDeath;
 
     private State state;
-    public enum State
-    {
+
+    Action BaseEnemy.OnDeath { get => OnDeath; set => OnDeath = value; }
+    Action IHittable.OnHit { get => OnHit; set => OnHit = value; }
+
+    public enum State {
         ProjectileAttacks,
         Spikes,
         Dead
     }
 
-    void Awake()
-    {
+    void Awake() {
         currentHealth = maxHealth;
         state = State.Spikes;
         OnStateChange?.Invoke(state);
@@ -62,10 +62,8 @@ public class World4Boss : MonoBehaviour, BaseEnemy
     }
 
     // Update is called once per frame
-    void FixedUpdate()
-    {
-        switch (state)
-        {
+    void FixedUpdate() {
+        switch (state) {
             case State.Spikes:
                 Spikes();
                 break;
@@ -80,37 +78,29 @@ public class World4Boss : MonoBehaviour, BaseEnemy
 
     }
 
-    private void ProjectileAttacks()
-    {
-        if (attackCooldownTimer > 0f)
-        {
+    private void ProjectileAttacks() {
+        if (attackCooldownTimer > 0f) {
             attackCooldownTimer -= Time.fixedDeltaTime;
-            if (attackCooldownTimer <= 0f)
-            {
+            if (attackCooldownTimer <= 0f) {
                 attackTimer = projectileAttackDuration;
                 projectileAttackTimer = projectileAttackStep;
             }
         }
 
-        if (attackTimer > 0f)
-        {
+        if (attackTimer > 0f) {
             attackTimer -= Time.fixedDeltaTime;
-            if (projectileAttackTimer > 0f)
-            {
+            if (projectileAttackTimer > 0f) {
                 projectileAttackTimer -= Time.fixedDeltaTime;
             }
-            if (projectileAttackTimer <= 0f)
-            {
+            if (projectileAttackTimer <= 0f) {
                 //Instantiate one projectile attack on each transform
-                foreach (Transform projectilettackTransform in projectileAttackTransforms)
-                {
+                foreach (Transform projectilettackTransform in projectileAttackTransforms) {
                     Instantiate(projectileAttackPrefab, projectilettackTransform.position, projectilettackTransform.rotation);
                 }
                 projectileAttackTimer = projectileAttackStep;
             }
 
-            if (attackTimer <= 0f)
-            {
+            if (attackTimer <= 0f) {
                 attackCooldownTimer = projectileAttackCooldown;
                 state = State.Spikes;
                 OnStateChange?.Invoke(state);
@@ -120,23 +110,18 @@ public class World4Boss : MonoBehaviour, BaseEnemy
 
     }
 
-    private void Spikes()
-    {
-        if (attackCooldownTimer > 0f)
-        {
+    private void Spikes() {
+        if (attackCooldownTimer > 0f) {
             attackCooldownTimer -= Time.fixedDeltaTime;
-            if (attackCooldownTimer <= 0f)
-            {
+            if (attackCooldownTimer <= 0f) {
                 ToggleSpikes();
                 attackTimer = spikeDuration;
             }
         }
 
-        if (attackTimer > 0f)
-        {
+        if (attackTimer > 0f) {
             attackTimer -= Time.fixedDeltaTime;
-            if (attackTimer <= 0f)
-            {
+            if (attackTimer <= 0f) {
                 ToggleSpikes();
                 attackCooldownTimer = spikeCooldown;
                 state = State.ProjectileAttacks;
@@ -145,25 +130,29 @@ public class World4Boss : MonoBehaviour, BaseEnemy
         }
     }
 
-    public void DoDamageToEnemy(int damage)
-    {
-        if (state != State.ProjectileAttacks)
-        {
+
+
+    public float GetHealthNormalized() {
+        return (float)currentHealth / maxHealth;
+    }
+
+
+    public void DoHit(int damage) {
+        if (state != State.ProjectileAttacks) {
             return;
         }
         currentHealth -= damage;
-        OnDamage?.Invoke();
-        if (currentHealth <= 0)
-        {
+        OnHit?.Invoke();
+        if (currentHealth <= 0) {
             currentHealth = 0;
             state = State.Dead;
+            OnDeath?.Invoke();
             levelExit.SetActive(true);
             OnStateChange?.Invoke(state);
         }
     }
 
-    public float GetHealthNormalized()
-    {
-        return (float)currentHealth / maxHealth;
+    HittableType IHittable.GetType() {
+        return HittableType.Enemy;
     }
 }
