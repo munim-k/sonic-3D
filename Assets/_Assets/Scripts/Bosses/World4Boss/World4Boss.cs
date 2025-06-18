@@ -48,6 +48,7 @@ public class World4Boss : MonoBehaviour, BaseEnemy {
         state = State.SpikesAttack;
         OnStateChange?.Invoke(state);
         attackDurationTimer = spikeAttackDuration;
+        damageVolume.gameObject.SetActive(true);
         movement = GetComponent<World4BossMovement>();
         movement.SetAttackDuration(spikeAttackDuration);
         movement.StartMoving();
@@ -99,6 +100,7 @@ public class World4Boss : MonoBehaviour, BaseEnemy {
             if (attackDurationTimer <= 0f) {
                 attackCooldownTimer = projectileAttackCooldown;
                 state = State.SpikesAttack;
+                damageVolume.gameObject.SetActive(true);
                 movement.StartMoving();
                 OnStateChange?.Invoke(state);
             }
@@ -123,6 +125,7 @@ public class World4Boss : MonoBehaviour, BaseEnemy {
             if (attackDurationTimer <= 0f) {
                 attackCooldownTimer = spikeAttackCooldown;
                 state = State.ProjectileAttacks;
+                damageVolume.gameObject.SetActive(false);
                 OnStateChange?.Invoke(state);
             }
         }
@@ -135,16 +138,15 @@ public class World4Boss : MonoBehaviour, BaseEnemy {
 
 
     public void DoHit(int damage) {
-        if (state != State.ProjectileAttacks) {
-            return;
-        }
         currentHealth -= damage;
         OnHit?.Invoke();
         if (currentHealth <= 0) {
             currentHealth = 0;
             state = State.Dead;
-            OnDeath?.Invoke();
+            movement.StopMoving();
+            damageVolume.gameObject.SetActive(false);
             levelExit.SetActive(true);
+            OnDeath?.Invoke();
             OnStateChange?.Invoke(state);
         }
     }

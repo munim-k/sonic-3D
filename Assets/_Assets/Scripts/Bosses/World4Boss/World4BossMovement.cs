@@ -4,6 +4,7 @@ using UnityEngine;
 public class World4BossMovement : MonoBehaviour {
     private float attackDuration;
     [SerializeField] private Transform target;
+    [SerializeField] private float speed = 5f;
     [SerializeField] private float rotationSpeed = 2f;
     [SerializeField] private float stoppingDistance = 1f;
 
@@ -17,7 +18,10 @@ public class World4BossMovement : MonoBehaviour {
         IsMoving = true;
         attackTimer = attackDuration;
     }
-
+    public void StopMoving() {
+        IsMoving = false;
+        attackTimer = 0f;
+    }
     public void SetAttackDuration(float attackDuration) {
         this.attackDuration = attackDuration;
     }
@@ -34,9 +38,8 @@ public class World4BossMovement : MonoBehaviour {
             Vector3 direction = target.position - transform.position;
             direction.y = 0;
             float distance = direction.magnitude;
-            float speed = distance / attackTimer;
             if (distance > stoppingDistance) {
-                transform.position = direction.normalized * speed * Time.fixedDeltaTime;
+                transform.position += direction.normalized * speed * Time.fixedDeltaTime;
             }
             rotation = rotationSpeed * Time.fixedDeltaTime;
         }
