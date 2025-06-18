@@ -18,7 +18,7 @@ public class World4BossVisuals : MonoBehaviour {
     private void OnStateChange(World4Boss.State s) {
         state = s;
         switch (state) {
-            case World4Boss.State.Spikes:
+            case World4Boss.State.SpikesAttack:
                 SetSpikeState(true);
                 break;
             case World4Boss.State.ProjectileAttacks:

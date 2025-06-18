@@ -1,39 +1,48 @@
 using UnityEngine;
-using System;
 
 
-public class World4BossMovement : MonoBehaviour
-{
-    [SerializeField] private float speed = 5f;
+public class World4BossMovement : MonoBehaviour {
+    private float attackDuration;
     [SerializeField] private Transform target;
     [SerializeField] private float rotationSpeed = 2f;
     [SerializeField] private float stoppingDistance = 1f;
 
     public bool IsMoving { get; private set; } = true;
-
-    public void SetMovement(bool isMoving)
-    {
-        IsMoving = isMoving;
+    private float rotation;
+    private float attackTimer = 0f;
+    private void Start() {
+        target = Player.CharacterInstance.playerBehaviourTree.modelTransform;
+    }
+    public void StartMoving() {
+        IsMoving = true;
+        attackTimer = attackDuration;
     }
 
-    void Update()
-    {
+    public void SetAttackDuration(float attackDuration) {
+        this.attackDuration = attackDuration;
+    }
+
+    void FixedUpdate() {
         // Movement handling
-        if (target != null && IsMoving)
-        {
-            Vector3 direction = target.position - transform.position;
-            direction.y = 0; // Keep movement on the horizontal plane
-            float distance = direction.magnitude;
 
-            // Rotate towards the target
-            if (distance > stoppingDistance)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
-                // Move towards the target
-                transform.position += transform.forward * speed * Time.deltaTime;
+        if (target != null && IsMoving) {
+            attackTimer -= Time.fixedDeltaTime;
+            if (attackTimer <= 0f) {
+                IsMoving = false;
+                return;
             }
+            Vector3 direction = target.position - transform.position;
+            direction.y = 0;
+            float distance = direction.magnitude;
+            float speed = distance / attackTimer;
+            if (distance > stoppingDistance) {
+                transform.position = direction.normalized * speed * Time.fixedDeltaTime;
+            }
+            rotation = rotationSpeed * Time.fixedDeltaTime;
         }
+        else {
+            rotation = Mathf.Lerp(rotation, 0, Time.fixedDeltaTime * 2f);
+        }
+        transform.rotation = transform.rotation * Quaternion.Euler(0, rotation, 0);
     }
 }

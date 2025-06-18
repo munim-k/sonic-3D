@@ -21,20 +21,12 @@ public class World4Boss : MonoBehaviour, BaseEnemy {
 
 
     // Spikes
-    [SerializeField] private Spikes[] spikes;
-    [SerializeField] private bool spikesActive = true;
-    [SerializeField] private float spikeDamage = 10f;
-    [SerializeField] private float spikeDuration = 3f;
-    [SerializeField] private float spikeCooldown = 5f;
-    void ToggleSpikes() {
-        spikesActive = !spikesActive;
-        foreach (Spikes spike in spikes) {
-            spike.SetSpikesState(spikesActive);
-        }
-    }
+    [SerializeField] private Transform damageVolume;
+    [SerializeField] private float spikeAttackCooldown = 1f;
+    [SerializeField] private float spikeAttackDuration = 3f;
 
-    private float attackTimer = 0f;
     private float attackCooldownTimer = 0f;
+    private float attackDurationTimer = 0f;
 
     public Action<State> OnStateChange;
     private Action OnHit;
@@ -47,24 +39,24 @@ public class World4Boss : MonoBehaviour, BaseEnemy {
 
     public enum State {
         ProjectileAttacks,
-        Spikes,
+        SpikesAttack,
         Dead
     }
 
     void Awake() {
         currentHealth = maxHealth;
-        state = State.Spikes;
+        state = State.SpikesAttack;
         OnStateChange?.Invoke(state);
-        attackTimer = spikeDuration;
-        attackCooldownTimer = 0.1f;
+        attackDurationTimer = spikeAttackDuration;
         movement = GetComponent<World4BossMovement>();
-        movement.SetMovement(true);
+        movement.SetAttackDuration(spikeAttackDuration);
+        movement.StartMoving();
     }
 
     // Update is called once per frame
     void FixedUpdate() {
         switch (state) {
-            case State.Spikes:
+            case State.SpikesAttack:
                 Spikes();
                 break;
             case State.ProjectileAttacks:
@@ -79,16 +71,20 @@ public class World4Boss : MonoBehaviour, BaseEnemy {
     }
 
     private void ProjectileAttacks() {
+        //First spend time in cooldown
         if (attackCooldownTimer > 0f) {
             attackCooldownTimer -= Time.fixedDeltaTime;
             if (attackCooldownTimer <= 0f) {
-                attackTimer = projectileAttackDuration;
                 projectileAttackTimer = projectileAttackStep;
+                attackDurationTimer = projectileAttackDuration;
+            }
+            else {
+                return;
             }
         }
-
-        if (attackTimer > 0f) {
-            attackTimer -= Time.fixedDeltaTime;
+        //After cooldown is over attack for however long the attackDurationTimer goes
+        if (attackDurationTimer > 0f) {
+            attackDurationTimer -= Time.fixedDeltaTime;
             if (projectileAttackTimer > 0f) {
                 projectileAttackTimer -= Time.fixedDeltaTime;
             }
@@ -100,9 +96,10 @@ public class World4Boss : MonoBehaviour, BaseEnemy {
                 projectileAttackTimer = projectileAttackStep;
             }
 
-            if (attackTimer <= 0f) {
+            if (attackDurationTimer <= 0f) {
                 attackCooldownTimer = projectileAttackCooldown;
-                state = State.Spikes;
+                state = State.SpikesAttack;
+                movement.StartMoving();
                 OnStateChange?.Invoke(state);
             }
         }
@@ -114,22 +111,22 @@ public class World4Boss : MonoBehaviour, BaseEnemy {
         if (attackCooldownTimer > 0f) {
             attackCooldownTimer -= Time.fixedDeltaTime;
             if (attackCooldownTimer <= 0f) {
-                ToggleSpikes();
-                attackTimer = spikeDuration;
+                attackDurationTimer = spikeAttackDuration;
+            }
+            else {
+                return;
             }
         }
-
-        if (attackTimer > 0f) {
-            attackTimer -= Time.fixedDeltaTime;
-            if (attackTimer <= 0f) {
-                ToggleSpikes();
-                attackCooldownTimer = spikeCooldown;
+        //After cooldown is over attack for however long the attackDurationTimer goes
+        if (attackDurationTimer > 0f) {
+            attackDurationTimer -= Time.fixedDeltaTime;
+            if (attackDurationTimer <= 0f) {
+                attackCooldownTimer = spikeAttackCooldown;
                 state = State.ProjectileAttacks;
                 OnStateChange?.Invoke(state);
             }
         }
     }
-
 
 
     public float GetHealthNormalized() {
