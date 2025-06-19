@@ -47,10 +47,14 @@ namespace RagdollEngine {
             foreach (Volume thisVolume in volumes) {
                 if (thisVolume is DamageVolume) {
                     DamageVolume thisDamageVolume = thisVolume as DamageVolume;
+                    if (thisDamageVolume.damageDealt) {
+                        continue; // Skip if damage has already been dealt by this volume
+                    }
                     // Deplete health based on the power of the damage volume
                     int damageAmount = Mathf.FloorToInt(thisDamageVolume.power);
                     currentHealth = Mathf.Max(currentHealth - damageAmount, 0);
-
+                    //Reset damageDealt variable of damageVolume
+                    thisDamageVolume.damageDealt = true; // Mark that damage has been dealt
                     // Play damage sound
                     audioSource.PlayOneShot(damageAudioClip);
 

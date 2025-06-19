@@ -23,7 +23,9 @@ public class World3BossHomingProjectile : MonoBehaviour {
 
         }
         else {
-            DetachParticles();
+            if (particles != null) {
+                DetachParticles();
+            }
             Destroy(this.gameObject);
         }
 
