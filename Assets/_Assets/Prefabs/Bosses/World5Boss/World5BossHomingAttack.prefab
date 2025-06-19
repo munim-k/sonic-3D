@@ -81,7 +81,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMode: 0
   damageDealt: 0
-  power: 0
+  power: 10
 --- !u!1 &4941344781351708189
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,7 +329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   travelSpeed: 30
-  rotationSpeed: 3.5
+  rotationSpeed: 4
   verticalLift: 0.1
   particles: {fileID: 0}
   ignoreLayers:
