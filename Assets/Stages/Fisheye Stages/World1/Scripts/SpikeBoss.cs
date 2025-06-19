@@ -6,19 +6,26 @@ public class SpikeBoss : MonoBehaviour
 {
     [SerializeField] private AreaSpike areaSpike;
     [SerializeField] private ForwardSpike forwardSpike;
-    [SerializeField] private float movementDistance = 10f;
-
     [SerializeField] private float movementSpeed = 5f;
-    [SerializeField] private float waitTime = 2f;
+    [SerializeField] private float waitTime = 0.5f;
 
     [SerializeField] private float attackTime = 3f;
 
-    private bool isMoving = false;
-    private Vector3 oldPosition;
-    private int randomMovement;
+    [SerializeField] private float rotationSpeed = 5f;
 
+    private Transform playerTransform;
+
+    private bool isForwardAttack = false;
+    private bool isAreaAttack = false;
+    private bool hasAttackStarted = false;
+    private bool isMoving = false;
+    private bool isSlamming = false;
+    private Vector3 positionToMoveTo;
     private void Start()
     {
+        //find the player transform
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+
         StartCoroutine(DeactivateSpikes());
 
         //start the coroutine to decide the first move
@@ -26,37 +33,55 @@ public class SpikeBoss : MonoBehaviour
     }
     private void Update()
     {
+        //make y rotation to face the player
+        Vector3 directionToPlayer = playerTransform.position - transform.position;
+        directionToPlayer.y = 0; // Keep the y component zero to avoid tilting
+        if (directionToPlayer != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed); // Smoothly rotate towards the player
+        }
+
+        if (isForwardAttack && !hasAttackStarted)
+        {
+            hasAttackStarted = true; // Prevent multiple starts
+            positionToMoveTo = new Vector3(playerTransform.position.x, transform.position.y, playerTransform.position.z);
+            isMoving = true; // Set moving to true for forward attack
+        }
+        else if (isAreaAttack && !hasAttackStarted)
+        {
+            hasAttackStarted = true; // Prevent multiple starts
+            positionToMoveTo = new Vector3(playerTransform.position.x, transform.position.y + 15f, playerTransform.position.z);
+            isMoving = true; // Set moving to true for area attack
+        }
 
         if (isMoving)
         {
-            //move the boss based on the random number
-            if (randomMovement == 0)
+            transform.position = !isSlamming ? Vector3.MoveTowards(transform.position, positionToMoveTo, movementSpeed * Time.deltaTime) : Vector3.MoveTowards(transform.position, positionToMoveTo, movementSpeed * 3 * Time.deltaTime);
+
+            // Check if the boss has reached the target position
+            if (Vector3.Distance(transform.position, positionToMoveTo) < 0.1f)
             {
-                //move left
-                transform.Translate(Vector3.left * movementSpeed * Time.deltaTime);
-            }
-            else if (randomMovement == 1)
-            {
-                //move right
-                transform.Translate(Vector3.right * movementSpeed * Time.deltaTime);
-            }
-            else if (randomMovement == 2)
-            {
-                //move up
-                transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
-            }
-            else if (randomMovement == 3)
-            {
-                //move down
-                transform.Translate(Vector3.back * movementSpeed * Time.deltaTime);
-            }
-            //check if the boss has moved the movement distance
-            if (Vector3.Distance(oldPosition, transform.position) >= movementDistance)
-            {
-                //stop moving
-                isMoving = false;
-                oldPosition = transform.position; //update the old position to the current position
-                StartCoroutine(DecideMove()); //decide the next move
+                if (isAreaAttack)
+                {
+                    if (isSlamming)
+                    {
+                        isSlamming = false;
+                        isMoving = false;
+                        StartCoroutine(StartAreaSpikeAttack());
+                    }
+                    else
+                    {
+                        // Move down to slam
+                        positionToMoveTo = positionToMoveTo + new Vector3(0, -15f, 0);
+                        isSlamming = true; // Set slamming to true to indicate the boss is slamming down
+                    }
+                }
+                else if (isForwardAttack)
+                {
+                    isMoving = false;
+                    StartCoroutine(StartForwardSpikeAttack());
+                }
             }
         }
     }
@@ -68,31 +93,14 @@ public class SpikeBoss : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
 
         //randomly choose between area spike and forward spike
-        int randomMove = Random.Range(0, 3);
+        int randomMove = Random.Range(0, 2);
         if (randomMove == 0)
         {
-            areaSpike.gameObject.SetActive(true);
-            areaSpike.StartAttack(); // start the area spike attack
-            yield return new WaitForSeconds(attackTime);
-            areaSpike.gameObject.SetActive(false);
-
-            StartCoroutine(DecideMove()); // decide the next move after the area spike attack
-        }
-        else if (randomMove == 1)
-        {
-            //activate forward spike
-            forwardSpike.gameObject.SetActive(true);
-            forwardSpike.StartAttack(); // start the forward spike attack
-            yield return new WaitForSeconds(attackTime);
-            forwardSpike.gameObject.SetActive(false);
-
-            StartCoroutine(DecideMove()); // decide the next move after the forward spike attack
+            isAreaAttack = true;
         }
         else
         {
-            oldPosition = transform.position;
-            isMoving = true;
-            randomMovement = Random.Range(0, 4); // Randomly choose a direction to move
+            isForwardAttack = true;
         }
     }
     // A coroutine to deactivate the spikes after some time
@@ -102,5 +110,31 @@ public class SpikeBoss : MonoBehaviour
 
         areaSpike.gameObject.SetActive(false);
         forwardSpike.gameObject.SetActive(false);
+    }
+
+    private IEnumerator StartAreaSpikeAttack()
+    {
+        areaSpike.gameObject.SetActive(true);
+        areaSpike.StartAttack(); // start the area spike attack
+        yield return new WaitForSeconds(attackTime);
+        areaSpike.gameObject.SetActive(false);
+
+        isAreaAttack = false; // reset the area attack flag
+        hasAttackStarted = false; // reset the attack started flag
+        
+        StartCoroutine(DecideMove()); // decide the next move after the area spike attack
+    }
+
+    private IEnumerator StartForwardSpikeAttack()
+    {
+        forwardSpike.gameObject.SetActive(true);
+        forwardSpike.StartAttack(); // start the forward spike attack
+        yield return new WaitForSeconds(attackTime);
+        forwardSpike.gameObject.SetActive(false);
+
+        isForwardAttack = false;
+        hasAttackStarted = false; // reset the attack started flag
+
+        StartCoroutine(DecideMove()); // decide the next move after the forward spike attack
     }
 }

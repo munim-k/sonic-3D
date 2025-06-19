@@ -6,14 +6,18 @@ using Unity.VisualScripting;
 public class ForwardSpike : MonoBehaviour
 {
     [SerializeField] private List<GameObject> spikes;
-
-    [SerializeField] private float throwForce = 10f;
-
+    private List<Vector3> spikePostions;
+    private List<Quaternion> spikeRotations;
+    [SerializeField] private float throwForce = 100f;
     private void Start()
     {
-        // Deactivate all spikes at the start
+        //save the transforms of the spikes
+        spikePostions = new List<Vector3>();
+        spikeRotations = new List<Quaternion>();
         foreach (GameObject spike in spikes)
         {
+            spikePostions.Add(spike.transform.localPosition);
+            spikeRotations.Add(spike.transform.localRotation);
             spike.SetActive(false);
         }
     }
@@ -26,10 +30,14 @@ public class ForwardSpike : MonoBehaviour
     // a co routine to activate the spikes one by one
     private IEnumerator ActivateSpikes()
     {
+        //make the transforms of the spikes the same as the transforms of the spikeTransforms
+        StartCoroutine(ResetSpikes());
+
+        yield return new WaitForSeconds(0.1f); // wait for some time before activating the first spike
         foreach (GameObject spike in spikes)
         {
             spike.SetActive(true);
-            yield return new WaitForSeconds(0.25f); // wait for half a second before activating the next spike
+            yield return new WaitForSeconds(0.1f); // wait for half a second before activating the next spike
         }
     }
 
@@ -44,9 +52,34 @@ public class ForwardSpike : MonoBehaviour
             if (rb != null)
             {
                 rb.isKinematic = false; // make the spike dynamic
-                rb.AddForce(spike.transform.forward * throwForce, ForceMode.Impulse); // throw the spike in the forward direction
+                rb.AddForce(spike.transform.up * throwForce, ForceMode.Impulse); // throw the spike in the forward direction
             }
-            yield return new WaitForSeconds(0.25f); // wait for half a second before throwing the next spike
+        }
+    }
+
+    private IEnumerator ResetSpikes()
+    {
+        yield return null;
+
+        for (int i = 0; i < spikes.Count; i++)
+        {
+            GameObject spike = spikes[i];
+            Rigidbody rb = spike.GetComponent<Rigidbody>();
+
+            // Reset transform
+            spike.transform.localPosition = spikePostions[i];
+            spike.transform.localRotation = spikeRotations[i];
+
+            // Reset Rigidbody
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+                rb.isKinematic = true;
+            }
+
+            // Deactivate the spike
+            spike.SetActive(false);
         }
     }
 }
