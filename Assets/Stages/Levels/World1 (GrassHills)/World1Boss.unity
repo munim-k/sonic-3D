@@ -1567,7 +1567,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6695489051614882999, guid: e72ff6824e5419f42bc2d68dc99a4ce8, type: 3}
       propertyPath: selectedSceneIndex
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8191246301747233247, guid: e72ff6824e5419f42bc2d68dc99a4ce8, type: 3}
       propertyPath: m_Mesh

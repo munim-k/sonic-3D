@@ -35983,6 +35983,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level Transition 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6695489051614882999, guid: 1397966936eceb240a27049a03182851, type: 3}
+      propertyPath: levelName
+      value: World4Boss
+      objectReference: {fileID: 0}
+    - target: {fileID: 6695489051614882999, guid: 1397966936eceb240a27049a03182851, type: 3}
+      propertyPath: selectedSceneIndex
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 6840787674012636349, guid: 1397966936eceb240a27049a03182851, type: 3}
       propertyPath: m_Mesh
       value: 

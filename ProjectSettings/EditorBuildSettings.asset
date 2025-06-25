@@ -12,9 +12,6 @@ EditorBuildSettings:
     path: Assets/Stages/Levels/World1 (GrassHills)/World1Level2.unity
     guid: adcae74b987c56a4ca2cb80efa1a5be2
   - enabled: 1
-    path: Assets/Stages/Levels/World1 (GrassHills)/World1Bonus.unity
-    guid: 13a0ae2761cb4b548b19bd3e5989dbb3
-  - enabled: 1
     path: Assets/Stages/Levels/World1 (GrassHills)/World1Boss.unity
     guid: 83b3dba5b48a6c04595e083b74f3a63d
   - enabled: 1
@@ -42,10 +39,19 @@ EditorBuildSettings:
     path: Assets/Stages/Levels/World4 (Beach)/World4Level2.unity
     guid: 9c68212811b1a2d4d8cd9689cad113d3
   - enabled: 1
+    path: Assets/Stages/Levels/World4 (Beach)/World4Boss.unity
+    guid: 9baab35aa6992374a8e4123b36eec610
+  - enabled: 1
     path: Assets/Stages/Levels/World5 (Desert)/World5Level1/World5Level1.unity
     guid: f84a7fe59fc0d47439eb43cbeac5d54d
   - enabled: 1
     path: Assets/Stages/Levels/World5 (Desert)/World5Level2/World5Level2.unity
     guid: 4dff539b7b340ea4aa0d579c9fe22009
+  - enabled: 1
+    path: Assets/Stages/Levels/World5 (Desert)/World5Boss/World5Boss.unity
+    guid: 6bba4e340ddbd194f9989d031d05ba8d
+  - enabled: 1
+    path: Assets/Stages/Levels/World6/World6Level1/World6Level1.unity
+    guid: 8e03640a8fd677044ac0b6f6281e180f
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

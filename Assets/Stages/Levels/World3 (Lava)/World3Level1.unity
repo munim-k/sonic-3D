@@ -6913,6 +6913,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageMode: 0
+  damageDealt: 0
   power: 10
 --- !u!65 &832336099
 BoxCollider:
@@ -8807,7 +8808,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6695489051614882999, guid: 1397966936eceb240a27049a03182851, type: 3}
       propertyPath: selectedSceneIndex
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6840787674012636349, guid: 1397966936eceb240a27049a03182851, type: 3}
       propertyPath: m_Mesh
