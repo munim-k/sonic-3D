@@ -47,8 +47,8 @@ namespace RagdollEngine {
             foreach (Volume thisVolume in volumes) {
                 if (thisVolume is DamageVolume) {
                     DamageVolume thisDamageVolume = thisVolume as DamageVolume;
-                    if (thisDamageVolume.damageDealt) {
-                        continue; // Skip if damage has already been dealt by this volume
+                    if (thisDamageVolume.damageDealt && thisDamageVolume.damageMode == DamageType.Single) {
+                        continue; // Skip if damage has already been dealt by this volume and its a single damageType
                     }
                     // Deplete health based on the power of the damage volume
                     int damageAmount = Mathf.FloorToInt(thisDamageVolume.power);
