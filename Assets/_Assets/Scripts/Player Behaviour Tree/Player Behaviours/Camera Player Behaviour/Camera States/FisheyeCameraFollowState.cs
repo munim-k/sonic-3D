@@ -55,7 +55,7 @@ namespace RagdollEngine
                 cameraTransform.position = modelTransform.position + offset;
                 cameraTransform.rotation = Quaternion.Euler(fixedEulerAngles);
             }
-        }   
+        }
 
         public override void Enable()
         {
@@ -77,6 +77,11 @@ namespace RagdollEngine
             }
 
             transition = 0;
+        }
+
+        private void Update()
+        {
+            bossObject = GameObject.FindGameObjectWithTag("Boss");
         }
     }
 }

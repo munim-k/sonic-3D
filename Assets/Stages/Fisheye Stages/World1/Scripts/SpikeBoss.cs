@@ -13,6 +13,8 @@ public class SpikeBoss : MonoBehaviour
 
     [SerializeField] private float rotationSpeed = 5f;
 
+    [SerializeField] private float initialDelay = 0.5f;
+
     private Transform playerTransform;
 
     private bool isForwardAttack = false;
@@ -25,6 +27,8 @@ public class SpikeBoss : MonoBehaviour
     {
         //find the player transform
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+
+        StartCoroutine(InitialDelay());
 
         StartCoroutine(DeactivateSpikes());
 
@@ -121,7 +125,7 @@ public class SpikeBoss : MonoBehaviour
 
         isAreaAttack = false; // reset the area attack flag
         hasAttackStarted = false; // reset the attack started flag
-        
+
         StartCoroutine(DecideMove()); // decide the next move after the area spike attack
     }
 
@@ -136,5 +140,10 @@ public class SpikeBoss : MonoBehaviour
         hasAttackStarted = false; // reset the attack started flag
 
         StartCoroutine(DecideMove()); // decide the next move after the forward spike attack
+    }
+    
+    private IEnumerator InitialDelay()
+    {
+        yield return new WaitForSeconds(initialDelay);
     }
 }

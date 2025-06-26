@@ -270,6 +270,7 @@ GameObject:
   - component: {fileID: 430607816144397314}
   - component: {fileID: 8924248647943434268}
   - component: {fileID: 8922361255900664483}
+  - component: {fileID: 8914424544323794989}
   m_Layer: 0
   m_Name: Hitbox
   m_TagString: Untagged
@@ -327,6 +328,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: {fileID: 7208909543541954519}
   maxHealth: 100
+  enableObject: {fileID: 0}
+  enemyPrefab: {fileID: 7914845235597970848}
+--- !u!65 &8914424544323794989
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4534018222569595616}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6, y: 1, z: 6}
+  m_Center: {x: 0, y: 3.5, z: 0}
 --- !u!1 &5287552824763161070
 GameObject:
   m_ObjectHideFlags: 0
@@ -623,6 +647,7 @@ MonoBehaviour:
   waitTime: 0.2
   attackTime: 3
   rotationSpeed: 5
+  initialDelay: 0.5
 --- !u!1 &8582253344399452200
 GameObject:
   m_ObjectHideFlags: 0
