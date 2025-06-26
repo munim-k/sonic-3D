@@ -5246,6 +5246,139 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1642084735}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &929050712
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 929050714}
+  - component: {fileID: 929050713}
+  - component: {fileID: 929050715}
+  m_Layer: 0
+  m_Name: Spline
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &929050713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929050712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dab5c7d4c32e743048dfca98e2d5914f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Spline:
+    m_EditModeType: 1
+    m_Knots: []
+    m_MetaData: []
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
+  m_Splines:
+  - m_EditModeType: 1
+    m_Knots:
+    - Position:
+        x: 0
+        y: 0
+        z: 0
+      TangentIn:
+        x: 0
+        y: 0
+        z: -12.041464
+      TangentOut:
+        x: 0
+        y: 0
+        z: 12.041464
+      Rotation:
+        value:
+          x: 0
+          y: 0
+          z: 0
+          w: 1
+    - Position:
+        x: 0
+        y: 0.000015258789
+        z: 160
+      TangentIn:
+        x: -0
+        y: -0
+        z: -16
+      TangentOut:
+        x: 0
+        y: 0
+        z: 16
+      Rotation:
+        value:
+          x: -0.000000047683717
+          y: -1.3562813e-21
+          z: -2.8443278e-14
+          w: 1
+    m_MetaData:
+    - Mode: 2
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
+  m_Knots:
+    m_KnotsLink: []
+--- !u!4 &929050714
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929050712}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.270598, y: -0.6532812, z: -0.27059782, w: 0.6532819}
+  m_LocalPosition: {x: -348.65195, y: 92.909004, z: 367.64322}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1642084735}
+  m_LocalEulerAnglesHint: {x: -45, y: -90, z: 0}
+--- !u!114 &929050715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929050712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98672a8e08f92014e8942acba8b46a1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectToPlace: {fileID: 1022997597482263924, guid: de07c7f9de466ad408237c7e53c7a79a, type: 3}
+  numberOfObjects: 20
+  alignRotation: 1
+  verticalOffsetFollowsCurve: 0
+  verticalOffset: 0
+  placementStart: 0
+  placementEnd: 1
+  useClosedSpline: 0
 --- !u!1001 &934290875
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7839,6 +7972,7 @@ GameObject:
   - component: {fileID: 1345298130}
   - component: {fileID: 1345298129}
   - component: {fileID: 1345298132}
+  - component: {fileID: 1345298133}
   m_Layer: 0
   m_Name: Spline
   m_TagString: Untagged
@@ -8108,6 +8242,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: dfd347a20fae469409c69f0935cf6ebc, type: 2}
+--- !u!114 &1345298133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345298122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98672a8e08f92014e8942acba8b46a1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectToPlace: {fileID: 1022997597482263924, guid: de07c7f9de466ad408237c7e53c7a79a, type: 3}
+  numberOfObjects: 50
+  alignRotation: 0
+  verticalOffsetFollowsCurve: 0
+  verticalOffset: 3.11
+  placementStart: 0.752
+  placementEnd: 1
+  useClosedSpline: 0
 --- !u!1001 &1357038125
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9895,15 +10049,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1476373159618062928, guid: 329d5d33f6096af46b59cec9ae17b5a4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -549.9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1476373159618062928, guid: 329d5d33f6096af46b59cec9ae17b5a4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 18.8
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1476373159618062928, guid: 329d5d33f6096af46b59cec9ae17b5a4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 348
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1476373159618062928, guid: 329d5d33f6096af46b59cec9ae17b5a4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10335,6 +10489,7 @@ Transform:
   - {fileID: 1227540940}
   - {fileID: 2079650738}
   - {fileID: 1635701382}
+  - {fileID: 929050714}
   - {fileID: 1830947714}
   - {fileID: 335185849}
   - {fileID: 1872574874724814176}
