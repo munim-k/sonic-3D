@@ -578,6 +578,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1008394410860306495, guid: 107a1b7f11bf9d1488bc4278fcba0b3d, type: 3}
+      propertyPath: initialDelay
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1008394410860306495, guid: 107a1b7f11bf9d1488bc4278fcba0b3d, type: 3}
       propertyPath: movementSpeed
       value: 15
       objectReference: {fileID: 0}
@@ -5610,11 +5614,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6695489051614882999, guid: 1397966936eceb240a27049a03182851, type: 3}
       propertyPath: levelName
-      value: FisheyeWorld1Level2
+      value: FisheyeWorld2Level1
       objectReference: {fileID: 0}
     - target: {fileID: 6695489051614882999, guid: 1397966936eceb240a27049a03182851, type: 3}
       propertyPath: selectedSceneIndex
-      value: 13
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6840787674012636349, guid: 1397966936eceb240a27049a03182851, type: 3}
       propertyPath: m_Mesh
