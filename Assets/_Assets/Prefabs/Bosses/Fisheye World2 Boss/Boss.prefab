@@ -319,8 +319,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ec2ecc891799884e924e02db6f334ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageMode: 1
-  power: 15
+  damageMode: 0
+  power: 5
 --- !u!1 &2921078301736911786
 GameObject:
   m_ObjectHideFlags: 0
@@ -1835,8 +1835,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ec2ecc891799884e924e02db6f334ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageMode: 1
-  power: 15
+  damageMode: 0
+  power: 5
 --- !u!1 &3673194856621757178
 GameObject:
   m_ObjectHideFlags: 0
@@ -1928,7 +1928,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: {fileID: 4852689604703155260}
-  maxHealth: 100
+  maxHealth: 50
   enableObject: {fileID: 0}
   enemyPrefab: {fileID: 6536342354293553202}
 --- !u!1 &4293421026237513153
@@ -2223,8 +2223,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ec2ecc891799884e924e02db6f334ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageMode: 1
-  power: 15
+  damageMode: 0
+  power: 5
 --- !u!1 &6536342354293553202
 GameObject:
   m_ObjectHideFlags: 0
@@ -2297,7 +2297,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 5
-  throwForce: 150
   initialDelay: 0.5
   delayBetweenAttacks: 2
   homingTime: 4
@@ -2464,7 +2463,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageMode: 0
-  power: 30
+  power: 10
 --- !u!1 &8608119525370724476
 GameObject:
   m_ObjectHideFlags: 0

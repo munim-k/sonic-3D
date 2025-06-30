@@ -9,10 +9,8 @@ public class SnowBoss : MonoBehaviour
 
     [Header("Timing Settings")]
     [SerializeField] private float rotationSpeed = 5f;
-    [SerializeField] private float throwForce = 50f;
     [SerializeField] private float initialDelay = 0.5f;
     [SerializeField] private float delayBetweenAttacks = 2f;
-
     [SerializeField] private float homingTime = 5f;
 
     [Header("Game Objects")]
@@ -51,21 +49,6 @@ public class SnowBoss : MonoBehaviour
     {
         yield return new WaitForSeconds(initialDelay);
     }
-    private IEnumerator ThrowPlayer()
-    {
-        if (playerInHitbox != null)
-        {
-            Rigidbody playerRigidbody = playerInHitbox.GetComponent<Rigidbody>();
-            if (playerRigidbody != null)
-            {
-                // Calculate throw direction with upward arc
-                Vector3 throwDirection = playerInHitbox.transform.position - transform.position;
-                throwDirection.y = 0.5f; // Add vertical force to create a proper throw arc
-                playerRigidbody.AddForce(throwDirection * throwForce, ForceMode.Impulse);
-            }
-        }
-        yield return null;
-    }
 
     private IEnumerator DecideAttack()
     {
@@ -88,8 +71,6 @@ public class SnowBoss : MonoBehaviour
         }
         else
         {
-            StartCoroutine(ThrowPlayer());
-
             StartCoroutine(SpawnHomingSingles());
         }
 

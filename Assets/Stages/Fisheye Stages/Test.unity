@@ -470,13 +470,17 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1611791044}
+    - target: {fileID: 1599062712514398367, guid: 6796a5543047e974191c715cd556ab89, type: 3}
+      propertyPath: enableObject
+      value: 
+      objectReference: {fileID: 1883521968}
     - target: {fileID: 3974054933501084853, guid: 6796a5543047e974191c715cd556ab89, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1611791044}
     - target: {fileID: 3974054933501084853, guid: 6796a5543047e974191c715cd556ab89, type: 3}
       propertyPath: m_VersionIndex
-      value: 3666
+      value: 3675
       objectReference: {fileID: 0}
     - target: {fileID: 5602282154003053122, guid: 6796a5543047e974191c715cd556ab89, type: 3}
       propertyPath: m_Mesh
@@ -656,6 +660,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1883521968
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1883521969}
+  m_Layer: 0
+  m_Name: Test Level Completion Objec
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1883521969
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1883521968}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.47514, y: 11.132004, z: 29.6943}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -664,3 +699,4 @@ SceneRoots:
   - {fileID: 1625140099}
   - {fileID: 1648650364}
   - {fileID: 1644986461}
+  - {fileID: 1883521969}
