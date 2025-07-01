@@ -1709,7 +1709,7 @@ MonoBehaviour:
   bombLaunchForce: 10
   bombLaunchPoints: []
   bombStep: 0.25
-  jumpShockwave: {fileID: 0}
+  jumpShockwave: {fileID: 7736840642676937717, guid: 556d0f32ce1cc854dbf7fe17cd92f47a, type: 3}
   movementSpeed: 5
   fireworkPrefab: {fileID: 3242651781645571398, guid: d9bd417a4e6c6974cbd14e8e6e1adc20, type: 3}
   fireworkLaunchPoint: {fileID: 76961846}
