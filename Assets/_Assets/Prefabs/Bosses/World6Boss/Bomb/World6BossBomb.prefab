@@ -249,7 +249,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1536
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -265,7 +265,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7550006532926932333}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 5
   m_Drag: 0
   m_AngularDrag: 199.51
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -276,7 +276,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1536
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -296,7 +296,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acc84389cc92ce94d8972ba6029fc317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToExplode: 5
+  timeToExplode: 3
   explosionTrigger: {fileID: 1720564141863786482}
+  explosionLingerTime: 1
   explosionVFX: {fileID: 1376617828620465841, guid: 7354b1cbae6593c46957b2aba7e5df5e, type: 3}
   bombVisual: {fileID: 4418345841404595451}

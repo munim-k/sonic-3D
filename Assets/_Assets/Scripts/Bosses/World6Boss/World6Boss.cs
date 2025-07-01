@@ -1,6 +1,7 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class World6Boss : MonoBehaviour, BaseEnemy {
     [SerializeField] private Transform levelExit;
@@ -11,7 +12,10 @@ public class World6Boss : MonoBehaviour, BaseEnemy {
     private bool isThrowing = false;
     [SerializeField] private Transform bombPrefab;
     [SerializeField] private float bombLaunchForce = 10f;
+    [SerializeField] private float bombLaunchIncrement = 1f;
+    private float bombLaunchForceCurrent = 0f;
     [SerializeField] private Transform[] bombLaunchPoints;
+    [SerializeField] private Transform bombLaunchOrigin;
     [SerializeField] private float bombStep = 0.25f;
     private float bombTimer = 0f;
 
@@ -28,7 +32,7 @@ public class World6Boss : MonoBehaviour, BaseEnemy {
 
 
     private float cooldownTimer = 0f;
-
+    private NavMeshAgent navMeshAgent;
     public enum State {
         Spinning,// Spin and throw bombs
         Jumping, //Jump, slam then spawn shockwave
@@ -44,8 +48,11 @@ public class World6Boss : MonoBehaviour, BaseEnemy {
     Action BaseEnemy.OnDeath { get => onDeath; set => onDeath = value; }
     Action IHittable.OnHit { get => onHit; set => onHit = value; }
 
-    void Start() {
+    void Awake() {
+        navMeshAgent = GetComponent<NavMeshAgent>();
         health = maxHealth;
+    }
+    void Start() {
         state = State.Moving;
         OnStateChange?.Invoke(state);
     }
@@ -70,11 +77,12 @@ public class World6Boss : MonoBehaviour, BaseEnemy {
         }
         else {
             bombTimer = bombStep;
+            bombLaunchForceCurrent+=bombLaunchIncrement;
             if (isThrowing) {
                 for (int i = 0; i < bombLaunchPoints.Length; i++) {
                     Transform bomb = Instantiate(bombPrefab, bombLaunchPoints[i].position, Quaternion.identity);
-                    Vector3 direction = (bombLaunchPoints[i].position - transform.position).normalized;
-                    bomb.GetComponent<Rigidbody>().AddForce(direction * bombLaunchForce, ForceMode.Impulse);
+                    Vector3 direction = (bombLaunchPoints[i].position - bombLaunchOrigin.position).normalized;
+                    bomb.GetComponent<Rigidbody>().AddForce(direction * bombLaunchForceCurrent, ForceMode.Impulse);
                 }
 
             }
@@ -84,6 +92,7 @@ public class World6Boss : MonoBehaviour, BaseEnemy {
         if (cooldownTimer >= 0f) {
             cooldownTimer -= Time.fixedDeltaTime;
         }
+        navMeshAgent.destination = Player.CharacterInstance.playerBehaviourTree.modelTransform.position;
         if (fireworkTimer >= 0f) {
             fireworkTimer -= Time.fixedDeltaTime;
         }
@@ -92,8 +101,12 @@ public class World6Boss : MonoBehaviour, BaseEnemy {
             Instantiate(fireworkPrefab, fireworkLaunchPoint.position, Quaternion.identity);
         }
         if (cooldownTimer < 0f) {
+            navMeshAgent.destination = transform.position;
+            navMeshAgent.updatePosition= false;
+            navMeshAgent.updateRotation = false;
             if (UnityEngine.Random.Range(0f, 1f) < 0.5f) {
                 state = State.Spinning;
+                bombLaunchForceCurrent = bombLaunchForce;
             }
             else {
                 state = State.Jumping;
@@ -119,6 +132,9 @@ public class World6Boss : MonoBehaviour, BaseEnemy {
         cooldownTimer = attackCooldown;
         state = State.Moving;
         OnStateChange?.Invoke(state);
+        navMeshAgent.updatePosition = true;
+        navMeshAgent.updateRotation = true;
+
     }
 
     float BaseEnemy.GetHealthNormalized() {
@@ -129,7 +145,6 @@ public class World6Boss : MonoBehaviour, BaseEnemy {
         onHit?.Invoke();
         if (health <= 0) {
             onDeath?.Invoke();
-            Destroy(gameObject);
             state = State.Dead;
             levelExit.gameObject.SetActive(true);
             OnStateChange?.Invoke(state);

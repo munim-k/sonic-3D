@@ -341,8 +341,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a3a53b303c87dd4485fd95d3bd92351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  travelSpeed: 10
-  rotationSpeed: 5
+  travelSpeed: 20
+  rotationSpeed: 4
   verticalLift: 0.5
   damageTrigger: {fileID: 397927299340186182}
   particles: {fileID: 0}

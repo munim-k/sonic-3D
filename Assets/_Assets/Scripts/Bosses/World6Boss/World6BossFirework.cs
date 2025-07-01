@@ -11,10 +11,9 @@ public class World6BossFirework : MonoBehaviour {
     [SerializeField] private Rigidbody rb;
     private Quaternion rotToPlayer;
     private Vector3 targetPos;
-    private void Awake() {
-        targetPos = Player.CharacterInstance.playerBehaviourTree.modelTransform.position;
-    }
+   
     void FixedUpdate() {
+        targetPos = Player.CharacterInstance.playerBehaviourTree.modelTransform.position;
         rb.linearVelocity = transform.forward * travelSpeed;
         Vector3 vecToPlayer = targetPos - transform.position;
         vecToPlayer.Normalize();

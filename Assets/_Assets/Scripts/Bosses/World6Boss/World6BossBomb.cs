@@ -5,6 +5,7 @@ public class World6BossBomb : MonoBehaviour
     [SerializeField] private float timeToExplode=3f;
     private float timer = 0f;
     [SerializeField] private Transform explosionTrigger;
+    [SerializeField] private float explosionLingerTime=1f;
     [SerializeField] private Transform explosionVFX;
     [SerializeField] private Transform bombVisual;
 
@@ -24,8 +25,14 @@ public class World6BossBomb : MonoBehaviour
         if (timer >= timeToExplode) {
            Instantiate(explosionVFX,transform.position,Quaternion.identity);
             explosionTrigger.gameObject.SetActive(true);
+            DetachAndDestroy(explosionTrigger);
             Destroy(gameObject,0.1f);
         }
+    }
+
+    private void DetachAndDestroy(Transform obj) {
+        obj.transform.parent = null;
+        Destroy(obj.gameObject, explosionLingerTime);
     }
 
     private void UpdateMat() {
