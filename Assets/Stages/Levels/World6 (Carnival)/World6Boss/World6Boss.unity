@@ -2247,7 +2247,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1063265643
 Transform:
   m_ObjectHideFlags: 0
@@ -2490,7 +2490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SerializedVersion: 0
-  m_AgentTypeID: -1372625422
+  m_AgentTypeID: 1479372276
   m_CollectObjects: 3
   m_Size: {x: 10, y: 10, z: 10}
   m_Center: {x: 0, y: 2, z: 0}
@@ -2505,9 +2505,9 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.22333334
+  m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 7498191fb5e3c36458bc08f8386bd46e, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: f28c8af502a536f469f2d0814f7bfc00, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &1120954369
 Transform:
