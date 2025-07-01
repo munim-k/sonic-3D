@@ -2,7 +2,7 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class World6Boss : MonoBehaviour,BaseEnemy {
+public class World6Boss : MonoBehaviour, BaseEnemy {
     [SerializeField] private Transform levelExit;
     [SerializeField] private int maxHealth = 100;
     private int health = 100;
@@ -22,7 +22,7 @@ public class World6Boss : MonoBehaviour,BaseEnemy {
     //Moving
     [SerializeField] private float movementSpeed = 5f;
     [SerializeField] private Transform fireworkPrefab;
-    [SerializeField] private Transform fireworkLaunchPoints;
+    [SerializeField] private Transform fireworkLaunchPoint;
     [SerializeField] private float fireworkStep = 0.5f;
     private float fireworkTimer = 0f;
 
@@ -84,11 +84,19 @@ public class World6Boss : MonoBehaviour,BaseEnemy {
         if (cooldownTimer >= 0f) {
             cooldownTimer -= Time.fixedDeltaTime;
         }
+        if (fireworkTimer >= 0f) {
+            fireworkTimer -= Time.fixedDeltaTime;
+        }
+        else {
+            fireworkTimer = fireworkStep;
+            Instantiate(fireworkPrefab, fireworkLaunchPoint.position, Quaternion.identity);
+        }
         if (cooldownTimer < 0f) {
             if (UnityEngine.Random.Range(0f, 1f) < 0.5f) {
                 state = State.Spinning;
-            } else {
-                state= State.Jumping;
+            }
+            else {
+                state = State.Jumping;
             }
             OnStateChange?.Invoke(state);
         }
