@@ -10,6 +10,14 @@ public class AnimOnEnemyDeath : MonoBehaviour {
             enemyComponent.OnDeath += HandleEnemyDeath;
         }
         aliveEnemies = enemies.Length;
+
+        if(aliveEnemies == 0) {
+            foreach (var anim in animations) {
+                if (anim != null) {
+                    anim.Play();
+                }
+            }
+        }
     }
 
     private void HandleEnemyDeath() {

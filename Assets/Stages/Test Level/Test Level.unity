@@ -6765,6 +6765,10 @@ PrefabInstance:
       propertyPath: m_LoopMode
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 459298518347298208, guid: b5ba6ff9e67030e4891d99b8315b8bac, type: 3}
+      propertyPath: m_MaxSpeed
+      value: 20.302528
+      objectReference: {fileID: 0}
     - target: {fileID: 666696627675788367, guid: b5ba6ff9e67030e4891d99b8315b8bac, type: 3}
       propertyPath: m_Name
       value: SplinePlatform
