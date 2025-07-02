@@ -12,6 +12,8 @@ public class SnowBoss : MonoBehaviour
     [SerializeField] private float initialDelay = 0.5f;
     [SerializeField] private float delayBetweenAttacks = 2f;
     [SerializeField] private float homingTime = 5f;
+    [Range(1f, 5f)] [SerializeField] private float swordDuration = 2f;
+    [SerializeField] private float swordSpeed = 400f;
 
     [Header("Game Objects")]
     [SerializeField] private GameObject sword;
@@ -26,6 +28,7 @@ public class SnowBoss : MonoBehaviour
     private float swordTimer = 0f;
     private void Start()
     {
+        swordDuration = Mathf.Clamp(swordDuration, 1f, delayBetweenAttacks);
         // Find the player GameObject in the scene.
         player = GameObject.FindGameObjectWithTag("Player");
 
@@ -41,18 +44,17 @@ public class SnowBoss : MonoBehaviour
         }
 
         StartCoroutine(InitialDelay());
-
-        StartCoroutine(DecideAttack());
     }
 
     private IEnumerator InitialDelay()
     {
         yield return new WaitForSeconds(initialDelay);
+
+        StartCoroutine(DecideAttack());
     }
 
     private IEnumerator DecideAttack()
     {
-        yield return new WaitForSeconds(delayBetweenAttacks);
 
         // Randomly choose between throwing the player or spawning homing singles
         if (Random.value < 0.5f)
@@ -74,8 +76,11 @@ public class SnowBoss : MonoBehaviour
             StartCoroutine(SpawnHomingSingles());
         }
 
+        yield return new WaitForSeconds(delayBetweenAttacks);
+
         // Restart the attack decision after a delay
         StartCoroutine(DecideAttack());
+
     }
 
     private IEnumerator SpawnHomingSingles()
@@ -112,14 +117,14 @@ public class SnowBoss : MonoBehaviour
         if (isSwordAttack)
         {
             swordTimer += Time.deltaTime;
-            if (swordTimer >= delayBetweenAttacks)
+            if (swordTimer >= swordDuration)
             {
                 isSwordAttack = false;
                 sword.SetActive(false);
                 swordTimer = 0f;
             }
             //rotate the sword from -75 to 75 degrees around the y-axis
-            float rotationAngle = Mathf.PingPong(Time.time * 200, 150) - 75; // Adjust the speed and range of the rotation
+            float rotationAngle = Mathf.PingPong(Time.time * swordSpeed, 150) - 75; // Adjust the speed and range of the rotation
             sword.transform.localRotation = Quaternion.Euler(0, rotationAngle, 0);
         }
     }

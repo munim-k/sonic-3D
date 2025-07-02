@@ -53,5 +53,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Stages/Fisheye Stages/World2/FisheyeWorld2Level1.unity
     guid: 94c8e65ca34974f4aa28b606700716af
+  - enabled: 1
+    path: Assets/Stages/Fisheye Stages/World2/FisheyeWorld2Level2.unity
+    guid: df94365390917ee468b476c1d1031650
+  - enabled: 1
+    path: Assets/Stages/Fisheye Stages/World2/FisheyeWorld2Boss.unity
+    guid: 6afa52cce1199804fba384a67181624c
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
