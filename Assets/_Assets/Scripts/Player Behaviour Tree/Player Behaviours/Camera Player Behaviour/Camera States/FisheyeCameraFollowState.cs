@@ -22,40 +22,38 @@ namespace RagdollEngine
 
         public override void Execute()
         {
-            // If player is aiming, delegate to aiming camera
             if (aimingState.Check())
             {
                 aimingState.Execute();
                 return;
             }
-
+        
+            float smoothSpeed = 5f;
+        
             if (bossObject != null)
             {
                 Vector3 playerPos = modelTransform.position;
                 Vector3 bossPos = bossObject.transform.position;
-
-                // Direction from player to boss
+        
                 Vector3 toBoss = (bossPos - playerPos).normalized;
-
-                // Offset distance (magnitude of original offset)
                 float camDistance = offset.magnitude;
-
-                // Place camera behind the player, opposite to the boss direction
-                Vector3 cameraPos = playerPos - toBoss * camDistance + Vector3.up * offset.y;
-
-                // Rotate camera to look at the boss
-                Quaternion lookRotation = Quaternion.LookRotation(toBoss, Vector3.up);
-
-                cameraTransform.position = cameraPos;
-                cameraTransform.rotation = lookRotation;
+        
+                Vector3 targetPos = playerPos - toBoss * camDistance + Vector3.up * offset.y;
+                Quaternion targetRot = Quaternion.LookRotation(toBoss, Vector3.up);
+        
+                cameraTransform.position = Vector3.Lerp(cameraTransform.position, targetPos, Time.deltaTime * smoothSpeed);
+                cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, targetRot, Time.deltaTime * smoothSpeed);
             }
             else
             {
-                // Default behavior: follow player with fixed rotation
-                cameraTransform.position = modelTransform.position + offset;
-                cameraTransform.rotation = Quaternion.Euler(fixedEulerAngles);
+                Vector3 targetPos = modelTransform.position + offset;
+                Quaternion targetRot = Quaternion.Euler(fixedEulerAngles);
+        
+                cameraTransform.position = Vector3.Lerp(cameraTransform.position, targetPos, Time.deltaTime * smoothSpeed);
+                cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, targetRot, Time.deltaTime * smoothSpeed);
             }
         }
+
 
         public override void Enable()
         {

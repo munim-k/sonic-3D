@@ -6,6 +6,7 @@ TagManager:
   tags:
   - MovingPlatform
   - Boss
+  - EnemyDamage
   layers:
   - Default
   - TransparentFX

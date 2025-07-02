@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private GameObject enableObject;
     
     [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private string otherGameObjectTag = "Player";
 
     private void Start()
     {
@@ -21,7 +23,7 @@ public class EnemyHealth : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == otherGameObjectTag)
         {
             currentHealth -= 10;
             health.fillAmount = (float)currentHealth / maxHealth;
