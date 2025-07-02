@@ -3471,6 +3471,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level Transition 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5919487088231280141, guid: e72ff6824e5419f42bc2d68dc99a4ce8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6176648921468529081, guid: e72ff6824e5419f42bc2d68dc99a4ce8, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -8973,7 +8977,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1658977080
 Transform:
   m_ObjectHideFlags: 0
@@ -9010,7 +9014,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1675350401
 Transform:
   m_ObjectHideFlags: 0
