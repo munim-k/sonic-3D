@@ -5,250 +5,127 @@ using UnityEngine.Splines;
 namespace RagdollEngine {
     public class SlidePlayerBehaviour : PlayerBehaviour {
         [SerializeField] private LayerMask slideLayerMask;
-        [SerializeField] private float cartSpeed = 1f;
-        [SerializeField] private float cartDetectionRadius = 5f;
-        [SerializeField] private float cartJumpDistance = 10f;
-        [SerializeField] private float cartJumpTime = 0.1f;
-        [SerializeField] private float cartEndMargins = 0.1f;
-        [Header("Cart Jump Additive Transform Curves")]
-        [SerializeField] private AnimationCurve cartJumpXTransformCurve;
-        [SerializeField] private AnimationCurve cartJumpYTransformCurve;
-        [SerializeField] private AnimationCurve cartJumpZTransformCurve;
-        [Header("Cart Jump Additive Rotation Curves")]
-        [SerializeField] private AnimationCurve cartJumpXRotationCurve;
-        [SerializeField] private AnimationCurve cartJumpYRotationCurve;
-        [SerializeField] private AnimationCurve cartJumpZRotationCurve;
-        [SerializeField] private float cartJumpImmunityTime = 1f;
-        private float cartJumpImmunityTimer = 0f;
-        private SlideStageObject currentCart = null;
-        private SlideStageObject nextCart = null;
+        [SerializeField] private float slideSpeed = 5f;
+        [SerializeField] private float detectionRadius = 5f;
+        [SerializeField] private float endMargin = 0.1f;
+        [SerializeField] private float lateralMoveSpeed = 5f;
+        [SerializeField] private float lateralLimit = 2f; // How far left/right from center the player can go
+        [SerializeField] private float immunityTime = 0.5f;
+        [SerializeField] private float verticalOffset = 0.5f;
 
-        private float currentCartLerp = 0f;
-        private float nextCartLerp = 0f;
+        [SerializeField] private JumpPlayerBehaviour jumpPlayerBehaviour;
+        [SerializeField] private AudioSource jumpAudioSource;
 
-        private bool currentCartDirection = true; // True if the cart is moving in the positive direction, false if negative
-        private bool nextCartDirection = true; // True if the next cart is moving in the positive direction, false if negative
+        private SlideStageObject currentSlide = null;
+        private float currentT = 0f;
+        private bool direction = true;
+        private float lateralOffset = 0f;
+        private float immunityTimer = 0f;
 
-        private bool isSidestepping = false;
-        private float sideSteppingTimer = 0f;
-        private bool sideStepDir = false;
-
-        [SerializeField] JumpPlayerBehaviour jumpPlayerBehaviour;
-
-        [SerializeField] AudioSource jumpAudioSource;
+        private Vector3 previousPosition;
 
         public override bool Evaluate() {
-            Debug.Log("Slider layer mask value: " + slideLayerMask.value);
-            //If player is intersecting with cart or inside cart
             bool result = false;
-            if (cartJumpImmunityTimer > 0f) {
-                cartJumpImmunityTimer -= Time.fixedDeltaTime;
-                return result;
-
+            if (immunityTimer > 0f) {
+                immunityTimer -= Time.fixedDeltaTime;
+                return false;
             }
 
-            if (currentCart == null) {
-                // Check if the player is colliding with a cart stage object
-                Collider[] colliders = Physics.OverlapSphere(modelTransform.position, cartDetectionRadius, slideLayerMask, QueryTriggerInteraction.Collide);
-                // If a cart stage object is found, set cart to true
-                if (colliders.Length > 0) {
-                    foreach (Collider collider in colliders) {
-                        SlideStageObject cartObject = collider.GetComponent<SlideStageObject>();
-                        if (cartObject != null) {
-                            currentCart = cartObject;
-                            //Get the closest position on the cart to set the players position to
-                            SplineUtility.GetNearestPoint(currentCart.splineContainer.Spline, currentCart.splineContainer.transform.InverseTransformPoint(modelTransform.position), out float3 _, out float closestT);
-                            currentCartLerp = closestT;
-                            float maxDist = currentCart.splineContainer.CalculateLength();
-                            float tDist = closestT * maxDist; // Get the distance along the spline at the closest T value
-                            //If closestT is within endMargins or 0 and 1 then dont get into the spline
-                            if (tDist >= (maxDist - cartEndMargins) || tDist <= (0 + cartEndMargins)) {
-                                currentCart = null;
-                                currentCartLerp = 0f;
-                                result = false;
-                                continue;
-                            }
-                            //Set cartDirection according to tangent
-                            Vector3 splineTangent = currentCart.splineContainer.Spline.EvaluateTangent(currentCartLerp);
-                            currentCartDirection = Vector3.Dot(modelTransform.forward, splineTangent) > 0;
-                            result = true;
+            if (currentSlide == null) {
+                Collider[] colliders = Physics.OverlapSphere(modelTransform.position, detectionRadius, slideLayerMask, QueryTriggerInteraction.Collide);
+                foreach (var col in colliders) {
+                    SlideStageObject slide = col.GetComponent<SlideStageObject>();
+                    if (slide != null) {
+                        currentSlide = slide;
+                        SplineUtility.GetNearestPoint(slide.splineContainer.Spline, slide.splineContainer.transform.InverseTransformPoint(modelTransform.position), out float3 _, out float closestT);
+                        currentT = closestT;
+                        float len = slide.splineContainer.CalculateLength();
+                        float dist = closestT * len;
+                        if (dist <= endMargin || dist >= len - endMargin) {
+                            currentSlide = null;
+                            currentT = 0f;
+                            continue;
                         }
+                        direction = Vector3.Dot(modelTransform.forward, slide.splineContainer.Spline.EvaluateTangent(currentT)) > 0;
+                        previousPosition = modelTransform.position;
+                        result = true;
+                        break;
                     }
                 }
             }
             else {
-                //If player is currently in cart 
-                //Player is sidestepping
-                if (isSidestepping)
-                    result = true;
-                //Player pressed space 
-                else if (inputHandler.jump.pressed) {
-                    playerBehaviourTree.groundInformation.ground = false;
+                if (inputHandler.jump.pressed) {
+                    playerBehaviourTree.groundInformation.ground = true;
                     jumpPlayerBehaviour.Jump(Vector3.up, true);
                     jumpAudioSource.Play();
-                    currentCart = null;
-                    cartJumpImmunityTimer = cartJumpImmunityTime;
-                    result = false;
-                }
-                //Player pressed sidestep
-                else if (inputHandler.slideMove.pressed || inputHandler.slideMove.hold) {
-                    //If player pressed sideStep then begin transitioning between carts
-                    Vector3 jumpDir = modelTransform.right * cartJumpDistance;
-                    sideStepDir = true;
-                    if (inputHandler.slideMove.value < 0) {
-                        jumpDir *= -1; // If sidestep is positive, jump to the left
-                        sideStepDir = false;
-                    }
-                    jumpDir.Normalize();
-                    RaycastHit[] hits = Physics.SphereCastAll(modelTransform.position, 2f, jumpDir, cartJumpDistance, slideLayerMask, QueryTriggerInteraction.Collide);
-                    //Sort the results by distance to the player (closest first)
-                    System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
-                    foreach (RaycastHit hit in hits) {
-                        SlideStageObject cartObject = hit.collider.GetComponent<SlideStageObject>();
-                        if (cartObject != null && cartObject != currentCart) {
-                            nextCart = cartObject;
-                            //Get the closest position on the cart to set the players position to
-                            SplineUtility.GetNearestPoint(nextCart.splineContainer.Spline, nextCart.splineContainer.transform.InverseTransformPoint(modelTransform.position), out float3 _, out float closestT);
-                            nextCartLerp = closestT;
-                            //Set cartDirection according to tangent
-                            Vector3 splineTangent = nextCart.splineContainer.Spline.EvaluateTangent(nextCartLerp);
-                            nextCartDirection = Vector3.Dot(modelTransform.forward, splineTangent) > 0;
-                            isSidestepping = true;
-                            sideSteppingTimer = 0f;
-                            result = true;
-                            break;
-                        }
-                    }
+                    currentSlide = null;
+                    immunityTimer = immunityTime;
                 }
                 result = true;
             }
+
             if (result) {
                 PositionPlayer();
                 return true;
             }
+
             return false;
         }
 
         private void PositionPlayer() {
-            //Control the players modelPosition and modelRotation, set player to kinematic
-            if (currentCart != null) {
-                overrideModelTransform = true;
-                kinematic = true;
-                moving = true;
-                moveVelocity = Vector3.zero; // Reset move velocity to prevent unwanted movement during sidestep
-                if (isSidestepping) {
-                    //If player is sidestepping, lerp between current cart and next cart
-                    float splineDistance = currentCart.splineContainer.CalculateLength();
-                    float currentCartIncrement = (cartSpeed / splineDistance) * Time.fixedDeltaTime * currentCart.SpeedMultiplier;
-                    splineDistance = nextCart.splineContainer.CalculateLength();
-                    float nextCartIncrement = (cartSpeed / splineDistance) * Time.fixedDeltaTime * nextCart.SpeedMultiplier;
+            if (currentSlide == null) return;
 
-                    if (currentCartDirection) {
-                        currentCartLerp += currentCartIncrement;
-                        currentCartLerp = math.min(currentCartLerp, 1);
-                    }
-                    else {
-                        currentCartLerp -= currentCartIncrement;
-                        currentCartLerp = math.max(currentCartLerp, 0);
-                    }
+            overrideModelTransform = true;
+            kinematic = true;
+            moving = true;
+            moveVelocity = Vector3.zero;
 
-                    if (nextCartDirection) {
-                        nextCartLerp += nextCartIncrement;
-                        nextCartLerp = math.min(nextCartLerp, 1);
-                    }
-                    else {
-                        nextCartLerp -= nextCartIncrement;
-                        nextCartLerp = math.max(nextCartLerp, 0);
-                    }
+            // Move along spline
+            float splineLength = currentSlide.splineContainer.CalculateLength();
+            float deltaT = (slideSpeed / splineLength) * Time.fixedDeltaTime * currentSlide.SpeedMultiplier;
+            currentT += direction ? deltaT : -deltaT;
 
-                    //Get the positions and rotation
-                    Vector3 currentCartPos;
-                    Quaternion currentCartRot;
-                    GetSplinePositionAndRotation(currentCart.splineContainer, currentCartLerp, currentCartDirection, out currentCartPos, out currentCartRot);
-                    Vector3 nextCartPos;
-                    Quaternion nextCartRot;
-                    GetSplinePositionAndRotation(nextCart.splineContainer, nextCartLerp, nextCartDirection, out nextCartPos, out nextCartRot);
-
-                    float lerpVal = sideSteppingTimer / cartJumpTime;
-                    Vector3 targetPosition = Vector3.Lerp(currentCartPos, nextCartPos, lerpVal);
-                    Quaternion targetRotation = Quaternion.Lerp(currentCartRot, nextCartRot, lerpVal);
-                    targetPosition.x += cartJumpXTransformCurve.Evaluate(lerpVal);
-                    targetPosition.y += cartJumpYTransformCurve.Evaluate(lerpVal);
-                    targetPosition.z += cartJumpZTransformCurve.Evaluate(lerpVal);
-
-
-                    Vector3 targetRotationAddition;
-                    targetRotationAddition.x = cartJumpXRotationCurve.Evaluate(lerpVal);
-                    targetRotationAddition.y = cartJumpYRotationCurve.Evaluate(lerpVal);
-                    targetRotationAddition.z = cartJumpZRotationCurve.Evaluate(lerpVal);
-                    if (!sideStepDir) {
-                        targetRotationAddition.x *= -1; // If sidestep is positive, flip the x rotation
-                    }
-                    targetRotation *= Quaternion.Euler(targetRotationAddition);
-
-                    modelTransform.position = targetPosition;
-                    modelTransform.rotation = targetRotation;
-                    playerTransform.position = targetPosition;
-                    sideSteppingTimer += Time.fixedDeltaTime;
-                    if (sideSteppingTimer >= cartJumpTime) {
-                        //Once lerp is complete, set currentCart to nextCart and reset sidestepping
-                        currentCart = nextCart;
-                        currentCartDirection = nextCartDirection;
-                        currentCartLerp = nextCartLerp;
-                        nextCart = null;
-                        nextCartLerp = 0;
-
-                        nextCartDirection = false;
-                        isSidestepping = false;
-                    }
-                }
-                else {
-                    float splineDistance = currentCart.splineContainer.CalculateLength();
-                    float speedMultiplier = currentCart.SpeedMultiplier;
-                    float increment = (cartSpeed / splineDistance) * Time.fixedDeltaTime * speedMultiplier;
-                    if (currentCartDirection) {
-                        currentCartLerp += increment;
-                        if (currentCartLerp > 1f) {
-                            DismountCart();
-                            return;
-                        }
-                    }
-                    else {
-                        currentCartLerp -= increment;
-                        if (currentCartLerp < 0f) {
-                            DismountCart();
-                            return;
-                        }
-                    }
-                    Vector3 targetPos;
-                    Quaternion targetRot;
-                    GetSplinePositionAndRotation(currentCart.splineContainer, currentCartLerp, currentCartDirection, out targetPos, out targetRot);
-                    playerTransform.position = targetPos;
-                    modelTransform.position = targetPos;
-                    modelTransform.rotation = targetRot;
-                }
-
+            if (currentT < 0f || currentT > 1f) {
+                Dismount();
+                return;
             }
+
+            Vector3 splinePos = currentSlide.splineContainer.Spline.EvaluatePosition(currentT);
+            Vector3 tangent = currentSlide.splineContainer.Spline.EvaluateTangent(currentT);
+            Vector3 up = currentSlide.splineContainer.Spline.EvaluateUpVector(currentT);
+            Vector3 right = Vector3.Cross(up, tangent).normalized;
+
+            splinePos = currentSlide.splineContainer.transform.TransformPoint(splinePos);
+            tangent = currentSlide.splineContainer.transform.TransformDirection(tangent);
+            up = currentSlide.splineContainer.transform.TransformDirection(up);
+            right = currentSlide.splineContainer.transform.TransformDirection(right);
+
+            // Apply lateral input (flip input if direction is reversed)
+            float inputX = inputHandler.slideMove.value * (direction ? 1f : -1f);
+            if (inputHandler.slideMove.hold) {
+                lateralOffset += inputX * lateralMoveSpeed * Time.fixedDeltaTime;
+                lateralOffset = Mathf.Clamp(lateralOffset, -lateralLimit, lateralLimit);
+            }
+
+            Vector3 offsetPos = splinePos + right * lateralOffset + Vector3.up * verticalOffset;
+            Vector3 movementDir = (offsetPos - previousPosition).normalized;
+            Quaternion rot = movementDir.sqrMagnitude > 0.001f ? Quaternion.LookRotation(movementDir, up) : modelTransform.rotation;
+
+            playerTransform.position = offsetPos;
+            modelTransform.position = offsetPos;
+            modelTransform.rotation = rot;
+
+            previousPosition = offsetPos;
         }
 
-        private void GetSplinePositionAndRotation(SplineContainer spline, float lerp, bool dir, out Vector3 position, out Quaternion rotation) {
-            position = spline.Spline.EvaluatePosition(lerp);
-            position = spline.transform.TransformPoint(position);
-
-            Vector3 splineTangent = spline.Spline.EvaluateTangent(lerp);
-            if (!dir)
-                splineTangent *= -1;
-            Vector3 splineUp = spline.Spline.EvaluateUpVector(lerp);
-
-            rotation = Quaternion.LookRotation(splineTangent, splineUp);
-        }
-
-        private void DismountCart() {
+        private void Dismount() {
             overrideModelTransform = false;
             kinematic = false;
             playerBehaviourTree.groundInformation.ground = false;
-            currentCart = null;
-            cartJumpImmunityTimer = cartJumpImmunityTime;
+            currentSlide = null;
+            currentT = 0f;
+            lateralOffset = 0f;
+            immunityTimer = immunityTime;
         }
     }
 }
