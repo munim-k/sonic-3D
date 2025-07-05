@@ -10,6 +10,8 @@ public class RotatingPlatform : MonoBehaviour {
     private float lastRotationY = 0f;
     private GameObject player = null;
     private GameObject highestParent = null;
+    private float rotatedThisSegment = 0f;
+    private bool isWaiting = false;
     private void Start() {
         // Initialize the rotation speed to zero.
         rotationSpeedUseable = rotationSpeed;
@@ -50,28 +52,31 @@ public class RotatingPlatform : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        //rotate the platform continuously and check if the platform has rotated by the specified angle
-        float rotationThisFrame = rotationSpeedUseable;
-        transform.Rotate(Vector3.up, rotationThisFrame);
+        if (isWaiting)
+            return;
 
-        // Track cumulative rotation
-        float currentY = transform.eulerAngles.y;
-        float delta = Mathf.DeltaAngle(lastRotationY, currentY);
+        float rotationThisFrame = rotationSpeed * Time.fixedDeltaTime;
 
-        if (Mathf.Abs(delta) >= rotationAngle) {
-            lastRotationY = currentY;
-            StartCoroutine(WaitBeforeNextRotation());
+        // Calculate remaining rotation for this segment
+        float remainingRotation = rotationAngle - rotatedThisSegment;
+
+        // Clamp to avoid overshooting
+        float actualRotation = Mathf.Min(rotationThisFrame, remainingRotation);
+
+        // Rotate the platform
+        transform.Rotate(Vector3.up, actualRotation);
+        rotatedThisSegment += actualRotation;
+
+        // Segment complete
+        if (rotatedThisSegment >= rotationAngle) {
+            rotatedThisSegment = 0f;
+            StartCoroutine(WaitBeforeNextSegment());
         }
     }
-    
-    private IEnumerator WaitBeforeNextRotation() {
-        // Disable further rotation while waiting
-        rotationSpeedUseable = 0f;
 
-        // Wait for the specified time
+    private IEnumerator WaitBeforeNextSegment() {
+        isWaiting = true;
         yield return new WaitForSeconds(waitTimeBetweenRotations);
-
-        // Re-enable rotation
-        rotationSpeedUseable = rotationSpeed;
+        isWaiting = false;
     }
 }

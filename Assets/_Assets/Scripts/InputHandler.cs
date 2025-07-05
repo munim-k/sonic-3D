@@ -27,6 +27,8 @@ namespace RagdollEngine {
 
         public Button sidestep = new Button();
 
+        public Button slideMove = new Button();
+
         public Button zoomDelta = new Button();
 
         public Button zoom = new Button();

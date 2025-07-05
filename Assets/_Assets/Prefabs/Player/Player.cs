@@ -95,6 +95,9 @@ public class Player : MonoBehaviour {
                 inputHandler.zoom.Set(callbackContext.ReadValue<float>());
 
                 break;
+            case "Slide Move":
+                inputHandler.slideMove.Set(callbackContext.ReadValue<float>());
+                break;
         }
     }
 }
