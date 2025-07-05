@@ -53,5 +53,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Stages/Levels/World6 (Carnival)/World6Level1/World6Level1.unity
     guid: 8e03640a8fd677044ac0b6f6281e180f
+  - enabled: 1
+    path: Assets/Stages/Levels/World6 (Carnival)/World6Level2/World6Level2.unity
+    guid: 58d38b314c368f848b432e3748fcdc3e
+  - enabled: 1
+    path: Assets/Stages/Levels/World6 (Carnival)/World6Boss/World6Boss.unity
+    guid: 304ca92e845badf498f235ae5ae6c0bc
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

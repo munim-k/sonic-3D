@@ -15759,37 +15759,6 @@ MonoBehaviour:
   m_IgnoreFromBuild: 0
   m_ApplyToChildren: 1
   m_AffectedAgents: ffffffff
---- !u!1 &1063265642
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1063265643}
-  m_Layer: 0
-  m_Name: LevelExit
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1063265643
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1063265642}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1182540414}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1065227654
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17661,7 +17630,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 734291280}
-  - {fileID: 1063265643}
   - {fileID: 1085041257}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -21810,6 +21778,14 @@ PrefabInstance:
     - target: {fileID: 6506179823972737208, guid: e72ff6824e5419f42bc2d68dc99a4ce8, type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6695489051614882999, guid: e72ff6824e5419f42bc2d68dc99a4ce8, type: 3}
+      propertyPath: levelName
+      value: World6Boss
+      objectReference: {fileID: 0}
+    - target: {fileID: 6695489051614882999, guid: e72ff6824e5419f42bc2d68dc99a4ce8, type: 3}
+      propertyPath: selectedSceneIndex
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 8191246301747233247, guid: e72ff6824e5419f42bc2d68dc99a4ce8, type: 3}
       propertyPath: m_Mesh

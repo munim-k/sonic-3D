@@ -5455,6 +5455,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level Transition 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6695489051614882999, guid: 1397966936eceb240a27049a03182851, type: 3}
+      propertyPath: levelName
+      value: World6Level2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6695489051614882999, guid: 1397966936eceb240a27049a03182851, type: 3}
+      propertyPath: selectedSceneIndex
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 6840787674012636349, guid: 1397966936eceb240a27049a03182851, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -6596,7 +6604,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.22333334
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 7498191fb5e3c36458bc08f8386bd46e, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: caa7f58335f5e3344978ba368e8e00b2, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &1120954369
 Transform:
