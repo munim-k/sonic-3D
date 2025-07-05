@@ -24,7 +24,6 @@ public class World6Boss : MonoBehaviour, BaseEnemy {
     [SerializeField] private Transform jumpShockwave;
 
     //Moving
-    [SerializeField] private float movementSpeed = 5f;
     [SerializeField] private Transform fireworkPrefab;
     [SerializeField] private Transform fireworkLaunchPoint;
     [SerializeField] private float fireworkStep = 0.5f;
