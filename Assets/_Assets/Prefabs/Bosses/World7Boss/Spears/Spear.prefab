@@ -109,7 +109,7 @@ MonoBehaviour:
   spearCollisionParticles: {fileID: 0}
   excludeMask:
     serializedVersion: 2
-    m_Bits: 1600
+    m_Bits: 9792
 --- !u!54 &6888554967192892284
 Rigidbody:
   m_ObjectHideFlags: 0

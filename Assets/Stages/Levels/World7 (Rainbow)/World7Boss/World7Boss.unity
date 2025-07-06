@@ -1785,11 +1785,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelExit: {fileID: 1063265643}
-  maxHealth: 100
-  ringPrefab: {fileID: 0}
+  maxHealth: 300
+  ringPrefab: {fileID: 6044375318223803403, guid: 686609f80f27e6b4885b7c9f811c6cfe, type: 3}
+  minBombDistance: 6
   ringDelay: 2
-  ringNum: 0
   ringCooldown: 1
+  ringSizeIncrement: 10
   horizontalSlashPrefab: {fileID: 1189431962643200004, guid: bd2896c16835ed64ba19c95a10861925, type: 3}
   verticalSlashPrefab: {fileID: 1189431962643200004, guid: 2699232132f3f8945b70b844d28bfff8, type: 3}
   horizontalSlashOrigin: {fileID: 1130123549}

@@ -16,9 +16,11 @@ public class World7Boss : MonoBehaviour, BaseEnemy {
 
     [Header("Rings Attack")]
     [SerializeField] private Transform ringPrefab;
-    [SerializeField] private float ringDelay;
-    [SerializeField] private int ringNum = 0;
+    [SerializeField] private float minBombDistance = 3f;
+    [SerializeField] private float ringDelay=3f;
+    private int ringNum = 0;
     [SerializeField] private float ringCooldown = 2f;
+    [SerializeField] private float ringSizeIncrement=10f;
     private float ringTimer = 0f;
     private bool startSpawningRings = false;
 
@@ -56,6 +58,7 @@ public class World7Boss : MonoBehaviour, BaseEnemy {
 
 
     void Start() {
+        health = maxHealth;
         spears = new List<Transform>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         TransitionToSpears();
@@ -116,14 +119,16 @@ public class World7Boss : MonoBehaviour, BaseEnemy {
     private void RingsState() {
         if (ringNum >= 3)
             return;
+        if (!startSpawningRings)
+            return;
         ringTimer += Time.deltaTime;
         if (ringTimer >= ringDelay) {
             ringTimer = 0f;
             if (ringNum == 0) {
-                print("Ring1");
+                RingAttack1();
             }
             else if (ringNum == 1) {
-                print("Ring2");
+                RingAttack2();
             }
             else {
                 state= State.RingsExit;
@@ -137,6 +142,48 @@ public class World7Boss : MonoBehaviour, BaseEnemy {
     private void SlashState() {
         RotateTowardsPlayer();
      }
+
+    private void RingAttack1() {
+        float distance = Vector3.Distance(Player.CharacterInstance.playerBehaviourTree.modelTransform.position, transform.position);
+        SpawnRingsAtDistance(distance,minBombDistance);
+    }
+
+    private void RingAttack2() {
+        float distance = Vector3.Distance(Player.CharacterInstance.playerBehaviourTree.modelTransform.position, transform.position);
+        SpawnRingsAtDistance(distance + ringSizeIncrement, minBombDistance);
+        SpawnRingsAtDistance(distance - ringSizeIncrement, minBombDistance);
+    }
+    private void SpawnRingsAtDistance(float radius, float minDistance) {
+        if (radius <= 0f || ringPrefab == null) {
+            Debug.LogWarning("SpawnBombRing: Invalid radius or prefab.");
+            return;
+        }
+
+        // If the required minDistance is larger than the diameter, only one can fit:
+        if (minDistance >= 2f * radius) {
+            Instantiate(ringPrefab, transform.position + Vector3.right * radius, Quaternion.identity);
+            return;
+        }
+
+        // Solve for maximum N such that chord length = 2 * R * sin(pi/N) >= minDistance
+        // => sin(pi/N) >= minDistance / (2R)
+        float ratio = Mathf.Clamp(minDistance / (2f * radius), 0f, 1f);
+        float angleStepRad = 2f * Mathf.Asin(ratio);          // angle between bombs in radians
+        int count = Mathf.FloorToInt(2f * Mathf.PI / angleStepRad);
+
+        // Clamp at least one
+        count = Mathf.Max(1, count);
+
+        float stepDeg = 360f / count;
+        for (int i = 0; i < count; i++) {
+            float angleDeg = i * stepDeg;
+            float angleRad = angleDeg * Mathf.Deg2Rad;
+            Vector3 offset = new Vector3(Mathf.Cos(angleRad), 0f, Mathf.Sin(angleRad)) * radius;
+            Vector3 spawnPos = transform.position + offset;
+            spawnPos.y += 2;
+            Instantiate(ringPrefab, spawnPos, Quaternion.identity);
+        }
+    }
 
     private void RotateTowardsPlayer() {
         Vector3 playerPos = Player.CharacterInstance.playerBehaviourTree.modelTransform.position;

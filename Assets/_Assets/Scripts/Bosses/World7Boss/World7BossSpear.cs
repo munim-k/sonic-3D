@@ -41,7 +41,6 @@ public class World7BossSpear : MonoBehaviour {
             }
             else {
                 // gameobject is not in excludemask
-                print($"Collided with {collision.gameObject} on layer {collision.gameObject.layer} with tag {collision.gameObject.tag}");
                 isStopped = true;
                 if (spearCollisionParticles != null) {
                     Instantiate(spearCollisionParticles, collision.GetContact(0).point, Quaternion.identity);
