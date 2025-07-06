@@ -5608,6 +5608,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 1
   verticalOffset: 1
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.015
   placementEnd: 0.077
   useClosedSpline: 0
@@ -5628,6 +5630,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 1
   verticalOffset: 1
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.412
   placementEnd: 0.425
   useClosedSpline: 0
@@ -5648,6 +5652,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 1
   verticalOffset: 1
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.792
   placementEnd: 0.802
   useClosedSpline: 0
@@ -5668,6 +5674,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 1
   verticalOffset: 1
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.864
   placementEnd: 0.865
   useClosedSpline: 0
@@ -6092,6 +6100,14 @@ PrefabInstance:
     - target: {fileID: 5919487088231280141, guid: 1397966936eceb240a27049a03182851, type: 3}
       propertyPath: m_Name
       value: Level Transition 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6695489051614882999, guid: 1397966936eceb240a27049a03182851, type: 3}
+      propertyPath: levelName
+      value: World5Boss
+      objectReference: {fileID: 0}
+    - target: {fileID: 6695489051614882999, guid: 1397966936eceb240a27049a03182851, type: 3}
+      propertyPath: selectedSceneIndex
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 6840787674012636349, guid: 1397966936eceb240a27049a03182851, type: 3}
       propertyPath: m_Mesh
@@ -9264,6 +9280,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 1
   verticalOffset: 1
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0
   placementEnd: 0.188
   useClosedSpline: 0
@@ -9284,6 +9302,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 1
   verticalOffset: 1
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.263
   placementEnd: 0.302
   useClosedSpline: 0
@@ -9304,6 +9324,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 1
   verticalOffset: 1
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.357
   placementEnd: 0.406
   useClosedSpline: 0
@@ -9324,6 +9346,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 1
   verticalOffset: 1
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.508
   placementEnd: 0.515
   useClosedSpline: 0
@@ -9344,6 +9368,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 1
   verticalOffset: 1
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.55
   placementEnd: 0.578
   useClosedSpline: 0
@@ -9364,6 +9390,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 1
   verticalOffset: 1
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.615
   placementEnd: 0.63
   useClosedSpline: 0
@@ -9384,6 +9412,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 1
   verticalOffset: 1
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.66
   placementEnd: 0.7
   useClosedSpline: 0
@@ -9404,6 +9434,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 1
   verticalOffset: 1
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.732
   placementEnd: 0.751
   useClosedSpline: 0
@@ -9424,6 +9456,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 1
   verticalOffset: 1
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.788
   placementEnd: 0.82
   useClosedSpline: 0
@@ -9444,6 +9478,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 1
   verticalOffset: 1
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.852
   placementEnd: 0.878
   useClosedSpline: 0
@@ -9464,6 +9500,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 1
   verticalOffset: 1
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.902
   placementEnd: 0.948
   useClosedSpline: 0
@@ -9484,6 +9522,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 1
   verticalOffset: 1
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.985
   placementEnd: 1
   useClosedSpline: 0
@@ -11355,6 +11395,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 1
   verticalOffset: 1
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.165
   placementEnd: 0.2
   useClosedSpline: 0
@@ -11375,6 +11417,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 1
   verticalOffset: 1
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.495
   placementEnd: 0.508
   useClosedSpline: 0
@@ -11395,6 +11439,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 1
   verticalOffset: 1
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.302
   placementEnd: 0.38
   useClosedSpline: 0
@@ -11415,6 +11461,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 1
   verticalOffset: 1
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.553
   placementEnd: 0.575
   useClosedSpline: 0
@@ -11435,6 +11483,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 1
   verticalOffset: 1
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.945
   placementEnd: 0.965
   useClosedSpline: 0
