@@ -2613,6 +2613,12 @@ MonoBehaviour:
   objectToPlace: {fileID: 1022997597482263924, guid: de07c7f9de466ad408237c7e53c7a79a, type: 3}
   numberOfObjects: 20
   alignRotation: 1
+  verticalOffsetFollowsCurve: 0
+  verticalOffset: 0
+  horizontalOffset: 0
+  zOffset: 0
+  placementStart: 0
+  placementEnd: 1
   useClosedSpline: 0
 --- !u!114 &520249152
 MonoBehaviour:
@@ -3212,6 +3218,12 @@ MonoBehaviour:
   objectToPlace: {fileID: 1022997597482263924, guid: de07c7f9de466ad408237c7e53c7a79a, type: 3}
   numberOfObjects: 35
   alignRotation: 1
+  verticalOffsetFollowsCurve: 0
+  verticalOffset: 0
+  horizontalOffset: 0
+  zOffset: 0
+  placementStart: 0
+  placementEnd: 1
   useClosedSpline: 0
 --- !u!1 &734291279
 GameObject:
@@ -3411,6 +3423,12 @@ MonoBehaviour:
   objectToPlace: {fileID: 1022997597482263924, guid: de07c7f9de466ad408237c7e53c7a79a, type: 3}
   numberOfObjects: 20
   alignRotation: 1
+  verticalOffsetFollowsCurve: 0
+  verticalOffset: 0
+  horizontalOffset: 0
+  zOffset: 0
+  placementStart: 0
+  placementEnd: 1
   useClosedSpline: 0
 --- !u!64 &786507875
 MeshCollider:
@@ -4014,6 +4032,12 @@ MonoBehaviour:
   objectToPlace: {fileID: 1022997597482263924, guid: de07c7f9de466ad408237c7e53c7a79a, type: 3}
   numberOfObjects: 20
   alignRotation: 1
+  verticalOffsetFollowsCurve: 0
+  verticalOffset: 0
+  horizontalOffset: 0
+  zOffset: 0
+  placementStart: 0
+  placementEnd: 1
   useClosedSpline: 0
 --- !u!114 &856798954
 MonoBehaviour:
@@ -4326,6 +4350,14 @@ PrefabInstance:
     - target: {fileID: 5919487088231280141, guid: 1397966936eceb240a27049a03182851, type: 3}
       propertyPath: m_Name
       value: Level Transition 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6695489051614882999, guid: 1397966936eceb240a27049a03182851, type: 3}
+      propertyPath: levelName
+      value: World5Level2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6695489051614882999, guid: 1397966936eceb240a27049a03182851, type: 3}
+      propertyPath: selectedSceneIndex
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 6840787674012636349, guid: 1397966936eceb240a27049a03182851, type: 3}
       propertyPath: m_Mesh
@@ -6625,6 +6657,12 @@ MonoBehaviour:
   objectToPlace: {fileID: 1022997597482263924, guid: de07c7f9de466ad408237c7e53c7a79a, type: 3}
   numberOfObjects: 35
   alignRotation: 1
+  verticalOffsetFollowsCurve: 0
+  verticalOffset: 0
+  horizontalOffset: 0
+  zOffset: 0
+  placementStart: 0
+  placementEnd: 1
   useClosedSpline: 0
 --- !u!114 &1417368685
 MonoBehaviour:
@@ -7225,6 +7263,12 @@ MonoBehaviour:
   objectToPlace: {fileID: 1022997597482263924, guid: de07c7f9de466ad408237c7e53c7a79a, type: 3}
   numberOfObjects: 10
   alignRotation: 1
+  verticalOffsetFollowsCurve: 0
+  verticalOffset: 0
+  horizontalOffset: 0
+  zOffset: 0
+  placementStart: 0
+  placementEnd: 1
   useClosedSpline: 0
 --- !u!114 &1533283724
 MonoBehaviour:
@@ -7861,6 +7905,12 @@ MonoBehaviour:
   objectToPlace: {fileID: 1022997597482263924, guid: de07c7f9de466ad408237c7e53c7a79a, type: 3}
   numberOfObjects: 10
   alignRotation: 1
+  verticalOffsetFollowsCurve: 0
+  verticalOffset: 0
+  horizontalOffset: 0
+  zOffset: 0
+  placementStart: 0
+  placementEnd: 1
   useClosedSpline: 0
 --- !u!1001 &1630333537
 PrefabInstance:
@@ -8257,6 +8307,12 @@ MonoBehaviour:
   objectToPlace: {fileID: 1022997597482263924, guid: de07c7f9de466ad408237c7e53c7a79a, type: 3}
   numberOfObjects: 35
   alignRotation: 1
+  verticalOffsetFollowsCurve: 0
+  verticalOffset: 0
+  horizontalOffset: 0
+  zOffset: 0
+  placementStart: 0
+  placementEnd: 1
   useClosedSpline: 0
 --- !u!114 &1730746103
 MonoBehaviour:
@@ -8588,6 +8644,12 @@ MonoBehaviour:
   objectToPlace: {fileID: 1022997597482263924, guid: de07c7f9de466ad408237c7e53c7a79a, type: 3}
   numberOfObjects: 4
   alignRotation: 1
+  verticalOffsetFollowsCurve: 0
+  verticalOffset: 0
+  horizontalOffset: 0
+  zOffset: 0
+  placementStart: 0
+  placementEnd: 1
   useClosedSpline: 0
 --- !u!1 &1803189718
 GameObject:

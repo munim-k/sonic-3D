@@ -3396,6 +3396,8 @@ MonoBehaviour:
   alignRotation: 1
   verticalOffsetFollowsCurve: 0
   verticalOffset: 0
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0
   placementEnd: 0.026
   useClosedSpline: 0
@@ -3416,6 +3418,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 0
   verticalOffset: 0
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.039
   placementEnd: 0.079
   useClosedSpline: 0
@@ -3436,6 +3440,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 0
   verticalOffset: 0
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.094
   placementEnd: 0.159
   useClosedSpline: 0
@@ -3456,6 +3462,8 @@ MonoBehaviour:
   alignRotation: 1
   verticalOffsetFollowsCurve: 0
   verticalOffset: 0
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.177
   placementEnd: 0.225
   useClosedSpline: 0
@@ -3476,6 +3484,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 0
   verticalOffset: 0
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.236
   placementEnd: 0.36
   useClosedSpline: 0
@@ -3496,6 +3506,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 0
   verticalOffset: 0
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.376
   placementEnd: 0.528
   useClosedSpline: 0
@@ -3516,6 +3528,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 0
   verticalOffset: 0
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.52
   placementEnd: 0.704
   useClosedSpline: 0
@@ -3536,6 +3550,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 0
   verticalOffset: 0
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.78
   placementEnd: 0.816
   useClosedSpline: 0
@@ -3556,6 +3572,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 0
   verticalOffset: 0
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.83
   placementEnd: 0.888
   useClosedSpline: 0
@@ -3576,6 +3594,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 0
   verticalOffset: 0
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.9
   placementEnd: 0.984
   useClosedSpline: 0
@@ -6924,6 +6944,8 @@ MonoBehaviour:
   alignRotation: 1
   verticalOffsetFollowsCurve: 0
   verticalOffset: 1
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0
   placementEnd: 1
   useClosedSpline: 0
@@ -9493,6 +9515,8 @@ MonoBehaviour:
   alignRotation: 1
   verticalOffsetFollowsCurve: 0
   verticalOffset: 0
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.188
   placementEnd: 0.826
   useClosedSpline: 0
@@ -10035,6 +10059,8 @@ MonoBehaviour:
   alignRotation: 1
   verticalOffsetFollowsCurve: 0
   verticalOffset: 0
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.123
   placementEnd: 0.768
   useClosedSpline: 0
@@ -12942,6 +12968,7 @@ Transform:
   m_Children:
   - {fileID: 1642084735}
   - {fileID: 814730872}
+  - {fileID: 1877215952}
   - {fileID: 638152997}
   - {fileID: 1642446439}
   m_Father: {fileID: 1182540414}
@@ -18134,6 +18161,8 @@ MonoBehaviour:
   alignRotation: 1
   verticalOffsetFollowsCurve: 0
   verticalOffset: 1
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.1
   placementEnd: 0.9
   useClosedSpline: 0
@@ -20861,7 +20890,6 @@ Transform:
   - {fileID: 894593342}
   - {fileID: 551028483}
   - {fileID: 359958753}
-  - {fileID: 1877215952}
   m_Father: {fileID: 734291280}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1642446433
@@ -21665,7 +21693,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1642084735}
+    m_TransformParent: {fileID: 734291280}
     m_Modifications:
     - target: {fileID: 329193467867022273, guid: e72ff6824e5419f42bc2d68dc99a4ce8, type: 3}
       propertyPath: m_LocalScale.x
