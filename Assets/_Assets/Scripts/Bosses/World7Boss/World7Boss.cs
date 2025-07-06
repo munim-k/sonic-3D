@@ -89,8 +89,8 @@ public class World7Boss : MonoBehaviour, BaseEnemy {
             if (spearTimer >= spearsDelay) {
                 spearTimer = 0f;
                 print("LaunchedSpear");
-                Destroy(spears[0].gameObject);
-                spears.RemoveAt(0);
+                //Destroy(spears[0].gameObject);
+                //spears.RemoveAt(0);
             }
             if (spears.Count == 0) {
                 if (UnityEngine.Random.Range(0f, 1f) < 0.5f) {
@@ -129,10 +129,10 @@ public class World7Boss : MonoBehaviour, BaseEnemy {
         cooldownTimer = spearCooldown;
         spearTimer = 0f;
         spears.Clear();
-        for (int i = 0; i < spearSpawnPoints.Length; i++) {
-            Transform spear = Instantiate(spearPrefab, spearSpawnPoints[i]);
-            spears.Add(spear);
-        }
+        //for (int i = 0; i < spearSpawnPoints.Length; i++) {
+            //Transform spear = Instantiate(spearPrefab, spearSpawnPoints[i]);
+            //spears.Add(spear);
+       // }
         state = State.Spears;
         OnStateChange?.Invoke(state);
     }
@@ -153,13 +153,13 @@ public class World7Boss : MonoBehaviour, BaseEnemy {
 
     public void SpawnHorizontalSlash() {
         if (state == State.Slash) {
-            Transform slash = Instantiate(horizontalSlashPrefab, horizontalSlashOrigin.position, horizontalSlashOrigin.rotation);
+            //Transform slash = Instantiate(horizontalSlashPrefab, horizontalSlashOrigin.position, horizontalSlashOrigin.rotation);
         }
     }
 
     public void SpawnVerticalSlash() {
         if (state == State.Slash) {
-            Transform slash = Instantiate(verticalSlashPrefab, verticalSlashOrigin.position, verticalSlashOrigin.rotation);
+            //Transform slash = Instantiate(verticalSlashPrefab, verticalSlashOrigin.position, verticalSlashOrigin.rotation);
         }
     }
 
@@ -180,12 +180,13 @@ public class World7Boss : MonoBehaviour, BaseEnemy {
         }
     }
     void IHittable.DoHit(int damage) {
-        if (state == State.Rings)
+        if (state == State.Rings || state==State.RingsExit)
             return;
         health -= damage;
         onHit?.Invoke();
         if (health <= 0) {
             state = State.Dead;
+            levelExit.gameObject.SetActive(true);
             onDeath?.Invoke();
             OnStateChange?.Invoke(state);
         }

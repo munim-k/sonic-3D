@@ -19,4 +19,8 @@ public class World7BossAnimationEventHandler : MonoBehaviour
         boss.SpawnVerticalSlash();
     }
 
+    private void ExitSlash() {
+        boss.EndSlash();
+    }
+
 }

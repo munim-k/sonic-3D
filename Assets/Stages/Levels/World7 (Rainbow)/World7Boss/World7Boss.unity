@@ -1722,7 +1722,7 @@ MonoBehaviour:
   levelExit: {fileID: 1063265643}
   maxHealth: 100
   ringPrefab: {fileID: 0}
-  ringDelay: 0
+  ringDelay: 2
   ringNum: 0
   ringCooldown: 2
   horizontalSlashPrefab: {fileID: 0}
