@@ -1745,11 +1745,11 @@ MonoBehaviour:
   slideLayerMask:
     serializedVersion: 2
     m_Bits: 4096
-  slideSpeed: 20
+  slideSpeed: 30
   detectionRadius: 2.5
   endMargin: 0.1
-  lateralMoveSpeed: 5
-  lateralLimit: 2
+  lateralMoveSpeed: 20
+  lateralLimit: 8
   immunityTime: 0.5
   verticalOffset: 0.5
   jumpPlayerBehaviour: {fileID: 3773458990709628176}

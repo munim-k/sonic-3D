@@ -9,6 +9,8 @@ public class SplineObjectPlacer : MonoBehaviour {
     public bool alignRotation = true;
     public bool verticalOffsetFollowsCurve = false;
     public float verticalOffset = 0f;
+    public float horizontalOffset = 0f;
+    public float zOffset = 0f;
 
     [Header("Placement Range (Normalized 0-1)")]
     [Range(0f, 1f)]
@@ -90,6 +92,8 @@ public class SplineObjectPlacer : MonoBehaviour {
         }
         else {
             localposition.y += verticalOffset;
+            localposition.x += horizontalOffset;
+            localposition.z += zOffset;
         }
         Vector3 position = splineContainer.transform.TransformPoint(localposition);
         Quaternion rotation = alignRotation
@@ -118,6 +122,8 @@ public class SplineObjectPlacer : MonoBehaviour {
         else {
             // Apply fixed vertical offset
             localposition.y += verticalOffset;
+            localposition.x += horizontalOffset;
+            localposition.z += zOffset;
         }
         Vector3 position = splineContainer.transform.TransformPoint(localposition);
         Quaternion rotation = alignRotation
@@ -175,6 +181,8 @@ public class SplineObjectPlacer : MonoBehaviour {
             }
             else {
                 localPos.y += verticalOffset;
+                localPos.x += horizontalOffset;
+                localPos.z += zOffset;
             }
             Vector3 worldPos = splineContainer.transform.TransformPoint(localPos);
             Gizmos.DrawSphere(worldPos, 1f);

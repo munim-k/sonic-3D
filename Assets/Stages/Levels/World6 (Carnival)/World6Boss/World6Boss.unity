@@ -1799,7 +1799,6 @@ MonoBehaviour:
   bombLaunchOrigin: {fileID: 1380580433}
   bombStep: 0.5
   jumpShockwave: {fileID: 7736840642676937717, guid: 556d0f32ce1cc854dbf7fe17cd92f47a, type: 3}
-  movementSpeed: 5
   fireworkPrefab: {fileID: 3242651781645571398, guid: d9bd417a4e6c6974cbd14e8e6e1adc20, type: 3}
   fireworkLaunchPoint: {fileID: 76961846}
   fireworkStep: 0.5
@@ -2694,7 +2693,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: f28c8af502a536f469f2d0814f7bfc00, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 179c72662ab41364585711bfc8e1cda8, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &1120954369
 Transform:
@@ -2944,6 +2943,14 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 671072502}
+    - target: {fileID: 6695489051614882999, guid: e72ff6824e5419f42bc2d68dc99a4ce8, type: 3}
+      propertyPath: levelName
+      value: World7Level1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6695489051614882999, guid: e72ff6824e5419f42bc2d68dc99a4ce8, type: 3}
+      propertyPath: selectedSceneIndex
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 8191246301747233247, guid: e72ff6824e5419f42bc2d68dc99a4ce8, type: 3}
       propertyPath: m_Mesh
       value: 

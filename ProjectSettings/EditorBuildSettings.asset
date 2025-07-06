@@ -59,5 +59,14 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Stages/Levels/World6 (Carnival)/World6Boss/World6Boss.unity
     guid: 304ca92e845badf498f235ae5ae6c0bc
+  - enabled: 1
+    path: Assets/Stages/Levels/World7 (Rainbow)/World7Level1/World7Level1.unity
+    guid: 70b458e3c66303b4a94b28359b28026b
+  - enabled: 1
+    path: Assets/Stages/Levels/World7 (Rainbow)/World7Level2/World7Level2.unity
+    guid: 90c292537afb80546b336cfca77fd232
+  - enabled: 1
+    path: Assets/Stages/Levels/World7 (Rainbow)/World7Boss/World7Boss.unity
+    guid: 0c9ae9c0a0728a745bba98df2671be9c
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
