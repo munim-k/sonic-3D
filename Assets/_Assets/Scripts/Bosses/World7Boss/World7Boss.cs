@@ -81,17 +81,24 @@ public class World7Boss : MonoBehaviour, BaseEnemy {
     }
 
     private void SpearsState() {
-        navMeshAgent.destination=Player.CharacterInstance.playerBehaviourTree.modelTransform.position; // Move towards player
         if (cooldownTimer >= 0f) {
             cooldownTimer -= Time.deltaTime;
+            navMeshAgent.destination=Player.CharacterInstance.playerBehaviourTree.modelTransform.position; // Move towards player
+            if (cooldownTimer < 0) {
+                navMeshAgent.Warp(transform.position);
+                navMeshAgent.updatePosition = false;
+                navMeshAgent.updateRotation = false;
+                navMeshAgent.destination = transform.position;
+            }
         }
         else {
+            RotateTowardsPlayer();
             spearTimer += Time.deltaTime;
             if (spearTimer >= spearsDelay) {
                 spearTimer = 0f;
-                print("LaunchedSpear");
-                //Destroy(spears[0].gameObject);
-                //spears.RemoveAt(0);
+                spears[0].parent = null;
+                spears[0].GetComponent<World7BossSpear>().Fire();
+                spears.RemoveAt(0);
             }
             if (spears.Count == 0) {
                 if (currentAttack==0) {
@@ -128,13 +135,15 @@ public class World7Boss : MonoBehaviour, BaseEnemy {
     }
 
     private void SlashState() {
-       Vector3 playerPos = Player.CharacterInstance.playerBehaviourTree.modelTransform.position;
-       //Rotate the transform only on the Y axis to face the player
-       Vector3 direction = (playerPos - transform.position).normalized;
-        direction.y = 0; // Keep the Y component zero to avoid tilting
-        transform.rotation = Quaternion.LookRotation(direction);
+        RotateTowardsPlayer();
      }
 
+    private void RotateTowardsPlayer() {
+        Vector3 playerPos = Player.CharacterInstance.playerBehaviourTree.modelTransform.position;
+        Vector3 direction = (playerPos - transform.position).normalized;
+        direction.y = 0;
+        transform.rotation = Quaternion.LookRotation(direction);
+    }
     
     private void TransitionToSpears() {
         switch (state) {
@@ -157,10 +166,10 @@ public class World7Boss : MonoBehaviour, BaseEnemy {
         
         spearTimer = 0f;
         spears.Clear();
-        //for (int i = 0; i < spearSpawnPoints.Length; i++) {
-            //Transform spear = Instantiate(spearPrefab, spearSpawnPoints[i]);
-            //spears.Add(spear);
-       // }
+        for (int i = 0; i < spearSpawnPoints.Length; i++) {
+            Transform spear = Instantiate(spearPrefab, spearSpawnPoints[i]);
+            spears.Add(spear);
+        }
         state = State.Spears;
         OnStateChange?.Invoke(state);
     }
