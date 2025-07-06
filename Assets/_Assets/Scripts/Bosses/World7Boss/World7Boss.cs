@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -23,8 +24,8 @@ public class World7Boss : MonoBehaviour, BaseEnemy {
 
     [Header("Slash Attack")]
     [SerializeField] private Transform horizontalSlashPrefab;
-    [SerializeField] private Transform horizontalSlashOrigin;
     [SerializeField] private Transform verticalSlashPrefab;
+    [SerializeField] private Transform horizontalSlashOrigin;
     [SerializeField] private Transform verticalSlashOrigin;
     [SerializeField] private float slashCooldown = 2f;
 
@@ -34,8 +35,7 @@ public class World7Boss : MonoBehaviour, BaseEnemy {
     private List<Transform> spears;
     [SerializeField] private float spearsDelay = 0.5f;
     private float spearTimer = 0f;
-    [SerializeField] private float spearCooldown = 2f;
-
+    private int currentAttack = 0;
 
     private float cooldownTimer = 0f;
 
@@ -57,8 +57,8 @@ public class World7Boss : MonoBehaviour, BaseEnemy {
 
     void Start() {
         spears = new List<Transform>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
         TransitionToSpears();
-        navMeshAgent= GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
@@ -71,7 +71,7 @@ public class World7Boss : MonoBehaviour, BaseEnemy {
                 RingsState();
                 break;
             case State.Slash:
-
+                SlashState();
                 break;
             case State.Dead:
                 break;
@@ -81,6 +81,7 @@ public class World7Boss : MonoBehaviour, BaseEnemy {
     }
 
     private void SpearsState() {
+        navMeshAgent.destination=Player.CharacterInstance.playerBehaviourTree.modelTransform.position; // Move towards player
         if (cooldownTimer >= 0f) {
             cooldownTimer -= Time.deltaTime;
         }
@@ -89,16 +90,18 @@ public class World7Boss : MonoBehaviour, BaseEnemy {
             if (spearTimer >= spearsDelay) {
                 spearTimer = 0f;
                 print("LaunchedSpear");
-                Destroy(spears[0].gameObject);
-                spears.RemoveAt(0);
+                //Destroy(spears[0].gameObject);
+                //spears.RemoveAt(0);
             }
             if (spears.Count == 0) {
-                if (UnityEngine.Random.Range(0f, 1f) < 0.5f) {
+                if (currentAttack==0) {
                     TransitionToRings();
                 }
                 else {
                     TransitionToSlash();
                 }
+                currentAttack += 1;
+                currentAttack%= 2; // Reset to 0 after 2 attacks
             }
         }
     }
@@ -124,31 +127,65 @@ public class World7Boss : MonoBehaviour, BaseEnemy {
 
     }
 
+    private void SlashState() {
+       Vector3 playerPos = Player.CharacterInstance.playerBehaviourTree.modelTransform.position;
+       //Rotate the transform only on the Y axis to face the player
+       Vector3 direction = (playerPos - transform.position).normalized;
+        direction.y = 0; // Keep the Y component zero to avoid tilting
+        transform.rotation = Quaternion.LookRotation(direction);
+     }
+
     
     private void TransitionToSpears() {
-        cooldownTimer = spearCooldown;
+        switch (state) {
+            case State.Rings:
+                cooldownTimer = ringCooldown;
+                break;
+            case State.RingsExit:
+                cooldownTimer = ringCooldown;
+                break;
+            case State.Slash:
+                cooldownTimer = slashCooldown;
+                break;
+            default:
+                break;
+        }
+        navMeshAgent.ResetPath();
+        navMeshAgent.updatePosition = true;
+        navMeshAgent.updateRotation = true;
+        navMeshAgent.Warp(transform.position);
+        
         spearTimer = 0f;
         spears.Clear();
-        for (int i = 0; i < spearSpawnPoints.Length; i++) {
-            Transform spear = Instantiate(spearPrefab, spearSpawnPoints[i]);
-            spears.Add(spear);
-        }
+        //for (int i = 0; i < spearSpawnPoints.Length; i++) {
+            //Transform spear = Instantiate(spearPrefab, spearSpawnPoints[i]);
+            //spears.Add(spear);
+       // }
         state = State.Spears;
         OnStateChange?.Invoke(state);
     }
 
 
     private void TransitionToRings() {
+      
         state = State.Rings;
         OnStateChange?.Invoke(state);
-        cooldownTimer = ringCooldown;
+        navMeshAgent.ResetPath();
+        navMeshAgent.isStopped = true; // Stop the NavMeshAgent from moving
+        navMeshAgent.updateRotation = false;
+        navMeshAgent.updatePosition = false;
+        navMeshAgent.Warp(transform.position);
+        
         ringTimer = 0f;
     }
 
     private void TransitionToSlash() {
         state = State.Slash;
         OnStateChange?.Invoke(state);
-        cooldownTimer = slashCooldown;
+        navMeshAgent.isStopped = true; // Stop the NavMeshAgent from moving
+        navMeshAgent.updateRotation = false;
+        navMeshAgent.updatePosition = false;
+        navMeshAgent.Warp(transform.position);
     }
 
     public void SpawnHorizontalSlash() {
@@ -159,7 +196,7 @@ public class World7Boss : MonoBehaviour, BaseEnemy {
 
     public void SpawnVerticalSlash() {
         if (state == State.Slash) {
-            Transform slash = Instantiate(verticalSlashPrefab, verticalSlashOrigin.position, verticalSlashOrigin.rotation);
+            Transform slash = Instantiate(verticalSlashPrefab, verticalSlashOrigin.position,verticalSlashOrigin.rotation);
         }
     }
 
@@ -180,12 +217,13 @@ public class World7Boss : MonoBehaviour, BaseEnemy {
         }
     }
     void IHittable.DoHit(int damage) {
-        if (state == State.Rings)
+        if (state == State.Rings || state==State.RingsExit)
             return;
         health -= damage;
         onHit?.Invoke();
         if (health <= 0) {
             state = State.Dead;
+            levelExit.gameObject.SetActive(true);
             onDeath?.Invoke();
             OnStateChange?.Invoke(state);
         }
