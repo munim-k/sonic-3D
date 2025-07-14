@@ -1,15 +1,10 @@
 using System;
 using UnityEngine;
 
-public class BossHitbox : MonoBehaviour
+public class PhaseChange : MonoBehaviour
 {
-    public int phase = 1;
+    private int phase = 1;
     public event Action<int> OnPhaseChange;
-
-    private void Start()
-    {
-
-    }
 
     private void OnTriggerEnter(Collider other)
     {

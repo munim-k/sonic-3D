@@ -15,7 +15,7 @@ public class BossAnimation : MonoBehaviour
     }
     void Start()
     {
-        boss.OnSpikeAttackChosen += Boss_OnSpikeAttackChosen;
+        boss.OnSpikeSlamAttackChosen += Boss_OnSpikeAttackChosen;
     }
 
     private void Boss_OnSpikeAttackChosen()
@@ -32,6 +32,6 @@ public class BossAnimation : MonoBehaviour
 
     private void OnDestroy()
     {
-        boss.OnSpikeAttackChosen -= Boss_OnSpikeAttackChosen;
+        boss.OnSpikeSlamAttackChosen -= Boss_OnSpikeAttackChosen;
     }
 }

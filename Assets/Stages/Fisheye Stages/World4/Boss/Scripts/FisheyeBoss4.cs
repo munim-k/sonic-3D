@@ -1,201 +1,184 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TreeEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class FisheyeBoss4 : MonoBehaviour
 {
-    public event Action OnSpikeAttackChosen;
+    public event Action OnSpikeSlamAttackChosen;
 
-    [Header("Phase specifc Variables")]
-    [Header("Phase 2 GameObjects")]
-    [SerializeField] private List<GameObject> phase2ActivatingObjects;
-    [SerializeField] private Transform phase2SpawnPosition;
-    [Header("Phase 3 GameObjects")]
-    [SerializeField] private List<GameObject> phase3ActivatingObjects;
-    [SerializeField] private Transform phase3SpawnPosition;
+    public enum Attacks
+    {
+        None,
+        LaserAttack,
+        SpikeThrow,
+        SpikeSlam
+    }
 
+    private Attacks currentAttack = Attacks.None;
+    [SerializeField] private float waitTime = 1.5f;
+    private int maxRandNumber = 2;
+    [SerializeField] private float showAttackSeconds = 0.4f;
+    [SerializeField] private PhaseChange phaseChange;
 
-    [SerializeField] private BossHitbox bossHitbox;
+    [Header("Phase activating Objects")]
+    [SerializeField] private List<GameObject> phaseChangeGameObjects;
+    [SerializeField] List<Transform> phaseSpawnPoints;
+    [SerializeField] private float moveSpeed = 35f;
+    private bool isMoving = false;
+    private Vector3 direction;
 
-    [Header("Variables Related to the laser Attack")]
+    [Header("Laser Attack Variables")]
+    [SerializeField] private float laserSpeed = 150f;
     [SerializeField] private GameObject laserObject;
-    [SerializeField] private float laserTime = 2f;
-    [SerializeField] private float laserSpeed = 100f;
-    private float laserTimer = 0f;
+    [SerializeField] private float rotationSpeed = 2f;
+    [SerializeField] private float maxRotationAngle = 45f;
+    private Vector3 origianlRotation;
+    private float singleWaveTime;
+    private float laserStartTime;
     private Vector3 laserPos;
     private Vector3 laserScale;
-    private bool isLaserAttack = false;
 
-
-    [Header("Variables related to spike attack")]
-    [SerializeField] private SpikesAnimation spikes;
-
-    [Header("Spike Throw Objects")]
+    [Header("SpikeThrow Objects")]
     [SerializeField] private GameObject spikeThrow;
-    [SerializeField] private float spikeThrowTime = 2f;
-    [SerializeField] private float spikeThrowSpeed = 100f;
+    [SerializeField] private float spikeThrowSpeed = 50f;
+    [SerializeField] private float spikeThrowTime = 1.5f;
     private float spikeThrowTimer = 0f;
     private Vector3 spikeThrowPos;
-    private bool isSpikeThrowAttack = false;
+    private int currentSpawnPoint;
 
-    [Header("Normal Variables")]
-    [SerializeField] private float waitTime = 2f;
+    [Header("Spike Slam Objects")]
+    [SerializeField] private SpikesAnimation spikesAnimation;
+    [SerializeField] private GameObject spikeSlamObject;
 
-    private bool shouldDoSpikeSlamAttack = false;
     private void Start()
     {
-        StartCoroutine(WaitInitially());
         laserPos = laserObject.transform.localPosition;
         laserScale = laserObject.transform.localScale;
+        origianlRotation = transform.eulerAngles;
         laserObject.SetActive(false);
 
         spikeThrow.SetActive(false);
         spikeThrowPos = spikeThrow.transform.localPosition;
 
-        spikes.OnSpikeAnimationComplete += Spikes_OnSpikeAnimationComplete;
-        bossHitbox.OnPhaseChange += BossHitbox_OnPhaseChange;
+        StartCoroutine(DecideAttack());
+
+        phaseChange.OnPhaseChange += PhaseChange_OnPhaseChange;
+        spikesAnimation.OnSpikeAnimationComplete += SpikesAnimation_OnAnimationComplete;
     }
 
-    private void BossHitbox_OnPhaseChange(int phase)
-    {
-        shouldDoSpikeSlamAttack = false;
-        if (phase == 4)
-        {
-            Destroy(gameObject);
-        }
-        else if (phase == 2)
-        {
-            foreach (GameObject obj in phase2ActivatingObjects)
-            {
-                obj.SetActive(true);
-            }
-            transform.position = phase2SpawnPosition.position;
-
-            isLaserAttack = false;
-            isSpikeThrowAttack = false;
-            spikeThrow.SetActive(false);
-            laserObject.SetActive(false);
-
-            StopAllCoroutines();
-
-            StartCoroutine(DecideAttack());
-        }
-        else
-        {
-            foreach (GameObject obj in phase3ActivatingObjects)
-            {
-                obj.SetActive(true);
-            }
-            transform.position = phase3SpawnPosition.position;
-
-            isLaserAttack = false;
-            isSpikeThrowAttack = false;
-
-            StopAllCoroutines();
-
-            StartCoroutine(DecideAttack());
-        }
-    }
-
-    private void Spikes_OnSpikeAnimationComplete()
+    private void SpikesAnimation_OnAnimationComplete()
     {
         StartCoroutine(DecideAttack());
+    }
+
+    private void PhaseChange_OnPhaseChange(int phase)
+    {
+        if (phase == 7)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        if (phase == 2 || phase == 3)
+        {
+            maxRandNumber++;
+            waitTime -= 0.5f;
+        }
+
+        phaseChangeGameObjects[phase - 2].SetActive(true);
+        isMoving = true;
+        direction = phaseSpawnPoints[phase - 2].position - transform.position;
+        currentSpawnPoint = phase - 2;
+        Debug.Log(currentSpawnPoint);
     }
 
     private void Update()
     {
-        if (isLaserAttack)
+        if (currentAttack == Attacks.LaserAttack)
         {
-            laserTimer += Time.deltaTime;
-            if (laserTimer >= laserTime)
+            //rotate the enemy
+            float elapsed = Time.time - laserStartTime;
+            float angle = Mathf.Sin(elapsed * rotationSpeed) * maxRotationAngle;
+            transform.rotation = Quaternion.Euler(origianlRotation.x, origianlRotation.y + angle, origianlRotation.z);
+
+            // increase scale of laser
+            laserObject.transform.localScale += new Vector3(0f, 0f, laserSpeed * Time.deltaTime);
+            laserObject.transform.localPosition += Vector3.forward * laserSpeed * Time.deltaTime;
+            if (elapsed >= singleWaveTime)
             {
-                isLaserAttack = false;
-                laserTimer = 0f;
-                laserObject.transform.localPosition = laserPos;
-                laserObject.transform.localScale = laserScale;
+                currentAttack = Attacks.None;
+                transform.eulerAngles = origianlRotation;
                 laserObject.SetActive(false);
 
+                spikeSlamObject.SetActive(true);
+
                 StartCoroutine(DecideAttack());
             }
-
-            laserObject.transform.localScale += new Vector3(Mathf.Abs(transform.forward.x) * laserSpeed * Time.deltaTime, 0f, Mathf.Abs(transform.forward.z) *  laserSpeed * Time.deltaTime);
-            laserObject.transform.localPosition -= new Vector3(transform.forward.x * laserSpeed / 2f * Time.deltaTime, 0f, transform.forward.z * laserSpeed / 2f * Time.deltaTime);
         }
-        else if (isSpikeThrowAttack)
+        else if (currentAttack == Attacks.SpikeThrow)
         {
+            //move the spikes in the forward direction
             spikeThrowTimer += Time.deltaTime;
+            spikeThrow.transform.localPosition += new Vector3(0f, 0f, spikeThrowSpeed * Time.deltaTime);
             if (spikeThrowTimer >= spikeThrowTime)
             {
-                isSpikeThrowAttack = false;
-                spikeThrowTimer = 0f;
-                spikeThrow.transform.localPosition = spikeThrowPos;
-                spikeThrow.SetActive(false);
-
+                currentAttack = Attacks.None;
                 StartCoroutine(DecideAttack());
+                spikeThrowTimer = 0f;
             }
-            spikeThrow.transform.localPosition -= new Vector3(transform.forward.x * spikeThrowSpeed * Time.deltaTime, 0f, transform.forward.z * spikeThrowSpeed * Time.deltaTime);
+        }
+
+        if (isMoving)
+        {
+            transform.position += direction.normalized * moveSpeed * Time.deltaTime;
+            direction = phaseSpawnPoints[currentSpawnPoint].position - transform.position;
+            if (Vector3.Distance(transform.position, phaseSpawnPoints[currentSpawnPoint].position) <= 0.05f)
+            {
+                isMoving = false;
+            }
         }
     }
-
 
     private IEnumerator DecideAttack()
     {
         yield return new WaitForSeconds(waitTime);
-        int random = UnityEngine.Random.Range(1, shouldDoSpikeSlamAttack ? 5 : 3);
-        if (random == 1)
+        int randNumber = UnityEngine.Random.Range(1, maxRandNumber);
+
+        if (randNumber == 1)
         {
-            isLaserAttack = true;
+            //Laser Attack
+            laserObject.transform.localPosition = laserPos;
+            laserObject.transform.localScale = laserScale;
             laserObject.SetActive(true);
+            //deactive spike slam so it doesnt appear
+            spikeSlamObject.SetActive(false);
+
+            yield return new WaitForSeconds(showAttackSeconds);
+            singleWaveTime = 2 * Mathf.PI / rotationSpeed;
+            currentAttack = Attacks.LaserAttack;
+            laserStartTime = Time.time;
         }
-        else if (random >= 3)
+        else if (randNumber == 2)
         {
-            OnSpikeAttackChosen?.Invoke();
+            spikeThrow.SetActive(true);
+
+            int newRand = UnityEngine.Random.Range(1, 3);
+            spikeThrow.transform.localPosition = spikeThrowPos;
+            if (newRand == 1)
+            {
+                spikeThrow.transform.localPosition += new Vector3(0f, 1.5f, 0f);
+            }
+            spikeThrow.SetActive(true);
+            yield return new WaitForSeconds(showAttackSeconds * 2);
+
+            currentAttack = Attacks.SpikeThrow;
         }
         else
         {
-            spikeThrow.SetActive(true);
-            int newRand = UnityEngine.Random.Range(1, 3);
-            if (newRand == 2)
-            {
-                spikeThrow.transform.localPosition += new Vector3(0f, 2f, 0f);
-            }
-            StartCoroutine(ShowSpikeThrowAttack());
-        }
-    }
-    private IEnumerator WaitInitially()
-    {
-        yield return new WaitForSeconds(1f);
-        StartCoroutine(DecideAttack());
-    }
-
-    private IEnumerator ShowSpikeThrowAttack()
-    {
-        yield return new WaitForSeconds(0.3f);
-        isSpikeThrowAttack = true;
-    }
-
-    private void OnDestroy()
-    {
-        spikes.OnSpikeAnimationComplete -= Spikes_OnSpikeAnimationComplete;
-        bossHitbox.OnPhaseChange -= BossHitbox_OnPhaseChange;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-            shouldDoSpikeSlamAttack = true;
-            Debug.Log("Hello");
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-            shouldDoSpikeSlamAttack = false;
+            OnSpikeSlamAttackChosen?.Invoke();
         }
     }
 }
