@@ -18,9 +18,7 @@ public class FisheyeBoss5 : MonoBehaviour
     [SerializeField] private float waitTime = 1.5f;
     [SerializeField] private float attackShownWaitTime = 1f;
     [SerializeField] private float moveTime = 5f;
-    [SerializeField] private Color attackSelectedColor;
-    [SerializeField] private Color attackIdleColor;
-    [SerializeField] private List<Image> attackImages;
+    [SerializeField] List<Material> attackMaterials = new List<Material>();
     [SerializeField] private GameObject shield;
     [SerializeField] private float shieldDisbaleTime = 5f;
     [SerializeField] private PhaseChange phaseChange;
@@ -111,15 +109,15 @@ public class FisheyeBoss5 : MonoBehaviour
             if (!selectedAttacks.Contains(attack))
             {
                 selectedAttacks.Add(attack);
-                attackImages[randIndex].GetComponent<Image>().color = attackSelectedColor;
+                attackMaterials[randIndex].SetFloat("_Emission", 2f);
             }
         }
 
         yield return new WaitForSeconds(attackShownWaitTime);
 
-        foreach (Image image in attackImages)
+        foreach (Material mat in attackMaterials)
         {
-            image.GetComponent<Image>().color = attackIdleColor;
+            mat.SetFloat("_Emission", 0.5f);
         }
 
         foreach (Action action in selectedAttacks)

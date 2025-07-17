@@ -7,6 +7,7 @@ TagManager:
   - MovingPlatform
   - Boss
   - EnemyDamage
+  - Ground
   layers:
   - Default
   - TransparentFX

@@ -49,5 +49,10 @@ public class ProjectileAttack : MonoBehaviour
     private void OnDestroy()
     {
         boss.OnProjectileAttack -= Boss_OnProjectileAttack;
+        if(newProjectile != null)
+        {
+            Destroy(newProjectile.gameObject);
+            newProjectile = null;
+        }
     }
 }
