@@ -632,10 +632,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 524967916804978669, guid: 6796a5543047e974191c715cd556ab89, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 524967916804978669, guid: 6796a5543047e974191c715cd556ab89, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 524967916804978669, guid: 6796a5543047e974191c715cd556ab89, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 572091499677332489, guid: 6796a5543047e974191c715cd556ab89, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 572091499677332489, guid: 6796a5543047e974191c715cd556ab89, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 572091499677332489, guid: 6796a5543047e974191c715cd556ab89, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1358219972446041463, guid: 6796a5543047e974191c715cd556ab89, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 852849712}
+    - target: {fileID: 1544421178425628251, guid: 6796a5543047e974191c715cd556ab89, type: 3}
+      propertyPath: power
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1599062712514398367, guid: 6796a5543047e974191c715cd556ab89, type: 3}
       propertyPath: maxHealth
       value: 100
@@ -646,7 +674,11 @@ PrefabInstance:
       objectReference: {fileID: 941832363}
     - target: {fileID: 2016356875898401047, guid: 6796a5543047e974191c715cd556ab89, type: 3}
       propertyPath: speed
-      value: 15
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2085603303380076875, guid: 6796a5543047e974191c715cd556ab89, type: 3}
+      propertyPath: power
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2665417580360568289, guid: 6796a5543047e974191c715cd556ab89, type: 3}
       propertyPath: homingTime
@@ -666,7 +698,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3070256948253643857, guid: 6796a5543047e974191c715cd556ab89, type: 3}
       propertyPath: speed
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3974054933501084853, guid: 6796a5543047e974191c715cd556ab89, type: 3}
       propertyPath: m_Mesh
@@ -675,6 +707,22 @@ PrefabInstance:
     - target: {fileID: 3974054933501084853, guid: 6796a5543047e974191c715cd556ab89, type: 3}
       propertyPath: m_VersionIndex
       value: 3681
+      objectReference: {fileID: 0}
+    - target: {fileID: 5182769849650500179, guid: 6796a5543047e974191c715cd556ab89, type: 3}
+      propertyPath: power
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5335831776585861024, guid: 6796a5543047e974191c715cd556ab89, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5335831776585861024, guid: 6796a5543047e974191c715cd556ab89, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5335831776585861024, guid: 6796a5543047e974191c715cd556ab89, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5602282154003053122, guid: 6796a5543047e974191c715cd556ab89, type: 3}
       propertyPath: m_Mesh
@@ -738,7 +786,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6357006385395546834, guid: 6796a5543047e974191c715cd556ab89, type: 3}
       propertyPath: speed
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6536342354293553202, guid: 6796a5543047e974191c715cd556ab89, type: 3}
       propertyPath: m_Name
@@ -746,7 +794,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6909313018636844354, guid: 6796a5543047e974191c715cd556ab89, type: 3}
       propertyPath: power
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

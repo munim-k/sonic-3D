@@ -14,11 +14,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 539433646890875665, guid: d4c0a62a5ff062745ba3d911aedab3d3, type: 3}
       propertyPath: power
-      value: 10
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 612159274988445279, guid: d4c0a62a5ff062745ba3d911aedab3d3, type: 3}
       propertyPath: power
-      value: 10
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2739430428383615984, guid: d4c0a62a5ff062745ba3d911aedab3d3, type: 3}
       propertyPath: m_LocalScale.x
@@ -78,7 +78,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3761110282557338222, guid: d4c0a62a5ff062745ba3d911aedab3d3, type: 3}
       propertyPath: power
-      value: 10
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4245159296889368041, guid: d4c0a62a5ff062745ba3d911aedab3d3, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
@@ -94,7 +94,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4962615294065262317, guid: d4c0a62a5ff062745ba3d911aedab3d3, type: 3}
       propertyPath: power
-      value: 10
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5114471640089267639, guid: d4c0a62a5ff062745ba3d911aedab3d3, type: 3}
       propertyPath: m_Color.b
@@ -110,19 +110,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6258753942308410525, guid: d4c0a62a5ff062745ba3d911aedab3d3, type: 3}
       propertyPath: power
-      value: 10
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6673502940513697610, guid: d4c0a62a5ff062745ba3d911aedab3d3, type: 3}
       propertyPath: power
-      value: 10
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7424705206938451888, guid: d4c0a62a5ff062745ba3d911aedab3d3, type: 3}
       propertyPath: power
-      value: 10
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7854657765344080684, guid: d4c0a62a5ff062745ba3d911aedab3d3, type: 3}
       propertyPath: power
-      value: 10
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7872513021442079853, guid: d4c0a62a5ff062745ba3d911aedab3d3, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -130,7 +130,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: cd3da460399184b4284962d32e1a0983, type: 2}
     - target: {fileID: 8634061166491160136, guid: d4c0a62a5ff062745ba3d911aedab3d3, type: 3}
       propertyPath: power
-      value: 10
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
