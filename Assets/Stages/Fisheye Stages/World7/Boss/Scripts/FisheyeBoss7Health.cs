@@ -9,6 +9,7 @@ public class FisheyeBoss7Health : MonoBehaviour
     private float currentHealth = 100f;
     private bool hasSecondPhaseStarted = false;
     [SerializeField] private GameObject headObject;
+    [SerializeField] private GameObject levelTransition;
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.tag == "EnemyDamage")
@@ -31,6 +32,7 @@ public class FisheyeBoss7Health : MonoBehaviour
 
             if (currentHealth <= 0f)
             {
+                levelTransition.SetActive(true);
                 Destroy(gameObject);
                 Destroy(headObject);
             }

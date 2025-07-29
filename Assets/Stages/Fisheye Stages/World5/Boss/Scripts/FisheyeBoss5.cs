@@ -22,6 +22,7 @@ public class FisheyeBoss5 : MonoBehaviour
     [SerializeField] private GameObject shield;
     [SerializeField] private float shieldDisbaleTime = 5f;
     [SerializeField] private PhaseChange phaseChange;
+    [SerializeField] private GameObject levelTransition;
     private int maxNumberOfAttacksBeforeStagger = 3;
     private bool isImmune = false;
     private Coroutine staggerCoroutine;
@@ -49,6 +50,7 @@ public class FisheyeBoss5 : MonoBehaviour
 
         if (phase == 4)
         {
+            levelTransition.SetActive(true);
             Destroy(gameObject);
             return;
         }

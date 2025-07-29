@@ -393,6 +393,7 @@ MonoBehaviour:
   healthBar: {fileID: 5293075311304948756}
   maxHealth: 100
   headObject: {fileID: 2132829518701829873}
+  levelTransition: {fileID: 0}
 --- !u!1 &5991243646032156499
 GameObject:
   m_ObjectHideFlags: 0

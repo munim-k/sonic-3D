@@ -7,6 +7,7 @@ public class FisheyeBoss6Damage : MonoBehaviour
     [SerializeField] private float maxHealth = 100f;
     [SerializeField] private GameObject boss;
     [SerializeField] private Image health;
+    [SerializeField] private GameObject levelTransition;
     private float currentHealth;
     private void Start()
     {
@@ -21,6 +22,7 @@ public class FisheyeBoss6Damage : MonoBehaviour
         if (currentHealth <= 0)
         {
             Bottle.OnBottleHitBoss -= TakeDamage;
+            levelTransition.SetActive(true);
             Destroy(boss);
         }
     }

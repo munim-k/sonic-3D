@@ -147,6 +147,7 @@ MonoBehaviour:
   maxHealth: 100
   boss: {fileID: 2055235760169892650}
   health: {fileID: 6595906920665168589}
+  levelTransition: {fileID: 0}
 --- !u!1 &3646988381593443063
 GameObject:
   m_ObjectHideFlags: 0

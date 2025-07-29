@@ -4294,11 +4294,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6695489051614882999, guid: 1397966936eceb240a27049a03182851, type: 3}
       propertyPath: levelName
-      value: FisheyeWorld2Level1
+      value: FisheyeWorld2Boss
       objectReference: {fileID: 0}
     - target: {fileID: 6695489051614882999, guid: 1397966936eceb240a27049a03182851, type: 3}
       propertyPath: selectedSceneIndex
-      value: 15
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 6840787674012636349, guid: 1397966936eceb240a27049a03182851, type: 3}
       propertyPath: m_Mesh

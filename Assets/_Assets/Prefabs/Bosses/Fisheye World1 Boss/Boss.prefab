@@ -330,6 +330,7 @@ MonoBehaviour:
   maxHealth: 100
   enableObject: {fileID: 0}
   enemyPrefab: {fileID: 7914845235597970848}
+  otherGameObjectTag: Player
 --- !u!65 &8914424544323794989
 BoxCollider:
   m_ObjectHideFlags: 0

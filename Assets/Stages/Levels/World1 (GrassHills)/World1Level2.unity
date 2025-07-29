@@ -17020,6 +17020,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9308f1ce59205554593b88cb91b54b4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lollipopThreshold: 50
   secretLevelTransform: {fileID: 848061129}
 --- !u!43 &640309631
 Mesh:

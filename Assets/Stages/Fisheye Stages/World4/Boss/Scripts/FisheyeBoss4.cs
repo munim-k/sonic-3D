@@ -25,6 +25,7 @@ public class FisheyeBoss4 : MonoBehaviour
 
     [Header("Phase activating Objects")]
     [SerializeField] private List<GameObject> phaseChangeGameObjects;
+    [SerializeField] private GameObject levelTransition;
     [SerializeField] List<Transform> phaseSpawnPoints;
     [SerializeField] private float moveSpeed = 35f;
     private bool isMoving = false;
@@ -78,6 +79,7 @@ public class FisheyeBoss4 : MonoBehaviour
     {
         if (phase == 7)
         {
+            levelTransition.SetActive(true);
             Destroy(gameObject);
             return;
         }

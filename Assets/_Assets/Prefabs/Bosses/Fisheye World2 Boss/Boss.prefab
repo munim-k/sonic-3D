@@ -1931,6 +1931,7 @@ MonoBehaviour:
   maxHealth: 50
   enableObject: {fileID: 0}
   enemyPrefab: {fileID: 6536342354293553202}
+  otherGameObjectTag: Player
 --- !u!1 &4293421026237513153
 GameObject:
   m_ObjectHideFlags: 0
@@ -2300,6 +2301,8 @@ MonoBehaviour:
   initialDelay: 0.5
   delayBetweenAttacks: 2
   homingTime: 4
+  swordDuration: 2
+  swordSpeed: 400
   sword: {fileID: 230597330152608785}
   parentOfHoming: {fileID: 5508507288244152942}
   homingSingles:

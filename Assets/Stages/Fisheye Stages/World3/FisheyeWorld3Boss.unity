@@ -2829,6 +2829,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Thorn (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 8194923132540512033, guid: 839e30fffec14c847961e0b4739fd082, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2895,6 +2899,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Thorn
       objectReference: {fileID: 0}
+    - target: {fileID: 8194923132540512033, guid: 839e30fffec14c847961e0b4739fd082, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3291,6 +3299,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Thorn (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 8194923132540512033, guid: 839e30fffec14c847961e0b4739fd082, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3820,6 +3832,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Thorn (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8194923132540512033, guid: 839e30fffec14c847961e0b4739fd082, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5226,6 +5242,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Thorn (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 8194923132540512033, guid: 839e30fffec14c847961e0b4739fd082, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6632,6 +6652,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Thorn (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 8194923132540512033, guid: 839e30fffec14c847961e0b4739fd082, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6698,6 +6722,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Thorn (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 8194923132540512033, guid: 839e30fffec14c847961e0b4739fd082, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7083,6 +7111,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Thorn (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8194923132540512033, guid: 839e30fffec14c847961e0b4739fd082, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9126,6 +9158,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Thorn (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 8194923132540512033, guid: 839e30fffec14c847961e0b4739fd082, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9192,6 +9228,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Thorn (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 8194923132540512033, guid: 839e30fffec14c847961e0b4739fd082, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11278,6 +11318,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Thorn (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 8194923132540512033, guid: 839e30fffec14c847961e0b4739fd082, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11344,6 +11388,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Thorn (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8194923132540512033, guid: 839e30fffec14c847961e0b4739fd082, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

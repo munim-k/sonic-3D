@@ -12,6 +12,7 @@ public class FisheyeWorld8Boss : MonoBehaviour
     [SerializeField] private Transform missilePosition2;
     [SerializeField] private Transform runwayPosition;
     [SerializeField] private GameObject phase2Objects;
+    [SerializeField] private GameObject levelTransition;
 
     [Header("Movement Settings")]
     [SerializeField] private float flySpeed = 15f;
@@ -231,6 +232,7 @@ public class FisheyeWorld8Boss : MonoBehaviour
 
             if (currentHealth <= 0f)
             {
+                levelTransition.SetActive(true);
                 Destroy(gameObject);
             }
         }
