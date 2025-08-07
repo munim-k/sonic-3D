@@ -1,9 +1,7 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class BeeEnemy : BaseEnemy,IHittable
-{
+public class BeeEnemy : MonoBehaviour, BaseEnemy, IHittable {
 
     public enum State {
         Idle,   //Bee is idly hovering
@@ -18,39 +16,104 @@ public class BeeEnemy : BaseEnemy,IHittable
     //Looking state
     [SerializeField] private float detectionRange = 20f;
     [SerializeField] private float lookDuration = 2f;
+    [SerializeField] private float lookSpeed = 2f;
     private float lookTimer = 0f;
 
     //Charging State
     [SerializeField] private float chargingSpeed = 5f;
     [SerializeField] private float detonationRange = 2f;
+    private Vector3 chargeDir = Vector3.zero;
     private Vector3 chargePoint = Vector3.zero;
+
+
+    //Explosion
+    [SerializeField] private GameObject damageSphere;
+    [SerializeField] private int explosionDamage = 10;
+    [SerializeField] private GameObject explosionVFX;
 
     private Action On_Death;
     private Action On_Hit;
-    public Action OnDeath { get => On_Death; set => On_Death=value; }
-    public Action OnHit { get => On_Hit; set => On_Hit=value; }
+    public Action OnDeath { get => On_Death; set => On_Death = value; }
+    public Action OnHit { get => On_Hit; set => On_Hit = value; }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
+    void Start() {
+        state = State.Idle;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    void FixedUpdate() {
+        switch (state) {
+            case State.Idle:
+                Idle();
+                break;
+            case State.Looking:
+                Looking();
+                break;
+            case State.Charging:
+                Charging();
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    private void Idle() {
+        Vector3 playerPosition = Player.CharacterInstance.playerBehaviourTree.modelTransform.position;
+        if (Vector3.SqrMagnitude(playerPosition - transform.position) < detectionRange * detectionRange) {
+            state = State.Looking;
+            lookTimer = lookDuration;
+        }
+        // Optionally, Can add idle behavior here, like hovering or random movement
+    }
+
+    private void Looking() {
+        lookTimer -= Time.fixedDeltaTime;
+        Vector3 playerPos = Player.CharacterInstance.playerBehaviourTree.modelTransform.position;
+        if (lookTimer <= 0f) {
+            state = State.Charging;
+            chargeDir = playerPos - transform.position;
+            chargePoint = playerPos;
+        }
+        else {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerPos - transform.position), Time.fixedDeltaTime * lookSpeed);
+        }
+    }
+
+    private void Charging() {
+        transform.position += chargeDir.normalized * chargingSpeed * Time.fixedDeltaTime;
+        // Check if the bee is close enough to detonate
+        if (Vector3.SqrMagnitude(chargePoint - transform.position) < detonationRange * detonationRange) {
+            Explode();
+        }
+    }
+
+    private void Explode() {
+        if (damageSphere != null) {
+            damageSphere.SetActive(true);
+            damageSphere.transform.parent = null;
+            Destroy(damageSphere, 2f); // Destroy the damage sphere after 2 seconds
+        }
+        if (explosionVFX != null) {
+            Instantiate(explosionVFX, transform.position, Quaternion.identity);
+        }
+        Destroy(gameObject);
     }
 
     float BaseEnemy.GetHealthNormalized() {
-        throw new NotImplementedException();
+        return (float)currentHealth / maxHealth;
     }
 
     void IHittable.DoHit(int damage) {
-        throw new NotImplementedException();
+        currentHealth -= damage;
+        OnHit?.Invoke();
+        if (currentHealth <= 0) {
+            OnDeath?.Invoke();
+            Destroy(gameObject);
+        }
     }
 
     HittableType IHittable.GetType() {
-        throw new NotImplementedException();
+        return HittableType.Enemy;
     }
 }
