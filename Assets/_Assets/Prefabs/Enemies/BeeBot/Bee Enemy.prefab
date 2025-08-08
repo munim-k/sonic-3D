@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2147206068541937536}
   - component: {fileID: 4648643546343536824}
   - component: {fileID: 7470968434594709036}
+  - component: {fileID: 5797970729298848790}
   m_Layer: 9
   m_Name: Bee Enemy
   m_TagString: Untagged
@@ -69,14 +70,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 20
-  detectionRange: 60
+  RB: {fileID: 5797970729298848790}
+  detectionRange: 50
   lookDuration: 0.5
   lookSpeed: 10
-  chargingSpeed: 20
+  chargingSpeed: 25
   detonationRange: 2
+  detonationDuration: 0.5
   damageSphere: {fileID: 4498934579821403601}
   explosionDamage: 10
   explosionVFX: {fileID: 1017516033835209097, guid: 41fd8b39359101a4fbc50f47af80bd71, type: 3}
+--- !u!54 &5797970729298848790
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213991418925733974}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 2
 --- !u!1 &4498934579821403601
 GameObject:
   m_ObjectHideFlags: 0

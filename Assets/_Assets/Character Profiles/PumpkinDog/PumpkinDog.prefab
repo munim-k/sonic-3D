@@ -1211,12 +1211,15 @@ MonoBehaviour:
   behaviourTree: {fileID: 0}
   active: 0
   wasActive: 0
-  dounwardsRayDistance: 1
+  downwardsRayDistance: 0.25
+  rayVerticalOffset: -0.5
+  downwardsSphereCastRadius: 0.5
   bounceDamage: 20
   bounceForce: 40
   enemyLayerMask:
     serializedVersion: 2
     m_Bits: 512
+  jumpPlayerBehaviour: {fileID: 3773458990709628176}
 --- !u!114 &8601145617138274750
 MonoBehaviour:
   m_ObjectHideFlags: 0

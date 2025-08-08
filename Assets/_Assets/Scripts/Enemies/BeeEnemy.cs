@@ -12,7 +12,7 @@ public class BeeEnemy : MonoBehaviour, BaseEnemy, IHittable {
     private State state;
     [SerializeField] private int maxHealth = 20;
     private int currentHealth;
-
+    [SerializeField] private Rigidbody RB;
     //Looking state
     [SerializeField] private float detectionRange = 20f;
     [SerializeField] private float lookDuration = 2f;
@@ -22,6 +22,8 @@ public class BeeEnemy : MonoBehaviour, BaseEnemy, IHittable {
     //Charging State
     [SerializeField] private float chargingSpeed = 5f;
     [SerializeField] private float detonationRange = 2f;
+    [SerializeField] private float detonationDuration = 0.5f;
+    private float detonationTimer = 0f;
     private Vector3 chargeDir = Vector3.zero;
     private Vector3 chargePoint = Vector3.zero;
 
@@ -33,6 +35,7 @@ public class BeeEnemy : MonoBehaviour, BaseEnemy, IHittable {
 
     private Action On_Death;
     private Action On_Hit;
+
     public Action OnDeath { get => On_Death; set => On_Death = value; }
     public Action OnHit { get => On_Hit; set => On_Hit = value; }
 
@@ -72,19 +75,26 @@ public class BeeEnemy : MonoBehaviour, BaseEnemy, IHittable {
         Vector3 playerPos = Player.CharacterInstance.playerBehaviourTree.modelTransform.position;
         if (lookTimer <= 0f) {
             state = State.Charging;
-            chargeDir = playerPos - transform.position;
-            chargePoint = playerPos;
         }
         else {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerPos - transform.position), Time.fixedDeltaTime * lookSpeed);
+            RB.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerPos - transform.position), Time.fixedDeltaTime * lookSpeed));
         }
     }
 
     private void Charging() {
-        transform.position += chargeDir.normalized * chargingSpeed * Time.fixedDeltaTime;
         // Check if the bee is close enough to detonate
+        chargePoint = Player.CharacterInstance.playerBehaviourTree.modelTransform.position;
         if (Vector3.SqrMagnitude(chargePoint - transform.position) < detonationRange * detonationRange) {
-            Explode();
+            detonationTimer -= Time.fixedDeltaTime;
+            if (detonationTimer <= 0f) {
+                Explode();
+            }
+        }
+        else {
+            chargeDir = chargePoint - transform.position;
+            RB.MovePosition(RB.position + chargingSpeed * Time.fixedDeltaTime * chargeDir.normalized);
+            RB.MoveRotation(Quaternion.LookRotation(chargeDir));
+            detonationTimer = detonationDuration;
         }
     }
 
