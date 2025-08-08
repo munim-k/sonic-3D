@@ -4,6 +4,8 @@ public class DamageVolume : Volume {
     public DamagePlayerBehaviour.DamageType damageMode;
     public bool damageDealt;
     public float power;
+    public float horizontalKnockback;
+    public float verticalKnockback;
 
 
 }

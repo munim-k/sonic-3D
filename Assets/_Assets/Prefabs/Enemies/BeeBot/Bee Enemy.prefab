@@ -78,7 +78,6 @@ MonoBehaviour:
   detonationRange: 2
   detonationDuration: 0.5
   damageSphere: {fileID: 4498934579821403601}
-  explosionDamage: 10
   explosionVFX: {fileID: 1017516033835209097, guid: 41fd8b39359101a4fbc50f47af80bd71, type: 3}
 --- !u!54 &5797970729298848790
 Rigidbody:
@@ -189,6 +188,8 @@ MonoBehaviour:
   damageMode: 0
   damageDealt: 0
   power: 20
+  horizontalKnockback: 10
+  verticalKnockback: 40
 --- !u!1 &4599968541264689438
 GameObject:
   m_ObjectHideFlags: 0

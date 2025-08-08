@@ -30,7 +30,6 @@ public class BeeEnemy : MonoBehaviour, BaseEnemy, IHittable {
 
     //Explosion
     [SerializeField] private GameObject damageSphere;
-    [SerializeField] private int explosionDamage = 10;
     [SerializeField] private GameObject explosionVFX;
 
     private Action On_Death;

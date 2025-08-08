@@ -10,13 +10,14 @@ namespace RagdollEngine {
         [SerializeField] private int bounceForce = 5;
         [SerializeField] private LayerMask enemyLayerMask;
         [SerializeField] private JumpPlayerBehaviour jumpPlayerBehaviour;
+        private Vector3 rayOffset;
+
         public override bool Evaluate() {
             //Check if player is colliding with an enemy, if so then apply damage to enemy and upward bounce force
-            RaycastHit[] hits;
-            Vector3 offset = new Vector3(0, rayVerticalOffset, 0); // Offset to avoid hitting the player itself
-            offset += playerTransform.position;
-            hits = Physics.SphereCastAll(offset, downwardsSphereCastRadius, Vector3.down, downwardsRayDistance, enemyLayerMask);
-            foreach (RaycastHit hit in hits) {
+            rayOffset = new Vector3(0, rayVerticalOffset, 0); // Offset to avoid hitting the player itself
+            rayOffset += playerTransform.position;
+
+            if (Physics.SphereCast(rayOffset, downwardsSphereCastRadius, Vector3.down, out RaycastHit hit, downwardsRayDistance, enemyLayerMask, QueryTriggerInteraction.Ignore)) {
                 if (hit.collider.gameObject != null) {
                     BaseEnemy enemy = hit.collider.gameObject.GetComponent<BaseEnemy>();
                     if (enemy != null) {
@@ -36,10 +37,13 @@ namespace RagdollEngine {
                     }
                 }
             }
+
             return false;
         }
 
-
+        private void OnDrawGizmos() {
+            //  Gizmos.DrawSphere(rayOffset, downwardsSphereCastRadius);
+        }
     }
 
 }

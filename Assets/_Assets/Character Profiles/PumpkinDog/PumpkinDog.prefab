@@ -1212,7 +1212,7 @@ MonoBehaviour:
   active: 0
   wasActive: 0
   downwardsRayDistance: 0.25
-  rayVerticalOffset: -0.5
+  rayVerticalOffset: -1
   downwardsSphereCastRadius: 0.5
   bounceDamage: 20
   bounceForce: 40

@@ -118,15 +118,10 @@ namespace RagdollEngine {
                 RB.MovePosition(movePosition);
             else {
                 additiveVelocity += accelerationVector;
-
-
                 RB.linearVelocity += additiveVelocity;
-
-
                 RB.linearVelocity -= Vector3.Project(RB.linearVelocity, plane);
-
-                if (groundInformation.ground)
-                    RB.linearVelocity -= Vector3.Project(RB.linearVelocity, groundInformation.hit.normal);
+                //if (groundInformation.ground)
+                //    RB.linearVelocity -= Vector3.Project(RB.linearVelocity, groundInformation.hit.normal);
             }
 
             if (dynamicSolverIterations)

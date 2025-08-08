@@ -62,6 +62,14 @@ namespace RagdollEngine {
                     // Set cooldown timer
                     cooldownTimer = cooldownTime;
 
+                    //To apply knockback
+                    Vector3 knockbackDir = modelTransform.position - thisDamageVolume.transform.position;
+                    knockbackDir.Normalize();
+                    knockbackDir.y = 0;
+                    knockbackDir *= thisDamageVolume.horizontalKnockback;
+                    knockbackDir.y = -RB.linearVelocity.y;
+                    knockbackDir.y += thisDamageVolume.verticalKnockback;
+                    additiveVelocity += knockbackDir;
                     // Check if the player has no health left
                     if (currentHealth <= 0) {
                         character.Respawn(); // Respawn the player if health is depleted
