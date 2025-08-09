@@ -7,10 +7,11 @@ namespace RagdollEngine {
         [SerializeField] float platformSpeed; // Speed of the moving platform
         private Transform currentPlatform;
         private Vector3 previousPlatformPosition;
+        private Vector3 previousFinalVel = Vector3.zero;
 
         bool wasMoving; // Tracks whether the player was moving in the previous frame
-
         public override void Execute() {
+
             active = true; // Mark this behavior as active
 
             // Determine if the player was moving in the previous frame and is still active
@@ -52,6 +53,7 @@ namespace RagdollEngine {
             Vector3 finalVel = moveVelocity - RB.linearVelocity;
             finalVel.y = 0;
             additiveVelocity += finalVel;
+
             // Update the movement state for the next frame
 
             if (groundInformation.ground && groundInformation.hit.collider.CompareTag("MovingPlatform")) {
@@ -78,5 +80,6 @@ namespace RagdollEngine {
             }
             wasMoving = moving;
         }
+
     }
 }

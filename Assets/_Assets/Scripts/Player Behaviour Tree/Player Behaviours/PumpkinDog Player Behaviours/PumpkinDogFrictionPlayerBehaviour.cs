@@ -14,7 +14,6 @@ namespace RagdollEngine {
         public override void Execute() {
             if (!moving)
                 Slow();
-
             active = true;
         }
 
