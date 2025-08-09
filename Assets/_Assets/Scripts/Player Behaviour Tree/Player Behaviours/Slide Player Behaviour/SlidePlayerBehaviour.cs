@@ -54,6 +54,14 @@ namespace RagdollEngine {
                 }
             }
             else {
+                if (inputHandler.jump.pressed) {
+                    playerBehaviourTree.groundInformation.ground = false;
+                    jumpPlayerBehaviour.Jump(Vector3.up, true);
+                    jumpAudioSource.Play();
+                    currentSlide = null;
+                    immunityTimer = immunityTime;
+                    result = false;
+                }
                 result = true;
             }
 
