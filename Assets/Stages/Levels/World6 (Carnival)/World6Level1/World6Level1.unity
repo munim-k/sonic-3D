@@ -5376,6 +5376,8 @@ MonoBehaviour:
   alignRotation: 1
   verticalOffsetFollowsCurve: 0
   verticalOffset: 0
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0
   placementEnd: 1
   useClosedSpline: 0
@@ -5548,6 +5550,8 @@ MonoBehaviour:
   damageMode: 1
   damageDealt: 0
   power: 20
+  horizontalKnockback: 0
+  verticalKnockback: 0
 --- !u!114 &949101367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8142,6 +8146,8 @@ MonoBehaviour:
   alignRotation: 1
   verticalOffsetFollowsCurve: 0
   verticalOffset: -1
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0
   placementEnd: 1
   useClosedSpline: 0
@@ -8267,6 +8273,8 @@ MonoBehaviour:
   alignRotation: 0
   verticalOffsetFollowsCurve: 0
   verticalOffset: 3.11
+  horizontalOffset: 0
+  zOffset: 0
   placementStart: 0.752
   placementEnd: 1
   useClosedSpline: 0
@@ -11103,18 +11111,17 @@ MonoBehaviour:
   m_Sides: 8
   m_SegmentsPerUnit: 1
   m_Capped: 1
-  m_Radius: 0.25
+  m_Radius: 2
   m_Range: {x: 0, y: 1}
   m_FlipNormals: 0
   m_Shape:
-    rid: 1004157067401887823
+    rid: 6244567658545545298
   references:
     version: 2
     RefIds:
-    - rid: 1004157067401887823
-      type: {class: Circle, ns: UnityEngine.Splines.ExtrusionShapes, asm: Unity.Splines}
-      data:
-        m_Sides: 8
+    - rid: 6244567658545545298
+      type: {class: Road, ns: UnityEngine.Splines.ExtrusionShapes, asm: Unity.Splines}
+      data: 
 --- !u!23 &1682761634
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11138,7 +11145,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 0dc94645624dca445a1e25f4ea1eb945, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -11827,18 +11834,17 @@ MonoBehaviour:
   m_Sides: 8
   m_SegmentsPerUnit: 1
   m_Capped: 1
-  m_Radius: 0.25
+  m_Radius: 2
   m_Range: {x: 0, y: 1}
   m_FlipNormals: 0
   m_Shape:
-    rid: 1004157067401887822
+    rid: 6244567658545545297
   references:
     version: 2
     RefIds:
-    - rid: 1004157067401887822
-      type: {class: Circle, ns: UnityEngine.Splines.ExtrusionShapes, asm: Unity.Splines}
-      data:
-        m_Sides: 8
+    - rid: 6244567658545545297
+      type: {class: Road, ns: UnityEngine.Splines.ExtrusionShapes, asm: Unity.Splines}
+      data: 
 --- !u!23 &1724924281
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11862,7 +11868,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 0dc94645624dca445a1e25f4ea1eb945, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -15369,6 +15375,8 @@ MonoBehaviour:
   damageMode: 1
   damageDealt: 0
   power: 20
+  horizontalKnockback: 0
+  verticalKnockback: 0
 --- !u!4 &1872574874724814176
 Transform:
   m_ObjectHideFlags: 0
