@@ -21,6 +21,8 @@ public class BeeEnemy : MonoBehaviour, BaseEnemy, IHittable {
 
     //Charging State
     [SerializeField] private float chargingSpeed = 5f;
+    [SerializeField] private float verticalLift = 0.5f;
+    [SerializeField] private float rotationSpeed = 1f;
     [SerializeField] private float detonationRange = 2f;
     [SerializeField] private float detonationDuration = 0.5f;
     private float detonationTimer = 0f;
@@ -84,6 +86,8 @@ public class BeeEnemy : MonoBehaviour, BaseEnemy, IHittable {
         // Check if the bee is close enough to detonate
         chargePoint = Player.CharacterInstance.playerBehaviourTree.modelTransform.position;
         if (Vector3.SqrMagnitude(chargePoint - transform.position) < detonationRange * detonationRange) {
+            RB.linearVelocity = Vector3.zero;
+            RB.angularVelocity = Vector3.zero;
             detonationTimer -= Time.fixedDeltaTime;
             if (detonationTimer <= 0f) {
                 Explode();
@@ -93,6 +97,8 @@ public class BeeEnemy : MonoBehaviour, BaseEnemy, IHittable {
             chargeDir = chargePoint - transform.position;
             RB.MovePosition(RB.position + chargingSpeed * Time.fixedDeltaTime * chargeDir.normalized);
             RB.MoveRotation(Quaternion.LookRotation(chargeDir));
+            RB.linearVelocity = Vector3.zero;
+            RB.angularVelocity = Vector3.zero;
             detonationTimer = detonationDuration;
         }
     }

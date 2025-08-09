@@ -1213,9 +1213,9 @@ MonoBehaviour:
   behaviourTree: {fileID: 0}
   active: 0
   wasActive: 0
-  downwardsRayDistance: 0.25
+  downwardsRayDistance: 0.5
   rayVerticalOffset: -1
-  downwardsSphereCastRadius: 0.8
+  downwardsSphereCastRadius: 1.1
   bounceDamage: 20
   bounceForce: 40
   enemyLayerMask:

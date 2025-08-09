@@ -42,7 +42,7 @@ namespace RagdollEngine {
         }
 
         private void OnDrawGizmos() {
-            //  Gizmos.DrawSphere(rayOffset, downwardsSphereCastRadius);
+            //Gizmos.DrawSphere(rayOffset, downwardsSphereCastRadius);
         }
     }
 
