@@ -42,7 +42,6 @@ namespace RagdollEngine {
         }
 
         public override void Execute() {
-
             CalculatePath();
             //If user has left clicked then fire and start cooldown
             if (inputHandler.fire.pressed && inputHandler.aim.hold && cooldownTimer <= 0) {

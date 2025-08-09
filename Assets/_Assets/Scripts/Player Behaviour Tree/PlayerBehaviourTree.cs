@@ -106,9 +106,9 @@ namespace RagdollEngine {
             moving = false;
 
             RB.isKinematic = false;
-
+            print("AdditiveVelocity before fixedUpdate: " + additiveVelocity);
+            print("RBVelocity before fixedupdate: " + RB.linearVelocity);
             base.FixedUpdate();
-
 
             Cursor.lockState = CursorLockMode.Locked;
 
@@ -117,13 +117,14 @@ namespace RagdollEngine {
             if (kinematic)
                 RB.MovePosition(movePosition);
             else {
+                print("velocity in tree: " + additiveVelocity);
                 additiveVelocity += accelerationVector;
                 RB.linearVelocity += additiveVelocity;
                 RB.linearVelocity -= Vector3.Project(RB.linearVelocity, plane);
                 //if (groundInformation.ground)
                 //    RB.linearVelocity -= Vector3.Project(RB.linearVelocity, groundInformation.hit.normal);
             }
-
+            print("RBVelocity after fixedUpdate: " + RB.linearVelocity);
             if (dynamicSolverIterations)
                 RB.solverIterations = Mathf.Max(Mathf.FloorToInt(RB.linearVelocity.magnitude * Time.fixedDeltaTime / solverIterationDistance), Physics.defaultSolverIterations);
             else

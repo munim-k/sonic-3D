@@ -188,7 +188,7 @@ MonoBehaviour:
   damageMode: 0
   damageDealt: 0
   power: 20
-  horizontalKnockback: 10
+  horizontalKnockback: 40
   verticalKnockback: 40
 --- !u!1 &4599968541264689438
 GameObject:

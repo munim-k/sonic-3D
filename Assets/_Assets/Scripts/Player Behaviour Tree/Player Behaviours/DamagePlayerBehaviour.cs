@@ -67,9 +67,11 @@ namespace RagdollEngine {
                     knockbackDir.Normalize();
                     knockbackDir.y = 0;
                     knockbackDir *= thisDamageVolume.horizontalKnockback;
-                    knockbackDir.y = -RB.linearVelocity.y;
                     knockbackDir.y += thisDamageVolume.verticalKnockback;
                     additiveVelocity += knockbackDir;
+                    Debug.DrawLine(modelTransform.position, modelTransform.position + knockbackDir, Color.red, 3f);
+                    moving = true;
+                    print("velocity in damagebehaviour: " + additiveVelocity);
                     // Check if the player has no health left
                     if (currentHealth <= 0) {
                         character.Respawn(); // Respawn the player if health is depleted

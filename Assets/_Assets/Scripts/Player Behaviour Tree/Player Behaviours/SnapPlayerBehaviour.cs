@@ -6,7 +6,7 @@ namespace RagdollEngine {
             if (kinematic)
                 return;
 
-            if (groundInformation.ground) {
+            if (groundInformation.ground && RB.linearVelocity.y <= 0) {
                 Vector3 goal = groundInformation.hit.point + (groundInformation.hit.normal * height);
 
                 Vector3 difference = goal - playerTransform.position;

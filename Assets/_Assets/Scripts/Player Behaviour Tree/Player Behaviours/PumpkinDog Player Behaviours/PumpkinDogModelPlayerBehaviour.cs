@@ -9,7 +9,6 @@ namespace RagdollEngine {
         [SerializeField] float maxSpeed;         // Maximum speed of the player
 
         public override void Execute() {
-
             // Calculate the player's current speed based on input or velocity
             float speed = inputHandler.move.magnitude > InputSystem.settings.defaultDeadzoneMin || moveVelocity.magnitude > moveDeadzone
                 ? moveVelocity.magnitude
@@ -32,16 +31,16 @@ namespace RagdollEngine {
 
 
 
+
+            // If the model's transform is overridden, exit early
+            if (overrideModelTransform)
+                return;
             // Smoothly align the model's "up" direction with the player's "up" direction
             Vector3 up = Vector3.Lerp(
                 modelTransform.up,
                 playerTransform.up,
                 1 - (groundInformation.ground ? groundSmoothness : airSmoothness)
             );
-
-            // If the model's transform is overridden, exit early
-            if (overrideModelTransform)
-                return;
 
             // Update the model's rotation to align with the calculated forward and up directions
 
