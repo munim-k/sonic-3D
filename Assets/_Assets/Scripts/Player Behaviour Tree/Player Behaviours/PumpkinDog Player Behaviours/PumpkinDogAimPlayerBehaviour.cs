@@ -8,6 +8,7 @@ namespace RagdollEngine {
         [SerializeField] private int maxPoints; // Maximum number of points for projectile motion
         [SerializeField] private float scale;
         [SerializeField] private float angleMultipler;
+        [SerializeField] private Vector2 angleClamps;
         [SerializeField] private float angleOffset;
         [SerializeField] private Vector3 offsetVector;
         [SerializeField] private float cooldown;
@@ -87,14 +88,14 @@ namespace RagdollEngine {
 
         private void SetLaunchVector() {
             Vector3 cameraForward = cameraTransform.forward;
-            Vector3 playerForward = modelTransform.forward;
-            float verticalAngle = Vector3.SignedAngle(Vector3.ProjectOnPlane(cameraForward, modelTransform.right), playerForward, modelTransform.right);
+            Vector3 cameraForwardProjected = Vector3.ProjectOnPlane(cameraForward, Vector3.up);
+            float verticalAngle = Vector3.SignedAngle(Vector3.ProjectOnPlane(cameraForward, Vector3.up), cameraForward, cameraTransform.right);
             //Invert the angle to make it positive
-            verticalAngle = -verticalAngle;
             verticalAngle *= angleMultipler;
-            verticalAngle += angleOffset;
+            verticalAngle -= angleOffset;
+            verticalAngle = Mathf.Clamp(verticalAngle, angleClamps.x, angleClamps.y);
             // Adjust the throw direction based on the vertical angle
-            Vector3 adjustedThrowDirection = Quaternion.AngleAxis(verticalAngle, modelTransform.right) * modelTransform.forward;
+            Vector3 adjustedThrowDirection = Quaternion.AngleAxis(verticalAngle, cameraTransform.right) * cameraForwardProjected;
 
             launchOrigin = modelTransform.position + (modelTransform.rotation * offsetVector);
             launchVector = adjustedThrowDirection * throwForce * projectileSpeed;
