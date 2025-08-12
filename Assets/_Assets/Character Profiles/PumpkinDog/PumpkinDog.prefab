@@ -1368,9 +1368,9 @@ MonoBehaviour:
   active: 0
   wasActive: 0
   jumps: 2
-  jumpHeight: 2
-  baseJumpHeight: 2
-  airJumpHeight: 2
+  jumpHeight: 3
+  baseJumpHeight: 3
+  airJumpHeight: 3
   gravity: 2
   jumpTimer: 0.1
   coyoteTime: 0.2
