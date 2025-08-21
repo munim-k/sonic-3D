@@ -42,7 +42,7 @@ public class HelicopterBotEnemy : MonoBehaviour, BaseEnemy, IHittable {
     //ReturnToPath
     [SerializeField] private float frontObstacleDetectionDistance = 5f;
     [SerializeField] private float frontObstacleSphereCastRadius = 1f;
-    [SerializeField] private LayerMask obstacleLayerMask;
+    [SerializeField] private LayerMask avoidCollisionLayerMask;
 
 
     private Action On_Death;
@@ -130,14 +130,17 @@ public class HelicopterBotEnemy : MonoBehaviour, BaseEnemy, IHittable {
         Vector3 dirToPlayer = (playerHorizontalPosition - rb.position).normalized;
         float movementDistance = movementSpeed * Time.fixedDeltaTime;
         Vector3 newPoint = rb.position + dirToPlayer * movementDistance;
+        Vector3 newPointHeightAdjusted = newPoint;
 
-        if (Physics.Raycast(newPoint + Vector3.up, Vector3.down, out RaycastHit hit, flightMinHeight + 1f, obstacleLayerMask)) {
-            newPoint.y = hit.point.y + flightMinHeight;
+        if (Physics.Raycast(newPoint + Vector3.up, Vector3.down, out RaycastHit hit, flightMinHeight + 1f, ~avoidCollisionLayerMask, QueryTriggerInteraction.Ignore)) {
+            newPointHeightAdjusted.y = hit.point.y + flightMinHeight;
+            print($"Raycast Hit: {hit.collider.gameObject.name}");
         }
         else {
-            newPoint.y = rb.position.y; //If no ground found, keep current height
+            newPointHeightAdjusted.y = rb.position.y; //If no ground found, keep current height
         }
-        rb.MovePosition(Vector3.Lerp(rb.position, newPoint, Time.fixedDeltaTime * movementLerpSpeed));
+        newPoint = Vector3.Lerp(newPoint, newPointHeightAdjusted, movementLerpSpeed * Time.fixedDeltaTime);
+        rb.MovePosition(newPoint);
         //Rotate towards player
         Quaternion targetRotation = Quaternion.LookRotation(dirToPlayer);
         rb.MoveRotation(Quaternion.Lerp(rb.rotation, targetRotation, Time.fixedDeltaTime * rotationSpeed));
@@ -165,7 +168,7 @@ public class HelicopterBotEnemy : MonoBehaviour, BaseEnemy, IHittable {
             state = State.FollowPlayer;
             return;
         }
-        if (Physics.SphereCast(rb.position, frontObstacleSphereCastRadius, transform.forward, out RaycastHit hit, frontObstacleDetectionDistance, obstacleLayerMask)) {
+        if (Physics.SphereCast(rb.position, frontObstacleSphereCastRadius, transform.forward, out RaycastHit hit, frontObstacleDetectionDistance, ~avoidCollisionLayerMask, QueryTriggerInteraction.Ignore)) {
             //Stop moving until spherecast can return a null hit
             return;
         }
