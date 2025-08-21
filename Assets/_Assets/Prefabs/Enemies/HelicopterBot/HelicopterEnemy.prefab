@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 44469466411440393}
+  - component: {fileID: 4700493313200777284}
   - component: {fileID: 4923328790690366142}
   - component: {fileID: 605896856574663113}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HelicopterEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34,6 +35,33 @@ Transform:
   - {fileID: 8161928941470890826}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &4700493313200777284
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3539146807799413256}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 1536
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!114 &4923328790690366142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46,6 +74,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 756efa25e97e9d047a044fa6bd092bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 40
+  movementSpeedHorizontal: 2
+  movementSpeedVertical: 1
+  flightMinHeight: 5
+  deathExplosion: {fileID: 0}
+  followSplineComponent: {fileID: 0}
+  playerDetectionRadius: 10
+  missilePrefab: {fileID: 0}
+  missileFireStep: 0.2
+  missileFireDuration: 1
+  missileFireCooldown: 1
+  frontObstacleDetectionDistance: 5
+  frontObstacleSphereCastRadius: 1
 --- !u!135 &605896856574663113
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -66,7 +107,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 2
-  m_Center: {x: 0, y: 0.61, z: 0.52}
+  m_Center: {x: 0, y: 0.61, z: 0.21}
 --- !u!1 &3755141364488037113
 GameObject:
   m_ObjectHideFlags: 0
@@ -76,7 +117,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8161928941470890826}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,6 +138,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8850978532738646630}
+  - {fileID: 6757792638419631685}
   m_Father: {fileID: 44469466411440393}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &9033736422082979213
@@ -147,9 +189,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6792028037931109622, guid: 9ce5ade1f18b9c149b4a4cee36c24fa5, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -3303284383266293979, guid: 9ce5ade1f18b9c149b4a4cee36c24fa5, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9ce5ade1f18b9c149b4a4cee36c24fa5, type: 3}
       propertyPath: m_Name
       value: HelicopterBot
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9ce5ade1f18b9c149b4a4cee36c24fa5, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -160,4 +214,70 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9ce5ade1f18b9c149b4a4cee36c24fa5, type: 3}
   m_PrefabInstance: {fileID: 9033736422082979213}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &9072076469459376569
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8161928941470890826}
+    m_Modifications:
+    - target: {fileID: 2319070005373577212, guid: c30dc7bb2202d5d4b9fffd217043059d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319070005373577212, guid: c30dc7bb2202d5d4b9fffd217043059d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319070005373577212, guid: c30dc7bb2202d5d4b9fffd217043059d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319070005373577212, guid: c30dc7bb2202d5d4b9fffd217043059d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319070005373577212, guid: c30dc7bb2202d5d4b9fffd217043059d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319070005373577212, guid: c30dc7bb2202d5d4b9fffd217043059d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319070005373577212, guid: c30dc7bb2202d5d4b9fffd217043059d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319070005373577212, guid: c30dc7bb2202d5d4b9fffd217043059d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319070005373577212, guid: c30dc7bb2202d5d4b9fffd217043059d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319070005373577212, guid: c30dc7bb2202d5d4b9fffd217043059d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5062507356415134444, guid: c30dc7bb2202d5d4b9fffd217043059d, type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 44469466411440393}
+    - target: {fileID: 8656100764484615194, guid: c30dc7bb2202d5d4b9fffd217043059d, type: 3}
+      propertyPath: m_Name
+      value: EnemyHealthBarUI
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c30dc7bb2202d5d4b9fffd217043059d, type: 3}
+--- !u!4 &6757792638419631685 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2319070005373577212, guid: c30dc7bb2202d5d4b9fffd217043059d, type: 3}
+  m_PrefabInstance: {fileID: 9072076469459376569}
   m_PrefabAsset: {fileID: 0}

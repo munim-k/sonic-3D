@@ -81,6 +81,7 @@ MonoBehaviour:
   detonationDuration: 0.5
   damageSphere: {fileID: 4498934579821403601}
   explosionVFX: {fileID: 1017516033835209097, guid: 41fd8b39359101a4fbc50f47af80bd71, type: 3}
+  deathExplosion: {fileID: 1017516033835209097, guid: 88ad9f77a3a90c34690ba0a98cd8a29f, type: 3}
 --- !u!54 &5797970729298848790
 Rigidbody:
   m_ObjectHideFlags: 0

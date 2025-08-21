@@ -33,6 +33,7 @@ public class BeeEnemy : MonoBehaviour, BaseEnemy, IHittable {
     //Explosion
     [SerializeField] private GameObject damageSphere;
     [SerializeField] private GameObject explosionVFX;
+    [SerializeField] private GameObject deathExplosion;
 
     private Action On_Death;
     private Action On_Hit;
@@ -124,6 +125,9 @@ public class BeeEnemy : MonoBehaviour, BaseEnemy, IHittable {
         OnHit?.Invoke();
         if (currentHealth <= 0) {
             OnDeath?.Invoke();
+            if (deathExplosion != null) {
+                Instantiate(deathExplosion, transform.position, Quaternion.identity);
+            }
             Destroy(gameObject);
         }
     }
