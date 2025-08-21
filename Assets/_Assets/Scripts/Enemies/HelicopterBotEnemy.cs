@@ -1,43 +1,48 @@
 using System;
-using System.Transactions;
 using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Splines;
 [RequireComponent(typeof(Rigidbody))]
 public class HelicopterBotEnemy : MonoBehaviour, BaseEnemy, IHittable {
 
     private enum State {
-       FollowPath,
-       FollowPlayer,
-       ReturnToPath,
+        FollowPath,
+        FollowPlayer,
+        ReturnToPath,
 
     }
 
     //Shared variables
     [SerializeField] private float maxHealth = 40f;
     private float currentHealth;
-    [SerializeField] private float movementSpeedHorizontal = 2f;
-    [SerializeField] private float movementSpeedVertical = 1f;
+    [SerializeField] private float movementSpeed = 2f;
+    [SerializeField] private float rotationSpeed = 1f;
     [SerializeField] private float flightMinHeight = 5f;
     [SerializeField] private GameObject deathExplosion;
     private Rigidbody rb;
 
     //FollowPath
     [SerializeField] private SplineContainer followSplineContainer;
-    private Spline followSpline=null;
+    private Spline followSpline = null;
     [SerializeField] private float playerDetectionRadius = 10f;
+
+
     //FollowPlayer
     [SerializeField] private GameObject missilePrefab;
     [SerializeField] private float missileFireStep = 0.2f;
     [SerializeField] private float missileFireDuration = 1f;
     [SerializeField] private float missileFireCooldown = 1f;
+    [SerializeField] private float playerDetectionRadiusFollowPlayer = 15f;
+    [SerializeField] private float movementLerpSpeed = 2f;
     private float missileFireStepTimer = 0f;
     private float missileFireTimer = 0f;
+    private float missileFireCooldownTimer = 0f;
+    private Vector3 playerPosition;
 
     //ReturnToPath
     [SerializeField] private float frontObstacleDetectionDistance = 5f;
     [SerializeField] private float frontObstacleSphereCastRadius = 1f;
+    [SerializeField] private LayerMask obstacleLayerMask;
 
 
     private Action On_Death;
@@ -51,57 +56,152 @@ public class HelicopterBotEnemy : MonoBehaviour, BaseEnemy, IHittable {
         state = State.FollowPath;
         currentHealth = maxHealth;
         followSpline = followSplineContainer.Spline;
-        rb= GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate() {
+        playerPosition = Player.CharacterInstance.playerBehaviourTree.modelTransform.position;
+        DecrementTimers();
         switch (state) {
             case State.FollowPath:
                 FollowPath();
                 break;
             case State.FollowPlayer:
+                FollowPlayer();
                 break;
             case State.ReturnToPath:
+                ReturnToPath();
                 break;
             default:
                 break;
         }
     }
 
+    private void DecrementTimers() {
+        if (missileFireStepTimer > 0f) {
+            missileFireStepTimer -= Time.fixedDeltaTime;
+        }
+        if (missileFireTimer > 0f) {
+            missileFireTimer -= Time.fixedDeltaTime;
+        }
+        if (missileFireCooldownTimer > 0f) {
+            missileFireCooldownTimer -= Time.fixedDeltaTime;
+            if (missileFireCooldownTimer <= 0f) {
+                missileFireTimer = missileFireDuration;
+            }
+        }
+
+    }
+
     void FollowPath() {
         if (followSpline.Count <= 0)
             return;
-        SplineUtility.GetNearestPoint(followSpline, followSplineContainer.transform.InverseTransformPoint(rb.position), out float3 nearestPointFloat, out float closestT);
-        Vector3 nearestPoint = new(nearestPointFloat.x,nearestPointFloat.y, nearestPointFloat.z);
-        //if (Vector3.SqrMagnitude(transform.position - nearestPoint) > 0.01f) {
-        //    state = State.ReturnToPath;
-        //    return;
-        //}
+        if (Vector3.SqrMagnitude(rb.position - playerPosition) <= playerDetectionRadius * playerDetectionRadius) {
+            state = State.FollowPlayer;
+            return;
+        }
+        SplineUtility.GetNearestPoint(followSpline, followSplineContainer.transform.InverseTransformPoint(rb.position), out float3 nearestPointFloat, out float closestT, resolution: 10, iterations: 5);
+        Vector3 nearestPoint = new(nearestPointFloat.x, nearestPointFloat.y, nearestPointFloat.z);
+        nearestPoint = followSplineContainer.transform.TransformPoint(nearestPoint);
+        float movementDistance = movementSpeed * Time.fixedDeltaTime;
+        if (Vector3.SqrMagnitude(transform.position - nearestPoint) >= movementDistance * movementDistance) {
+            state = State.ReturnToPath;
+            return;
+        }
         //Enemy is near spline
-        Vector3 splineTangent = followSpline.EvaluateTangent(closestT);
-        bool currentSplineDir = Vector3.Dot(transform.forward, splineTangent) > 0f;
-        //Move forward in the currentSplineDir by movementDistance/splineLength
-        float movementDistance = movementSpeedHorizontal * Time.fixedDeltaTime;
         float movementT = movementDistance / followSplineContainer.CalculateLength();
-        float newT = closestT;
-        if (currentSplineDir) {
-            newT -= movementT;
-        }
-        else {
-            newT += movementT;
-        }
+        float newT = closestT + movementT;
         newT = Mathf.Repeat(newT, 1f);
+        Vector3 splineTangent = followSpline.EvaluateTangent(newT);
         //Find point of newT
         Vector3 newPoint = followSpline.EvaluatePosition(newT);
         newPoint = followSplineContainer.transform.TransformPoint(newPoint);
         rb.MovePosition(newPoint);
-
-        if (!currentSplineDir) {
-            splineTangent *= -1f;
-        }
-        rb.MoveRotation(Quaternion.LookRotation(splineTangent));
+        rb.MoveRotation(Quaternion.Lerp(rb.rotation, Quaternion.LookRotation(splineTangent), Time.fixedDeltaTime * rotationSpeed));
     }
-  
+
+    void FollowPlayer() {
+        if (Vector3.SqrMagnitude(rb.position - playerPosition) >= playerDetectionRadiusFollowPlayer * playerDetectionRadiusFollowPlayer) {
+            state = State.ReturnToPath;
+            return;
+        }
+        //Move towards player horizontal position above flightMinHeight
+        Vector3 playerHorizontalPosition = new(playerPosition.x, rb.position.y, playerPosition.z);
+        Vector3 dirToPlayer = (playerHorizontalPosition - rb.position).normalized;
+        float movementDistance = movementSpeed * Time.fixedDeltaTime;
+        Vector3 newPoint = rb.position + dirToPlayer * movementDistance;
+
+        if (Physics.Raycast(newPoint + Vector3.up, Vector3.down, out RaycastHit hit, flightMinHeight + 1f, obstacleLayerMask)) {
+            newPoint.y = hit.point.y + flightMinHeight;
+        }
+        else {
+            newPoint.y = rb.position.y; //If no ground found, keep current height
+        }
+        rb.MovePosition(Vector3.Lerp(rb.position, newPoint, Time.fixedDeltaTime * movementLerpSpeed));
+        //Rotate towards player
+        Quaternion targetRotation = Quaternion.LookRotation(dirToPlayer);
+        rb.MoveRotation(Quaternion.Lerp(rb.rotation, targetRotation, Time.fixedDeltaTime * rotationSpeed));
+        //Fire missiles at player
+        if (missileFireCooldownTimer > 0f) {
+            return; //Wait for cooldown
+        }
+        else if (missileFireTimer > 0f) {
+            if (missileFireStepTimer <= 0f) {
+                missileFireStepTimer = missileFireStep;
+                if (missilePrefab != null) {
+                    GameObject missile = Instantiate(missilePrefab, rb.position, Quaternion.identity);
+                }
+            }
+        }
+        else {
+            missileFireCooldownTimer = missileFireCooldown;
+        }
+
+    }
+    void ReturnToPath() {
+        if (followSpline.Count <= 0)
+            return;
+        if (Vector3.SqrMagnitude(rb.position - playerPosition) <= playerDetectionRadius * playerDetectionRadius) {
+            state = State.FollowPlayer;
+            return;
+        }
+        if (Physics.SphereCast(rb.position, frontObstacleSphereCastRadius, transform.forward, out RaycastHit hit, frontObstacleDetectionDistance, obstacleLayerMask)) {
+            //Stop moving until spherecast can return a null hit
+            return;
+        }
+        SplineUtility.GetNearestPoint(followSpline, followSplineContainer.transform.InverseTransformPoint(rb.position), out float3 nearestPointFloat, out float closestT);
+        //If nearest point is close then return to FollowPath state
+        Vector3 nearestPoint = new(nearestPointFloat.x, nearestPointFloat.y, nearestPointFloat.z);
+        nearestPoint = followSplineContainer.transform.TransformPoint(nearestPoint);
+        float distanceToNearestPoint = Vector3.Distance(rb.position, nearestPoint);
+        float movementDistance = movementSpeed * Time.fixedDeltaTime;
+        if (distanceToNearestPoint < movementDistance) {
+            state = State.FollowPath;
+            return;
+        }
+        Vector3 splineTangent = followSpline.EvaluateTangent(closestT);
+        Vector3 dirToPoint = (nearestPoint - transform.position).normalized;
+
+        //Move towards nearest point on spline
+        Vector3 newPoint = rb.position + dirToPoint * movementDistance;
+        rb.MovePosition(newPoint);
+
+        //Rotate towards spline, if enemy is going to reach spline within 1 second then start rotating towards spline tangent
+        Quaternion targetRotation;
+        Quaternion splineRotation = Quaternion.LookRotation(splineTangent);
+        Quaternion dirToPointRotation = Quaternion.LookRotation(dirToPoint);
+        float timeToReachSpline = Vector3.Distance(rb.position, nearestPoint) / movementSpeed;
+        if (timeToReachSpline < 3f) {
+            //Lerp between dirToPoint and splineTangent based on normalized time to reach spline
+            timeToReachSpline = Mathf.Clamp01(timeToReachSpline / 3f);
+            targetRotation = Quaternion.Lerp(dirToPointRotation, splineRotation, 1f - timeToReachSpline);
+        }
+        else {
+            targetRotation = dirToPointRotation;
+        }
+        rb.MoveRotation(Quaternion.Lerp(rb.rotation, targetRotation, Time.fixedDeltaTime * rotationSpeed));
+    }
+
     void IHittable.DoHit(int damage) {
         currentHealth -= damage;
         OnHit?.Invoke();
@@ -122,5 +222,6 @@ public class HelicopterBotEnemy : MonoBehaviour, BaseEnemy, IHittable {
         return HittableType.Enemy;
     }
 
- 
+
+
 }

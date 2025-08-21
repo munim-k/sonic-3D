@@ -43,9 +43,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3539146807799413256}
   serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 10000000
+  m_Drag: 1000
+  m_AngularDrag: 0.051
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -75,18 +75,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 40
-  movementSpeedHorizontal: 2
-  movementSpeedVertical: 1
+  movementSpeed: 10
+  rotationSpeed: 2
   flightMinHeight: 5
-  deathExplosion: {fileID: 0}
-  followSplineComponent: {fileID: 0}
-  playerDetectionRadius: 10
-  missilePrefab: {fileID: 0}
-  missileFireStep: 0.2
+  deathExplosion: {fileID: 1017516033835209097, guid: 88ad9f77a3a90c34690ba0a98cd8a29f, type: 3}
+  followSplineContainer: {fileID: 0}
+  playerDetectionRadius: 20
+  missilePrefab: {fileID: 6630216056138673301, guid: 4e6e6b3966360554ea9ee29aad683ff4, type: 3}
+  missileFireStep: 0.4
   missileFireDuration: 1
   missileFireCooldown: 1
+  playerDetectionRadiusFollowPlayer: 35
+  movementLerpSpeed: 2
   frontObstacleDetectionDistance: 5
   frontObstacleSphereCastRadius: 1
+  obstacleLayerMask:
+    serializedVersion: 2
+    m_Bits: 1600
 --- !u!135 &605896856574663113
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -208,8 +213,38 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9ce5ade1f18b9c149b4a4cee36c24fa5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1588327234332418447}
   m_SourcePrefab: {fileID: 100100000, guid: 9ce5ade1f18b9c149b4a4cee36c24fa5, type: 3}
+--- !u!1 &8187314016009230556 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9ce5ade1f18b9c149b4a4cee36c24fa5, type: 3}
+  m_PrefabInstance: {fileID: 9033736422082979213}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1588327234332418447
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8187314016009230556}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 436cc1d7d416b37429bceb731a402efd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &8850978532738646630 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9ce5ade1f18b9c149b4a4cee36c24fa5, type: 3}
