@@ -17,6 +17,8 @@ public class ShooterBotEnemy : MonoBehaviour, BaseEnemy, IHittable {
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform firePoint;
 
+
+    [SerializeField] private GameObject deathExplosion;
     public Action OnAttack;
     public Action<State> OnStateChange;
     private Action OnHit;
@@ -103,17 +105,23 @@ public class ShooterBotEnemy : MonoBehaviour, BaseEnemy, IHittable {
         health -= damage;
         OnHit?.Invoke();
         if (health <= 0) {
-            OnDeath?.Invoke();
-            //Turn off the collider on this gameObject
-            Collider col = this.GetComponent<Collider>();
-            if (col != null) {
-                col.enabled = false;
-            }
-            state = State.Dead;
-            OnStateChange?.Invoke(state);
+            StartDeath();
+        }
+    }
+    private void StartDeath() {
+        OnDeath?.Invoke();
+        state = State.Dead;
+        OnStateChange?.Invoke(state);
+        if (deathExplosion != null) {
+            Instantiate(deathExplosion, transform.position, Quaternion.identity);
         }
     }
 
+    public void EndDeath() {
+        //This is called by the animation event handler when the death animation ends
+        Destroy(gameObject);
+
+    }
     HittableType IHittable.GetType() {
         return HittableType.Enemy;
     }

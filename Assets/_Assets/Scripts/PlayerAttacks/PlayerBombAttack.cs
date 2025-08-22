@@ -35,6 +35,17 @@ public class PlayerBombAttack : MonoBehaviour {
         LayerMask mask = ~excludeLayers;
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange, mask);
         foreach (Collider hitCollider in hitColliders) {
+            //Do a raycast from the bomb to the enemy to check if there are no obstacles
+            Vector3 direction = hitCollider.transform.position - transform.position;
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, direction.normalized, out hit, attackRange, mask)) {
+                //If the raycast hit the enemy, we can damage it
+                if (hit.collider != hitCollider) {
+                    continue; // If the raycast hit something else, skip this collider
+                }
+            } else {
+                continue; // If the raycast didn't hit anything, skip this collider
+            }
             IHittable enemy = hitCollider.GetComponent<IHittable>();
             if (enemy != null && !enemiesAttacked.Contains(enemy)) {
                 enemy.DoHit(damage);

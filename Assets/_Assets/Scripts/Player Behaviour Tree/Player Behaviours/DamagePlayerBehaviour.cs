@@ -80,5 +80,15 @@ namespace RagdollEngine {
             }
             return false;
         }
+
+
+        public void DoDamage(int damage) {
+            currentHealth-=damage;
+            // Check if the player has no health left
+            if (currentHealth <= 0) {
+                character.Respawn(); // Respawn the player if health is depleted
+            }
+            onDamage?.Invoke(currentHealth, maxHealth); // Invoke the damage event
+        }
     }
 }

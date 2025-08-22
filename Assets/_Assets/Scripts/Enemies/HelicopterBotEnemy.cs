@@ -207,9 +207,9 @@ public class HelicopterBotEnemy : MonoBehaviour, BaseEnemy, IHittable {
 
     void IHittable.DoHit(int damage) {
         currentHealth -= damage;
-        OnHit?.Invoke();
+        On_Hit?.Invoke();
         if (currentHealth <= 0) {
-            OnDeath?.Invoke();
+            On_Death?.Invoke();
             if (deathExplosion != null) {
                 Instantiate(deathExplosion, transform.position, Quaternion.identity);
             }
