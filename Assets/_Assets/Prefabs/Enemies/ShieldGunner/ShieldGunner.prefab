@@ -50,6 +50,7 @@ MonoBehaviour:
   shieldGunnerGunTransform: {fileID: 7845794084690839664}
   meshGunTransform: {fileID: 3035498032193611978}
   muzzleAnimator: {fileID: 67168242598140295}
+  bulletTrailsPSPrefab: {fileID: -7750538726151241372, guid: efffb9889a4c2ee4aa342c8345040c8b, type: 3}
 --- !u!1 &4118955168188671961
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,7 +93,7 @@ GameObject:
   - component: {fileID: 1656199299052146280}
   - component: {fileID: 3648760866511193161}
   m_Layer: 0
-  m_Name: FrontShield
+  m_Name: FrontShieldCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

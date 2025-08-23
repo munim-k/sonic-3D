@@ -38,7 +38,7 @@ public class PlayerBombAttack : MonoBehaviour {
             //Do a raycast from the bomb to the enemy to check if there are no obstacles
             Vector3 direction = hitCollider.transform.position - transform.position;
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, direction.normalized, out hit, attackRange, mask)) {
+            if (Physics.Raycast(transform.position, direction.normalized, out hit, attackRange, mask, QueryTriggerInteraction.Ignore)) {
                 //If the raycast hit the enemy, we can damage it
                 if (hit.collider != hitCollider) {
                     continue; // If the raycast hit something else, skip this collider

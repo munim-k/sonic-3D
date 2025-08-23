@@ -41,6 +41,7 @@ public class ShieldGunnerEnemy : MonoBehaviour, BaseEnemy, IHittable {
     private Action On_Hit;
 
     public Action<State> OnStateChange;
+    public Action<Vector3,Vector3> OnShotFired;
     public Action<bool> FiringStateChange;
     Action BaseEnemy.OnDeath { get => On_Death; set => On_Death = value; }
     Action IHittable.OnHit { get => On_Hit; set => On_Hit = value; }
@@ -48,6 +49,7 @@ public class ShieldGunnerEnemy : MonoBehaviour, BaseEnemy, IHittable {
     private void Awake() {
         state = State.Idle;
         currentHealth = maxHealth;
+        bulletTimer = bulletStep;
     }
 
 
@@ -119,9 +121,10 @@ public class ShieldGunnerEnemy : MonoBehaviour, BaseEnemy, IHittable {
         }
         if (angle < maxFiringAngle) {
             Vector3 shotOrigin = gunTransform.position + gunTransform.forward * 2;
-            Debug.DrawLine(shotOrigin, gunTransform.position + gunTransform.forward * 100f, Color.red, bulletStep);
-            if (Physics.Raycast(shotOrigin, gunTransform.forward, out RaycastHit hit, Mathf.Infinity, ~raycastLayersToAvoid, QueryTriggerInteraction.Ignore)) {
+            float shotDistance = detectionRange;
+            if (Physics.Raycast(shotOrigin, gunTransform.forward, out RaycastHit hit, detectionRange, ~raycastLayersToAvoid, QueryTriggerInteraction.Ignore)) {
                 //Bullet hits something
+                shotDistance = hit.distance;
                 if (((1 << hit.collider.gameObject.layer) & playerLayer) != 0) {
                     //Hit object is on player layer
                     if (playerDamageBehaviour == null) {
@@ -134,6 +137,8 @@ public class ShieldGunnerEnemy : MonoBehaviour, BaseEnemy, IHittable {
                     playerDamageBehaviour.DoDamage(bulletDamage);
                 }
             }
+            Debug.DrawLine(shotOrigin, gunTransform.position + gunTransform.forward * shotDistance, Color.red, bulletStep);
+            OnShotFired?.Invoke(shotOrigin, gunTransform.forward * shotDistance);
         }
     }
 
