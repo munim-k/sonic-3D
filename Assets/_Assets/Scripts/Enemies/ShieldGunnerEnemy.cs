@@ -20,6 +20,7 @@ public class ShieldGunnerEnemy : MonoBehaviour, BaseEnemy, IHittable {
     [SerializeField] private Transform gunTransform;
     [SerializeField] private LayerMask raycastLayersToAvoid;
     [SerializeField] private LayerMask playerLayer;
+    [SerializeField] private float sphereCastRadius = 0.5f;
     [SerializeField] private float bulletStep = 0.5f;
     [SerializeField] private int bulletDamage = 1;
     [SerializeField] private float rotationSpeed = 2f;
@@ -122,7 +123,7 @@ public class ShieldGunnerEnemy : MonoBehaviour, BaseEnemy, IHittable {
         if (angle < maxFiringAngle) {
             Vector3 shotOrigin = gunTransform.position + gunTransform.forward * 2;
             float shotDistance = detectionRange;
-            if (Physics.Raycast(shotOrigin, gunTransform.forward, out RaycastHit hit, detectionRange, ~raycastLayersToAvoid, QueryTriggerInteraction.Ignore)) {
+            if (Physics.SphereCast(shotOrigin,sphereCastRadius, gunTransform.forward, out RaycastHit hit, detectionRange, ~raycastLayersToAvoid, QueryTriggerInteraction.Ignore)) {
                 //Bullet hits something
                 shotDistance = hit.distance;
                 if (((1 << hit.collider.gameObject.layer) & playerLayer) != 0) {

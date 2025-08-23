@@ -214,12 +214,13 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
-  bulletStep: 1
+  sphereCastRadius: 0.5
+  bulletStep: 0.1
   bulletDamage: 1
   rotationSpeed: 2
   fastRotationAngle: 90
   rotationSlowFactor: 0.2
-  gunRotationSpeed: 3
+  gunRotationSpeed: 4
   maxFiringAngle: 40
 --- !u!1001 &352568135484136069
 PrefabInstance:
