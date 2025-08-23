@@ -220,7 +220,7 @@ MonoBehaviour:
   rotationSpeed: 2
   fastRotationAngle: 90
   rotationSlowFactor: 0.2
-  gunRotationSpeed: 4
+  gunRotationSpeed: 3
   maxFiringAngle: 40
 --- !u!1001 &352568135484136069
 PrefabInstance:
