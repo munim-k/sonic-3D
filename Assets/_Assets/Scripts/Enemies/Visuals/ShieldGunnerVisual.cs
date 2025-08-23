@@ -105,4 +105,10 @@ public class ShieldGunnerVisual : MonoBehaviour {
 
         }
     }
+
+    private void OnDestroy() {
+        if (bulletTrailsPS != null) {
+            Destroy(bulletTrailsPS.gameObject);
+        }
+    }
 }

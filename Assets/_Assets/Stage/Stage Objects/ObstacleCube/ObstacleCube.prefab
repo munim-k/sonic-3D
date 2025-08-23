@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 248635070347570167}
   - component: {fileID: 3962217232375979461}
   - component: {fileID: 2016258826188913379}
-  m_Layer: 9
+  m_Layer: 14
   m_Name: ObstacleCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

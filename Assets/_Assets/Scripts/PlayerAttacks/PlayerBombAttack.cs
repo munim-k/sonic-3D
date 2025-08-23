@@ -7,6 +7,7 @@ public class PlayerBombAttack : MonoBehaviour {
     [SerializeField] private float bombTime = 1f;
     [SerializeField] private LayerMask excludeLayers;
     [SerializeField] private GameObject bombParticles;
+    private Vector3 hitNormal= Vector3.zero;
 
     private float bombTimer;
     private bool explode = false;
@@ -27,6 +28,7 @@ public class PlayerBombAttack : MonoBehaviour {
 
     public void OnCollisionEnter(Collision collision) {
         explode = true;
+        hitNormal = collision.GetContact(0).normal.normalized;
     }
 
 
@@ -38,7 +40,7 @@ public class PlayerBombAttack : MonoBehaviour {
             //Do a raycast from the bomb to the enemy to check if there are no obstacles
             Vector3 direction = hitCollider.transform.position - transform.position;
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, direction.normalized, out hit, attackRange, mask, QueryTriggerInteraction.Ignore)) {
+            if (Physics.Raycast(transform.position + hitNormal* 0.1f , direction.normalized, out hit, attackRange, mask, QueryTriggerInteraction.Ignore)) {
                 //If the raycast hit the enemy, we can damage it
                 if (hit.collider != hitCollider) {
                     continue; // If the raycast hit something else, skip this collider
