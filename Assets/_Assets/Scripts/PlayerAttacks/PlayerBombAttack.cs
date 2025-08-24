@@ -10,7 +10,7 @@ public class PlayerBombAttack : MonoBehaviour {
     private Vector3 hitNormal = Vector3.zero;
 
     private float bombTimer;
-    private bool explode = false;
+    private bool exploded = false;
     private List<IHittable> enemiesAttacked;
     public void Start() {
         enemiesAttacked = new List<IHittable>();
@@ -18,40 +18,54 @@ public class PlayerBombAttack : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        if (bombTimer > 0 && !explode) {
+        if (bombTimer > 0) {
             bombTimer -= Time.fixedDeltaTime;
         }
-        else {
+        else if(!exploded) {
             Explode();
         }
     }
 
     public void OnCollisionEnter(Collision collision) {
-        explode = true;
         hitNormal = collision.GetContact(0).normal.normalized;
+        Explode();
     }
 
 
     private void Explode() {
+        exploded = true;
         //Check all layers except exclude layers
         LayerMask mask = ~excludeLayers;
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange, mask);
+        Collider[] insideColliders= Physics.OverlapSphere(transform.position, 0.05f, mask);
         foreach (Collider hitCollider in hitColliders) {
-            print($"Hit {hitCollider.name}");
             //Do a raycast from the bomb to the enemy to check if there are no obstacles
-            Vector3 direction = hitCollider.transform.position - transform.position;
+            Vector3 originPos = transform.position + hitNormal*0.1f;
+            Vector3 direction = hitCollider.transform.position - originPos;
             direction.Normalize();
             RaycastHit hit;
-            if (Physics.Raycast(transform.position + direction * 0.1f, direction, out hit, attackRange, mask, QueryTriggerInteraction.Ignore)) {
+            bool skip = false;
+            if (Physics.Raycast(originPos, direction, out hit, attackRange, mask, QueryTriggerInteraction.Ignore)) {
                 //If the raycast hit the enemy, we can damage it
                 if (hit.collider != hitCollider) {
-                    continue; // If the raycast hit something else, skip this collider
+                    skip=true;
                 }
             }
             else {
-                continue; // If the raycast didn't hit anything, skip this collider
+             skip=true;
             }
-            print($"Raycast hit {hit.collider.name}");
+            if (skip) {
+                //But if the enemy is very close to the bomb, raycast may have started inside them, we can still damage it
+                foreach (Collider insideCollider in insideColliders) {
+                    if (insideCollider == hitCollider) {
+                        skip = false;
+                        break;
+                    }
+                }
+            }
+            if (skip) {
+                continue;
+            }
             IHittable enemy = hitCollider.GetComponent<IHittable>();
             if (enemy != null && !enemiesAttacked.Contains(enemy)) {
                 enemy.DoHit(damage);

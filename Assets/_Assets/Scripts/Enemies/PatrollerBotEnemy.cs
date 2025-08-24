@@ -37,6 +37,7 @@ public class PatrollerBotEnemy : MonoBehaviour, BaseEnemy, IHittable {
         currentHealth= maxHealth;
         rb = GetComponent<Rigidbody>();
         state = State.Moving;
+        OnStateChange?.Invoke(state);
     }
     private void FixedUpdate() {
         switch (state) {
@@ -56,13 +57,13 @@ public class PatrollerBotEnemy : MonoBehaviour, BaseEnemy, IHittable {
         Vector3 downwardsRayOrigin = transform.position + transform.rotation* downwardsRayOffset;
         Debug.DrawRay(forwardRayOrigin, transform.forward * forwardRayDistance, Color.red);
         if (Physics.SphereCast(forwardRayOrigin, forwardRayRadius,transform.forward, out RaycastHit forwardHit, forwardRayDistance, ~raycastLayersToAvoid, QueryTriggerInteraction.Ignore)) {
-            //print($"Forward hit: {forwardHit.collider.gameObject.name}");
+          //  print($"Forward hit: {forwardHit.collider.gameObject.name}");
             TransitionToTurning();
             return;
         }
         Debug.DrawRay(downwardsRayOrigin, Vector3.down * downwardsRayDistance, Color.blue);
         if (!Physics.SphereCast(downwardsRayOrigin, downwardsRayRadius, Vector3.down, out RaycastHit downwardsHit, downwardsRayDistance, ~raycastLayersToAvoid, QueryTriggerInteraction.Ignore)) {
-            //print("No ground detected");
+         //   print("No ground detected");
             TransitionToTurning();
             return;
         }

@@ -13,10 +13,12 @@ namespace RagdollEngine {
         private Vector3 rayOffset;
 
         public override bool Evaluate() {
-            //Check if player is colliding with an enemy, if so then apply damage to enemy and upward bounce force
+            //Check if player is colliding with an enemy while having downward velocity, if so then apply damage to enemy and upward bounce force
             rayOffset = new Vector3(0, rayVerticalOffset, 0); // Offset to avoid hitting the player itself
             rayOffset += playerTransform.position;
-
+            if(RB.linearVelocity.y >= 0) {
+                return false; // Only check for bounce attack when moving downwards
+            }
             if (Physics.SphereCast(rayOffset, downwardsSphereCastRadius, Vector3.down, out RaycastHit hit, downwardsRayDistance, enemyLayerMask, QueryTriggerInteraction.Ignore)) {
                 if (hit.collider.gameObject != null) {
                     BaseEnemy enemy = hit.collider.gameObject.GetComponent<BaseEnemy>();

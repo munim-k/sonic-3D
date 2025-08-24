@@ -18287,7 +18287,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3603435981005501466, guid: 80462b17fdce65545bb25adf72b4ade1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 16.4
+      value: -62.9
       objectReference: {fileID: 0}
     - target: {fileID: 3603435981005501466, guid: 80462b17fdce65545bb25adf72b4ade1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -18546,6 +18546,10 @@ PrefabInstance:
     - target: {fileID: 5251489677202233127, guid: ab2015bc5ca8aa042bd0d2c68b8a5d6a, type: 3}
       propertyPath: m_Name
       value: SquasherBotEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5251489677202233127, guid: ab2015bc5ca8aa042bd0d2c68b8a5d6a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6866444370611277096, guid: ab2015bc5ca8aa042bd0d2c68b8a5d6a, type: 3}
       propertyPath: m_LocalPosition.x

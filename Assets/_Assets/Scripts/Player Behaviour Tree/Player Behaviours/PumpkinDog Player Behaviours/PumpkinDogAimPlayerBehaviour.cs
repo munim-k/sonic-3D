@@ -39,6 +39,9 @@ namespace RagdollEngine {
                 //Reset the move velocity to the models forward direction
                 moveVelocity = Vector3.ProjectOnPlane(modelTransform.forward, plane);
             }
+            if (cooldownTimer > 0) {
+                cooldownTimer -= Time.deltaTime;
+            }
             return aiming;
         }
 
@@ -50,10 +53,6 @@ namespace RagdollEngine {
                 FireProjectile();
                 cooldownTimer = cooldown;
             }
-            if (cooldownTimer > 0) {
-                cooldownTimer -= Time.deltaTime;
-            }
-
         }
 
 
