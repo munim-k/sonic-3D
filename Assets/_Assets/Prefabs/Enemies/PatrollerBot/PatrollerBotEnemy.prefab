@@ -97,8 +97,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  deathExplosion: {fileID: 0}
-  moveSpeed: 10
+  deathExplosion: {fileID: 1017516033835209097, guid: 88ad9f77a3a90c34690ba0a98cd8a29f, type: 3}
+  moveSpeed: 25
   forwardRayDistance: 4
   forwardRayRadius: 1
   forwardRayOffset: {x: 0, y: 1.5, z: 0}

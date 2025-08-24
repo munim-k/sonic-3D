@@ -7,7 +7,7 @@ public class PlayerBombAttack : MonoBehaviour {
     [SerializeField] private float bombTime = 1f;
     [SerializeField] private LayerMask excludeLayers;
     [SerializeField] private GameObject bombParticles;
-    private Vector3 hitNormal= Vector3.zero;
+    private Vector3 hitNormal = Vector3.zero;
 
     private float bombTimer;
     private bool explode = false;
@@ -37,17 +37,21 @@ public class PlayerBombAttack : MonoBehaviour {
         LayerMask mask = ~excludeLayers;
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange, mask);
         foreach (Collider hitCollider in hitColliders) {
+            print($"Hit {hitCollider.name}");
             //Do a raycast from the bomb to the enemy to check if there are no obstacles
             Vector3 direction = hitCollider.transform.position - transform.position;
+            direction.Normalize();
             RaycastHit hit;
-            if (Physics.Raycast(transform.position + hitNormal* 0.1f , direction.normalized, out hit, attackRange, mask, QueryTriggerInteraction.Ignore)) {
+            if (Physics.Raycast(transform.position + direction * 0.1f, direction, out hit, attackRange, mask, QueryTriggerInteraction.Ignore)) {
                 //If the raycast hit the enemy, we can damage it
                 if (hit.collider != hitCollider) {
                     continue; // If the raycast hit something else, skip this collider
                 }
-            } else {
+            }
+            else {
                 continue; // If the raycast didn't hit anything, skip this collider
             }
+            print($"Raycast hit {hit.collider.name}");
             IHittable enemy = hitCollider.GetComponent<IHittable>();
             if (enemy != null && !enemiesAttacked.Contains(enemy)) {
                 enemy.DoHit(damage);

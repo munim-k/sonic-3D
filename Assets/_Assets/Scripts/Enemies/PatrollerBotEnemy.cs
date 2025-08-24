@@ -103,6 +103,11 @@ public class PatrollerBotEnemy : MonoBehaviour, BaseEnemy, IHittable {
             }
             Destroy(gameObject);
         }
+        else {
+            if (state == State.Moving) {
+                TransitionToTurning();
+            }
+        }
     }
 
     float BaseEnemy.GetHealthNormalized() {
