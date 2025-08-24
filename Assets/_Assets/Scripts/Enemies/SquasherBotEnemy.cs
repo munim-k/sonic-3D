@@ -40,7 +40,7 @@ public class SquasherBotEnemy : MonoBehaviour, BaseEnemy, IHittable {
     [SerializeField] private float riseTime = 0.1f;
     private float riseTimer = 0f;
 
-
+    private Vector3 raycastHitPos;
 
     private Rigidbody rb;
     private void Start() {
@@ -83,10 +83,10 @@ public class SquasherBotEnemy : MonoBehaviour, BaseEnemy, IHittable {
             //If player detected then do a linecast to see if there is anything in the way
             if (!Physics.Linecast(rb.position, hitInfo.point, ~layersToExclude, QueryTriggerInteraction.Ignore)) {
                 //If nothing in the way then do another spherecast to find the ground
-                float descendDistance = hitInfo.distance + descendOffset; 
+                float descendDistance = hitInfo.distance + descendOffset;
                 if (Physics.SphereCast(rb.position, sphereCastRadius, transform.rotation * Vector3.down, out hitInfo, Mathf.Infinity, ~layersToExclude & ~playerLayer, QueryTriggerInteraction.Ignore)) {
                     //If ground found then set descend distance to ground distance
-                    descendDistance = hitInfo.distance + descendOffset;
+                    descendDistance = Vector3.Distance(rb.position,hitInfo.point) + descendOffset;
                 }
                 //Start squashing
                 state = State.Squashing;
@@ -150,5 +150,6 @@ public class SquasherBotEnemy : MonoBehaviour, BaseEnemy, IHittable {
     HittableType IHittable.GetType() {
         return HittableType.Enemy;
     }
+
 
 }

@@ -106,7 +106,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 9728
   descendTime: 0.1
-  descendOffset: -0.6
+  descendOffset: -3.8
   squashedTime: 1
   riseTime: 1
 --- !u!1 &1881911286069316055

@@ -18549,7 +18549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5251489677202233127, guid: ab2015bc5ca8aa042bd0d2c68b8a5d6a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6866444370611277096, guid: ab2015bc5ca8aa042bd0d2c68b8a5d6a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18607,6 +18607,10 @@ PrefabInstance:
     - target: {fileID: 3632147719380997662, guid: 630de98b2ef2b074992b5b8009a08299, type: 3}
       propertyPath: m_Name
       value: PatrollerBotEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632147719380997662, guid: 630de98b2ef2b074992b5b8009a08299, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4257087936518517674, guid: 630de98b2ef2b074992b5b8009a08299, type: 3}
       propertyPath: m_LocalPosition.x
