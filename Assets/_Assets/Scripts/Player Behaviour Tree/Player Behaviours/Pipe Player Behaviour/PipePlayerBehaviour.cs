@@ -9,6 +9,7 @@ namespace RagdollEngine {
         [SerializeField] private float slideSpeed = 5f;
         [SerializeField] private float detectionRadius = 5f;
         [SerializeField] private float endMargin = 0.1f;
+        [SerializeField] private float lateralMovementCap = 0.1f;
         [SerializeField] private float lateralMoveSpeed = 2f;
         [SerializeField] private float immunityTime = 0.5f;
         [SerializeField] private float verticalOffset = 0.5f;
@@ -120,7 +121,10 @@ namespace RagdollEngine {
             float inputX = inputHandler.slideMove.value * (direction ? -1f : 1f);
             if (inputHandler.slideMove.hold) {
                 lateralOffset += inputX * lateralMoveSpeed * currentPipe.LateralSpeed * Time.fixedDeltaTime;
-                lateralOffset = Mathf.Clamp(lateralOffset, 0f, 1f);
+                if (lateralMovementCap > 0.5f) {
+                    lateralMovementCap = 0.49f;
+                }
+                lateralOffset = Mathf.Clamp(lateralOffset, 0f + lateralMovementCap, 1f - lateralMovementCap);
             }
 
             Vector3 main_Position = SplineUtility.EvaluatePosition(currentPipe.splineContainer.Spline, currentT1);

@@ -145,7 +145,6 @@ GameObject:
   - component: {fileID: 1865954479783432352}
   - component: {fileID: 5447475483090649252}
   - component: {fileID: 3750507940904116840}
-  - component: {fileID: 2212778335252575216}
   - component: {fileID: 6344706830438462894}
   - component: {fileID: 9065594014320927967}
   m_Layer: 15
@@ -346,28 +345,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 2df769aae8f3ae04cbe0b6f908aae71b, type: 2}
---- !u!114 &2212778335252575216
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4802183958730458771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98672a8e08f92014e8942acba8b46a1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectToPlace: {fileID: 1022997597482263924, guid: de07c7f9de466ad408237c7e53c7a79a, type: 3}
-  numberOfObjects: 10
-  alignRotation: 1
-  verticalOffsetFollowsCurve: 0
-  verticalOffset: 0.24
-  horizontalOffset: -0.42
-  zOffset: 0
-  placementStart: 0
-  placementEnd: 1
-  useClosedSpline: 0
 --- !u!114 &6344706830438462894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,6 +393,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   splineContainer: {fileID: 1962405758014194057}
   profileSplineContainer: {fileID: 2535645470300682933}
-  speedMultiplier: 1
+  speedMultiplier: 5
   profileScale: 15
-  lateralSpeed: 0.2
+  lateralSpeed: 0.5
