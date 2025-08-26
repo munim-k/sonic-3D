@@ -55,8 +55,14 @@ public class HelicopterBotEnemy : MonoBehaviour, BaseEnemy, IHittable {
     void Awake() {
         state = State.FollowPath;
         currentHealth = maxHealth;
-        followSpline = followSplineContainer.Spline;
-        rb = GetComponent<Rigidbody>();
+        if (followSplineContainer != null) {
+
+            followSpline = followSplineContainer.Spline;
+        }
+        else {
+            Debug.LogError($"Helicopter {gameObject.name} Spline not assigned");
+        }
+            rb = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate() {
