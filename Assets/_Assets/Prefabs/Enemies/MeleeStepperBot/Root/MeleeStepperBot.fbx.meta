@@ -1,0 +1,464 @@
+fileFormatVersion: 2
+guid: 255043de724130f478690db61d76bf99
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable: []
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: MeleeBotArmature|_ArmReadyBaked
+      takeName: MeleeBotArmature|_ArmReadyBaked
+      internalID: -4319607643696102417
+      firstFrame: 0
+      lastFrame: 19
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: MeleeBotArmature|_IdleBaked
+      takeName: MeleeBotArmature|_IdleBaked
+      internalID: 541138264559849460
+      firstFrame: 0
+      lastFrame: 52
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: MeleeBotArmature|_SwingBaked
+      takeName: MeleeBotArmature|_SwingBaked
+      internalID: 2332026059669400351
+      firstFrame: 0
+      lastFrame: 19
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: MeleeBotArmature|_WalkForwardBaked
+      takeName: MeleeBotArmature|_WalkForwardBaked
+      internalID: -3510529466927055685
+      firstFrame: 0
+      lastFrame: 12
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: MeleeBotArmature|ArmReadyBase
+      takeName: MeleeBotArmature|ArmReadyBase
+      internalID: 1425631500011754450
+      firstFrame: 0
+      lastFrame: 19
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: MeleeBotArmature|IdleBase
+      takeName: MeleeBotArmature|IdleBase
+      internalID: 8971080915568587829
+      firstFrame: 0
+      lastFrame: 51
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: MeleeBotArmature|SwingBase
+      takeName: MeleeBotArmature|SwingBase
+      internalID: 2132641710577708036
+      firstFrame: 0
+      lastFrame: 19
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: MeleeBotArmature|WalkForwardBase
+      takeName: MeleeBotArmature|WalkForwardBase
+      internalID: -6345625016359685601
+      firstFrame: 0
+      lastFrame: 12
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton:
+    - name: MeleeStepperBot(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: MeleeBot
+      parentName: MeleeStepperBot(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: MeleeBotArmature
+      parentName: MeleeStepperBot(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Root
+      parentName: MeleeBotArmature
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.748528, y: 0, z: -0, w: 0.66310316}
+      scale: {x: 1, y: 0.99999994, z: 1}
+    - name: ElbowIKTarget.R
+      parentName: Root
+      position: {x: 1.9342504, y: 1.6299951, z: 2.9242444}
+      rotation: {x: 0.1755669, y: 0.6394389, z: 0.7218151, w: -0.19818449}
+      scale: {x: 1, y: 1, z: 1}
+    - name: FootIK.L
+      parentName: Root
+      position: {x: -0.6400731, y: 0.83831924, z: 0.73399127}
+      rotation: {x: 0.99817395, y: 0, z: 0, w: -0.060404714}
+      scale: {x: 1, y: 0.99999255, z: 0.99999994}
+    - name: Foot.L
+      parentName: FootIK.L
+      position: {x: 0.000000059604645, y: -0.0000000864801, z: 0.00000007363218}
+      rotation: {x: 4.1655923e-10, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: FootIK.R
+      parentName: Root
+      position: {x: 0.6400731, y: -0.04658276, z: 0.62649786}
+      rotation: {x: 0.99817395, y: 0, z: 0, w: -0.060404714}
+      scale: {x: 1, y: 0.99999255, z: 0.99999994}
+    - name: Foot.R
+      parentName: FootIK.R
+      position: {x: -0.000000059604645, y: -0.0000000026610607, z: 0.00000008471444}
+      rotation: {x: 4.1655923e-10, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: HandIK.L
+      parentName: Root
+      position: {x: -1.0078632, y: -1.4245602, z: 3.808929}
+      rotation: {x: 0.3194375, y: 0.5594756, z: -0.12315693, w: 0.7548372}
+      scale: {x: 0.9999999, y: 1.0000001, z: 1.0000001}
+    - name: Hand.L
+      parentName: HandIK.L
+      position: {x: 0.0000006519258, y: -0.000000059604645, z: -0.00000011920929}
+      rotation: {x: -0.0000000102445465, y: -0.000000013038516, z: 0.00000016391277, w: 1}
+      scale: {x: 0.99999994, y: 0.9999999, z: 1.0000001}
+    - name: HandIK.R
+      parentName: Root
+      position: {x: 0.86710334, y: -1.8166018, z: 3.594802}
+      rotation: {x: 0.051674433, y: -0.52929866, z: 0.23501459, w: 0.81359744}
+      scale: {x: 0.9999999, y: 1.0000002, z: 1.0000004}
+    - name: Hand.R
+      parentName: HandIK.R
+      position: {x: 0.00000011920929, y: 0.00000047683716, z: -0.0000004172325}
+      rotation: {x: -0.000000014901161, y: 0.000000037252903, z: -0.00000017881393, w: 1}
+      scale: {x: 1.0000001, y: 0.9999999, z: 1}
+    - name: Torso
+      parentName: Root
+      position: {x: -0, y: 0.06309089, z: 2.4868886}
+      rotation: {x: 0.08371174, y: -0.016475987, z: -0.015048546, w: 0.99624014}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Torso.001
+      parentName: Torso
+      position: {x: 9.313226e-10, y: -0.000000047206413, z: 1.0073509}
+      rotation: {x: 0.03371801, y: 0.009926172, z: 0.007280436, w: 0.9993556}
+      scale: {x: 0.9999997, y: 0.9999997, z: 0.9999997}
+    - name: Neck
+      parentName: Torso.001
+      position: {x: 0.0000000069849193, y: 0.000000010593794, z: 0.78324133}
+      rotation: {x: -0.022520736, y: -0.00093909836, z: -0.015073394, w: 0.9996323}
+      scale: {x: 0.9999999, y: 0.99999976, z: 0.99999994}
+    - name: Head
+      parentName: Neck
+      position: {x: 0.000000003259629, y: -0.00000007357448, z: 0.26101518}
+      rotation: {x: 0.016719121, y: 0.0125929685, z: 0.015828473, w: 0.9996556}
+      scale: {x: 1.0000001, y: 1.0000001, z: 0.9999999}
+    - name: UpperArm.L
+      parentName: Torso.001
+      position: {x: -1.0447255, y: -0.04912547, z: 0.35649943}
+      rotation: {x: 0.5536575, y: -0.57389367, z: -0.08420945, w: 0.59751016}
+      scale: {x: 0.999999, y: 0.9999999, z: 0.9999996}
+    - name: LowerArm.L
+      parentName: UpperArm.L
+      position: {x: -0.00000017881393, y: -0.00000062584877, z: 1.4616268}
+      rotation: {x: -0.45617124, y: 0.7876545, z: -0.2892255, w: 0.29640666}
+      scale: {x: 1.0000006, y: 1.000001, z: 0.99999946}
+    - name: UpperArm.R
+      parentName: Torso.001
+      position: {x: 1.0447261, y: -0.049125034, z: 0.35649875}
+      rotation: {x: 0.62176263, y: 0.55728716, z: 0.04160348, w: 0.54873616}
+      scale: {x: 0.999999, y: 0.9999998, z: 0.99999887}
+    - name: LowerArm.R
+      parentName: UpperArm.R
+      position: {x: -0.000000059604645, y: 0.000000022351742, z: 1.461627}
+      rotation: {x: 0.42009822, y: 0.72536826, z: -0.38083252, w: -0.39028835}
+      scale: {x: 1.0000001, y: 1, z: 0.99999934}
+    - name: UpperLeg.L
+      parentName: Torso
+      position: {x: -0.42022812, y: 0.016896538, z: 0.0073010353}
+      rotation: {x: 0.9944174, y: -0.0034082592, z: -0.089269705, w: -0.056153722}
+      scale: {x: 0.99999994, y: 1.0000002, z: 1}
+    - name: LowerLeg.L
+      parentName: UpperLeg.L
+      position: {x: -0.00000014994293, y: 0, z: 0.9973099}
+      rotation: {x: 0.12161556, y: 0.01611035, z: 0.02732807, w: 0.9920702}
+      scale: {x: 0.99999994, y: 1.0000001, z: 0.9999997}
+    - name: UpperLeg.R
+      parentName: Torso
+      position: {x: 0.4202281, y: 0.016896617, z: 0.0073014973}
+      rotation: {x: 0.97872156, y: 0.023606785, z: 0.056819305, w: 0.19575103}
+      scale: {x: 0.9999999, y: 1.0000001, z: 1.0000002}
+    - name: LowerLeg.R
+      parentName: UpperLeg.R
+      position: {x: 0.000000052445102, y: 0.00000010617077, z: 0.9973095}
+      rotation: {x: 0.17597377, y: -0.023311116, z: -0.027098754, w: 0.98374563}
+      scale: {x: 1.0000002, y: 1.0000004, z: 1.0000008}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: Root
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
