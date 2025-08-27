@@ -18757,7 +18757,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6344706830438462894, guid: ed148c5156fb81f4395fee26e6fc6c37, type: 3}
       propertyPath: m_FlipNormals
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6344706830438462894, guid: ed148c5156fb81f4395fee26e6fc6c37, type: 3}
       propertyPath: m_SegmentsPerUnit

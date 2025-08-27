@@ -25,6 +25,7 @@ namespace RagdollEngine {
         private float immunityTimer = 0f;
 
         private Vector3 previousPosition;
+        private Vector3 previousUpVector;
 
         public override bool Evaluate() {
             bool result = false;
@@ -61,7 +62,7 @@ namespace RagdollEngine {
             else {
                 if (inputHandler.jump.pressed) {
                     playerBehaviourTree.groundInformation.ground = false;
-                    jumpPlayerBehaviour.Jump(Vector3.up, true);
+                    jumpPlayerBehaviour.Jump(previousUpVector, true);
                     jumpAudioSource.Play();
                     currentPipe = null;
                     immunityTimer = immunityTime;
@@ -151,6 +152,8 @@ namespace RagdollEngine {
             //Invert this up vector
             mainProfile_Up = -mainProfile_Up;
             mainProfile_Up.Normalize();
+            world_Position += mainProfile_Up * verticalOffset;
+            previousUpVector = mainProfile_Up;
             //Invert the maintangent based on direction
             if (!direction)
                 main_Tangent = -main_Tangent;

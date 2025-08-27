@@ -1862,10 +1862,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 32768
   slideSpeed: 5
-  detectionRadius: 5
+  detectionRadius: 2
   endMargin: 0.1
+  lateralMovementCap: 0.1
   lateralMoveSpeed: 2
-  immunityTime: 0.5
+  immunityTime: 0.2
   verticalOffset: 0.5
   jumpPlayerBehaviour: {fileID: 3773458990709628176}
   jumpAudioSource: {fileID: 6494705532546526289}
