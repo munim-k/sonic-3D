@@ -12,7 +12,7 @@ public class PlayerBombAttack : MonoBehaviour {
     private float bombTimer;
     private bool exploded = false;
     private List<IHittable> enemiesAttacked;
-    public void Start() {
+    public void Awake() {
         enemiesAttacked = new List<IHittable>();
         bombTimer = bombTime;
     }
@@ -21,7 +21,7 @@ public class PlayerBombAttack : MonoBehaviour {
         if (bombTimer > 0) {
             bombTimer -= Time.fixedDeltaTime;
         }
-        else if(!exploded) {
+        else if (!exploded) {
             Explode();
         }
     }
@@ -37,10 +37,10 @@ public class PlayerBombAttack : MonoBehaviour {
         //Check all layers except exclude layers
         LayerMask mask = ~excludeLayers;
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange, mask);
-        Collider[] insideColliders= Physics.OverlapSphere(transform.position, 0.05f, mask);
+        Collider[] insideColliders = Physics.OverlapSphere(transform.position, 0.05f, mask);
         foreach (Collider hitCollider in hitColliders) {
             //Do a raycast from the bomb to the enemy to check if there are no obstacles
-            Vector3 originPos = transform.position + hitNormal*0.1f;
+            Vector3 originPos = transform.position + hitNormal * 0.1f;
             Vector3 direction = hitCollider.transform.position - originPos;
             direction.Normalize();
             RaycastHit hit;
@@ -48,11 +48,11 @@ public class PlayerBombAttack : MonoBehaviour {
             if (Physics.Raycast(originPos, direction, out hit, attackRange, mask, QueryTriggerInteraction.Ignore)) {
                 //If the raycast hit the enemy, we can damage it
                 if (hit.collider != hitCollider) {
-                    skip=true;
+                    skip = true;
                 }
             }
             else {
-             skip=true;
+                skip = true;
             }
             if (skip) {
                 //But if the enemy is very close to the bomb, raycast may have started inside them, we can still damage it

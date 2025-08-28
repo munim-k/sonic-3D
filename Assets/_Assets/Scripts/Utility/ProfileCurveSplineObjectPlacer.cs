@@ -19,9 +19,16 @@ public class ProfileCurveSplineObjectPlacer : MonoBehaviour {
     public float placementStart = 0f;
     [Range(0f, 1f)]
     public float placementEnd = 1f;
+    [Range(0f, 1f)]
+    public float placementAdd = 0f;
+    public bool placementAdditive = false;
 
     [Header("Spline Options")]
     public bool useClosedSpline = false;
+
+    [Header("Editor Visualization Color")]
+    public Color gizmoColor = Color.cyan;
+
 
     private SplineContainer splineContainer;
     private Spline spline;
@@ -60,6 +67,10 @@ public class ProfileCurveSplineObjectPlacer : MonoBehaviour {
 
         // Calculate placement parameters
         int placementCount = numberOfObjects;
+        float placementEnd = this.placementEnd;
+        if (placementAdditive) {
+            placementEnd = placementStart + placementAdd;
+        }
         float tStart = Mathf.Clamp01(Mathf.Min(placementStart, placementEnd));
         float tEnd = Mathf.Clamp01(Mathf.Max(placementStart, placementEnd));
 
@@ -92,11 +103,7 @@ public class ProfileCurveSplineObjectPlacer : MonoBehaviour {
             Vector3 up = SplineUtility.EvaluateUpVector(spline, t);
             localposition += up.normalized * verticalOffset;
         }
-        else {
-            localposition.y += verticalOffset;
-            localposition.x += horizontalOffset;
-            localposition.z += zOffset;
-        }
+
         Vector3 main_Position = splineContainer.transform.TransformPoint(localposition);
         Vector3 main_Tangent = SplineUtility.EvaluateTangent(splineContainer.Spline, t);
         main_Tangent = splineContainer.transform.TransformDirection(main_Tangent);
@@ -150,8 +157,6 @@ public class ProfileCurveSplineObjectPlacer : MonoBehaviour {
         else {
             // Apply fixed vertical offset
             localposition.y += verticalOffset;
-            localposition.x += horizontalOffset;
-            localposition.z += zOffset;
         }
         Vector3 position = splineContainer.transform.TransformPoint(localposition);
         Quaternion rotation = alignRotation
@@ -186,10 +191,14 @@ public class ProfileCurveSplineObjectPlacer : MonoBehaviour {
         }
 
         int placementCount = numberOfObjects;
+        float placementEnd = this.placementEnd;
+        if (placementAdditive) {
+            placementEnd = placementStart + placementAdd;
+        }
         float tStart = Mathf.Clamp01(Mathf.Min(placementStart, placementEnd));
         float tEnd = Mathf.Clamp01(Mathf.Max(placementStart, placementEnd));
 
-        Gizmos.color = Color.cyan;
+        Gizmos.color = gizmoColor;
         for (int i = 0; i < placementCount; i++) {
             float t;
             if (useClosedSpline) {
@@ -206,8 +215,6 @@ public class ProfileCurveSplineObjectPlacer : MonoBehaviour {
             Vector3 localposition = SplineUtility.EvaluatePosition(spline, t);
             if (!verticalOffsetFollowsCurve) {
                 localposition.y += verticalOffset;
-                localposition.x += horizontalOffset;
-                localposition.z += zOffset;
             }
             Vector3 main_Position = splineContainer.transform.TransformPoint(localposition);
             Vector3 main_Tangent = SplineUtility.EvaluateTangent(splineContainer.Spline, t);
