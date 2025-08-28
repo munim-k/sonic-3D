@@ -10,11 +10,9 @@ public class ProfileCurveSplineObjectPlacer : MonoBehaviour {
     public bool alignRotation = true;
     public bool verticalOffsetFollowsCurve = false;
     public float verticalOffset = 0f;
-    public float horizontalOffset = 0f;
     public float profileOffset = 0f;
 
     public float profileScale = 0f;
-    public float zOffset = 0f;
 
     [Header("Placement Range (Normalized 0-1)")]
     [Range(0f, 1f)]

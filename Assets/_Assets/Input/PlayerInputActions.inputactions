@@ -526,6 +526,17 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "",
+                    "id": "115974c5-896c-460b-8327-5db6d798ea6c",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "Keyboard",
                     "id": "6bff57a0-d435-4166-8ae7-3dd16cb3bc18",
                     "path": "1DAxis",

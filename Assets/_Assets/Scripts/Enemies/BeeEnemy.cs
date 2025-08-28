@@ -21,8 +21,6 @@ public class BeeEnemy : MonoBehaviour, BaseEnemy, IHittable {
 
     //Charging State
     [SerializeField] private float chargingSpeed = 5f;
-    [SerializeField] private float verticalLift = 0.5f;
-    [SerializeField] private float rotationSpeed = 1f;
     [SerializeField] private float detonationRange = 2f;
     [SerializeField] private float detonationDuration = 0.5f;
     private float detonationTimer = 0f;
@@ -113,6 +111,7 @@ public class BeeEnemy : MonoBehaviour, BaseEnemy, IHittable {
         if (explosionVFX != null) {
             Instantiate(explosionVFX, transform.position, Quaternion.identity);
         }
+        On_Death?.Invoke();
         Destroy(gameObject);
     }
 
