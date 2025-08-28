@@ -19,8 +19,10 @@ public class SplineVectorTest : MonoBehaviour
         main_Position = mainSplineComponent.transform.TransformPoint(main_Position);
         mainPos= main_Position;
         Vector3 main_Tangent = SplineUtility.EvaluateTangent(mainSplineComponent.Spline, t1);
+        main_Tangent = mainSplineComponent.transform.TransformDirection(main_Tangent);
         main_Tangent.Normalize();
         Vector3 main_Up = SplineUtility.EvaluateUpVector(mainSplineComponent.Spline, t1);
+        main_Up = mainSplineComponent.transform.TransformDirection(main_Up);
         main_Up.Normalize();
         Vector3 main_Right = Vector3.Cross(main_Tangent, main_Up).normalized;
         main_Right.Normalize();

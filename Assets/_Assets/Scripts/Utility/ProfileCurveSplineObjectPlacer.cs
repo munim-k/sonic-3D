@@ -101,8 +101,10 @@ public class ProfileCurveSplineObjectPlacer : MonoBehaviour {
         }
         Vector3 main_Position = splineContainer.transform.TransformPoint(localposition);
         Vector3 main_Tangent = SplineUtility.EvaluateTangent(splineContainer.Spline, t);
+        main_Tangent = splineContainer.transform.TransformDirection(main_Tangent);
         main_Tangent.Normalize();
         Vector3 main_Up = SplineUtility.EvaluateUpVector(splineContainer.Spline, t);
+        main_Up = splineContainer.transform.TransformDirection(main_Up);
         main_Up.Normalize();
         Vector3 main_Right = Vector3.Cross(main_Tangent, main_Up).normalized;
         main_Right.Normalize();
@@ -211,8 +213,10 @@ public class ProfileCurveSplineObjectPlacer : MonoBehaviour {
             }
             Vector3 main_Position = splineContainer.transform.TransformPoint(localposition);
             Vector3 main_Tangent = SplineUtility.EvaluateTangent(splineContainer.Spline, t);
+            main_Tangent = splineContainer.transform.TransformDirection(main_Tangent);
             main_Tangent.Normalize();
             Vector3 main_Up = SplineUtility.EvaluateUpVector(splineContainer.Spline, t);
+            main_Up = splineContainer.transform.TransformDirection(main_Up);
             main_Up.Normalize();
             Vector3 main_Right = Vector3.Cross(main_Tangent, main_Up).normalized;
             main_Right.Normalize();

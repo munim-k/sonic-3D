@@ -88,8 +88,10 @@ namespace RagdollEngine {
             Vector3 main_Position = SplineUtility.EvaluatePosition(currentPipe.splineContainer.Spline, currentT1);
             main_Position = currentPipe.splineContainer.transform.TransformPoint(main_Position);
             Vector3 main_Tangent = SplineUtility.EvaluateTangent(currentPipe.splineContainer.Spline, currentT1);
+            main_Tangent = currentPipe.splineContainer.transform.TransformDirection(main_Tangent);
             main_Tangent.Normalize();
             Vector3 main_Up = SplineUtility.EvaluateUpVector(currentPipe.splineContainer.Spline, currentT1);
+            main_Up = currentPipe.splineContainer.transform.TransformDirection(main_Up);
             main_Up.Normalize();
             Vector3 main_Right = Vector3.Cross(main_Tangent, main_Up).normalized;
             main_Right.Normalize();
@@ -130,9 +132,12 @@ namespace RagdollEngine {
 
             Vector3 main_Position = SplineUtility.EvaluatePosition(currentPipe.splineContainer.Spline, currentT1);
             main_Position = currentPipe.splineContainer.transform.TransformPoint(main_Position);
+
             Vector3 main_Tangent = SplineUtility.EvaluateTangent(currentPipe.splineContainer.Spline, currentT1);
+            main_Tangent=currentPipe.splineContainer.transform.TransformDirection(main_Tangent);
             main_Tangent.Normalize();
             Vector3 main_Up = SplineUtility.EvaluateUpVector(currentPipe.splineContainer.Spline, currentT1);
+            main_Up = currentPipe.splineContainer.transform.TransformDirection(main_Up);
             main_Up.Normalize();
             Vector3 main_Right = Vector3.Cross(main_Tangent, main_Up).normalized;
             main_Right.Normalize();
