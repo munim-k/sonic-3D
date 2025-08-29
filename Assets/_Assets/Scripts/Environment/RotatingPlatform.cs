@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 public class RotatingPlatform : MonoBehaviour {
     [SerializeField] private float rotationSpeed = 30f; // Speed of rotation in degrees per second.
@@ -21,7 +21,7 @@ public class RotatingPlatform : MonoBehaviour {
         // Check if the object entering the trigger is a player.
         if (other.tag == "Player") {
             player = other.gameObject; // Store a reference to the player.
-            while(player.transform.parent != null) {
+            while (player.transform.parent != null) {
                 player = player.transform.parent.gameObject; // Traverse up the hierarchy to find the root player object.
             }
 
@@ -47,10 +47,31 @@ public class RotatingPlatform : MonoBehaviour {
             //set the most high parent as the child of null
             player.transform.SetParent(null, true);
 
+
             Debug.Log("Player has exited the platform trigger.");
         }
     }
 
+    IEnumerator SetWorldPos(Transform modelTransform, Vector3 pos, Quaternion rot) {
+
+        yield return null;
+        modelTransform.position = pos;
+        modelTransform.rotation = rot;
+    }
+    Transform RecursiveFindChild(Transform parent, string childName) {
+        foreach (Transform child in parent) {
+            if (child.name == childName) {
+                return child;
+            }
+            else {
+                Transform found = RecursiveFindChild(child, childName);
+                if (found != null) {
+                    return found;
+                }
+            }
+        }
+        return null;
+    }
     private void FixedUpdate() {
         if (isWaiting)
             return;

@@ -1,10 +1,8 @@
-using RagdollEngine;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
 namespace RagdollEngine {
-    public class PipePlayerBehaviour : PlayerBehaviour
-{
+    public class PipePlayerBehaviour : PlayerBehaviour {
         [SerializeField] private LayerMask pipeLayerMask;
         [SerializeField] private float slideSpeed = 5f;
         [SerializeField] private float detectionRadius = 5f;
@@ -51,7 +49,10 @@ namespace RagdollEngine {
                             currentSplineLength = 0f;
                             continue;
                         }
-                        direction = Vector3.Dot(modelTransform.forward, pipe.splineContainer.Spline.EvaluateTangent(currentT1)) > 0;
+                        Vector3 splineTangent = pipe.splineContainer.Spline.EvaluateTangent(closestT);
+                        splineTangent.Normalize();
+                        splineTangent = pipe.splineContainer.transform.TransformDirection(splineTangent);
+                        direction = Vector3.Dot(modelTransform.forward, splineTangent) > 0;
                         previousPosition = modelTransform.position;
                         lateralOffset = FindProfilePosOfPlayer(modelTransform.position);
                         result = true;
@@ -134,7 +135,7 @@ namespace RagdollEngine {
             main_Position = currentPipe.splineContainer.transform.TransformPoint(main_Position);
 
             Vector3 main_Tangent = SplineUtility.EvaluateTangent(currentPipe.splineContainer.Spline, currentT1);
-            main_Tangent=currentPipe.splineContainer.transform.TransformDirection(main_Tangent);
+            main_Tangent = currentPipe.splineContainer.transform.TransformDirection(main_Tangent);
             main_Tangent.Normalize();
             Vector3 main_Up = SplineUtility.EvaluateUpVector(currentPipe.splineContainer.Spline, currentT1);
             main_Up = currentPipe.splineContainer.transform.TransformDirection(main_Up);

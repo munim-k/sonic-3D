@@ -75,8 +75,6 @@ MonoBehaviour:
   lookDuration: 0.5
   lookSpeed: 10
   chargingSpeed: 25
-  verticalLift: 0.2
-  rotationSpeed: 5
   detonationRange: 4
   detonationDuration: 0.5
   damageSphere: {fileID: 4498934579821403601}
@@ -301,7 +299,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: d86d7c8972af3c946b99e43fbd0a1aaf, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 2
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
