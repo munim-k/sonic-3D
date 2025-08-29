@@ -83,12 +83,29 @@ namespace RagdollEngine {
 
 
         public void DoDamage(int damage) {
-            currentHealth-=damage;
+            if (damage <= 0) {
+                Debug.LogWarning("DamagePlayerBehaviour: DoDamage called with non-positive damage value.");
+                return;
+            }
+            currentHealth -= damage;
             // Check if the player has no health left
             if (currentHealth <= 0) {
                 character.Respawn(); // Respawn the player if health is depleted
             }
             onDamage?.Invoke(currentHealth, maxHealth); // Invoke the damage event
+        }
+
+        public void SetHealth(int h) {
+            if (h <= 0) {
+                Debug.LogWarning("DamagePlayerBehaviour: AddHealth called with non-positive health value.");
+                return;
+            }
+            currentHealth = Mathf.Min(h, maxHealth);
+            onDamage?.Invoke(currentHealth, maxHealth); // Invoke the damage event
+        }
+
+        public int GetCurrentHealth() {
+            return currentHealth;
         }
     }
 }

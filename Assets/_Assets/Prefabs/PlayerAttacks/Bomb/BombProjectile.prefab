@@ -112,9 +112,12 @@ MonoBehaviour:
   damage: 20
   attackRange: 5
   bombTime: 2
-  excludeLayers:
+  overlapSphereMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 8200
+  raycastMask:
+    serializedVersion: 2
+    m_Bits: 48776
   bombParticles: {fileID: 1017516033835209097, guid: 41fd8b39359101a4fbc50f47af80bd71, type: 3}
 --- !u!1001 &5425809084860076355
 PrefabInstance:

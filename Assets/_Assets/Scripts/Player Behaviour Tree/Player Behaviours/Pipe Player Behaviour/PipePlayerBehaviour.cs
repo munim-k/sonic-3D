@@ -179,6 +179,9 @@ namespace RagdollEngine {
             currentSplineLength = 0f;
             lateralOffset = 0.5f;
             immunityTimer = immunityTime;
+
+            jumpPlayerBehaviour.Jump(previousUpVector, true);
+            jumpAudioSource.Play();
         }
     }
 

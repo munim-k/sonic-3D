@@ -5,9 +5,7 @@ using UnityEditor;
 #endif
 
 // ScriptableObject to store persistent path data
-public class MotionPathData : ScriptableObject {
-    public List<Vector3> positions = new List<Vector3>();
-}
+
 
 [ExecuteInEditMode]
 public class MotionPathRecorder : MonoBehaviour {
@@ -38,9 +36,9 @@ public class MotionPathRecorder : MonoBehaviour {
     void OnEnable() {
 #if UNITY_EDITOR
         // Auto-create path data if none exists
-        if (pathData == null) {
-            CreatePathDataAsset();
-        }
+        //if (pathData == null) {
+        //    CreatePathDataAsset();
+        //}
 #endif
 
         if (Application.isPlaying && target != null) {
@@ -51,8 +49,6 @@ public class MotionPathRecorder : MonoBehaviour {
         if (isRecording) {
             StopRecording();
         }
-        // Save path data when the application quits
-        SavePathData();
     }
 
     void Update() {
