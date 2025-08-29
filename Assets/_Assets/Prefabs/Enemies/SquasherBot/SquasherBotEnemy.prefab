@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9589dc4650e61240b279544fa27f304, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 40
   deathExplosion: {fileID: 1017516033835209097, guid: 88ad9f77a3a90c34690ba0a98cd8a29f, type: 3}
   damageVolume: {fileID: 6398524844515043244}
   sphereCastRadius: 4

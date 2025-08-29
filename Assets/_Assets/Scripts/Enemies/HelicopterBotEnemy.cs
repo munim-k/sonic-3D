@@ -62,7 +62,7 @@ public class HelicopterBotEnemy : MonoBehaviour, BaseEnemy, IHittable {
         else {
             Debug.LogError($"Helicopter {gameObject.name} Spline not assigned");
         }
-            rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate() {
@@ -232,5 +232,8 @@ public class HelicopterBotEnemy : MonoBehaviour, BaseEnemy, IHittable {
     }
 
 
+    private void OnDrawGizmosSelected() {
+        Gizmos.DrawWireSphere(transform.position, playerDetectionRadius);
+    }
 
 }

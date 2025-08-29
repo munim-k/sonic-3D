@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29b3a14802b212143a22b49b11f5b420, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 60
   deathExplosion: {fileID: 1017516033835209097, guid: 88ad9f77a3a90c34690ba0a98cd8a29f, type: 3}
   playerDetectionRadius: 30
   moveSpeed: 20

@@ -42,7 +42,7 @@ public class ShieldGunnerEnemy : MonoBehaviour, BaseEnemy, IHittable {
     private Action On_Hit;
 
     public Action<State> OnStateChange;
-    public Action<Vector3,Vector3> OnShotFired;
+    public Action<Vector3, Vector3> OnShotFired;
     public Action<bool> FiringStateChange;
     Action BaseEnemy.OnDeath { get => On_Death; set => On_Death = value; }
     Action IHittable.OnHit { get => On_Hit; set => On_Hit = value; }
@@ -123,7 +123,7 @@ public class ShieldGunnerEnemy : MonoBehaviour, BaseEnemy, IHittable {
         if (angle < maxFiringAngle) {
             Vector3 shotOrigin = gunTransform.position + gunTransform.forward * 2;
             float shotDistance = detectionRange;
-            if (Physics.SphereCast(shotOrigin,sphereCastRadius, gunTransform.forward, out RaycastHit hit, detectionRange, ~raycastLayersToAvoid, QueryTriggerInteraction.Ignore)) {
+            if (Physics.SphereCast(shotOrigin, sphereCastRadius, gunTransform.forward, out RaycastHit hit, detectionRange, ~raycastLayersToAvoid, QueryTriggerInteraction.Ignore)) {
                 //Bullet hits something
                 shotDistance = hit.distance;
                 if (((1 << hit.collider.gameObject.layer) & playerLayer) != 0) {
@@ -133,7 +133,8 @@ public class ShieldGunnerEnemy : MonoBehaviour, BaseEnemy, IHittable {
                             if (b is DamagePlayerBehaviour) {
                                 playerDamageBehaviour = b as DamagePlayerBehaviour;
                             }
-                        };
+                        }
+                        ;
                     }
                     playerDamageBehaviour.DoDamage(bulletDamage);
                 }
@@ -163,5 +164,8 @@ public class ShieldGunnerEnemy : MonoBehaviour, BaseEnemy, IHittable {
         return HittableType.Enemy;
     }
 
+    private void OnDrawGizmosSelected() {
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
+    }
 
 }

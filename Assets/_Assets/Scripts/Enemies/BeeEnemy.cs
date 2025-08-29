@@ -134,4 +134,8 @@ public class BeeEnemy : MonoBehaviour, BaseEnemy, IHittable {
     HittableType IHittable.GetType() {
         return HittableType.Enemy;
     }
+
+    private void OnDrawGizmosSelected() {
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
+    }
 }

@@ -3,8 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class MeleeStepperBotEnemy : MonoBehaviour, BaseEnemy, IHittable
-{
+public class MeleeStepperBotEnemy : MonoBehaviour, BaseEnemy, IHittable {
 
     public enum State {
         Idle,
@@ -33,7 +32,7 @@ public class MeleeStepperBotEnemy : MonoBehaviour, BaseEnemy, IHittable
     //Moving State
     [Header("Moving State Settings")]
     [SerializeField] private float moveSpeed = 5f;
-    
+
     //AttackWindup State
     [Header("AttackWindup State Settings")]
     [SerializeField] private float attackWindupTime = 1f;
@@ -43,13 +42,13 @@ public class MeleeStepperBotEnemy : MonoBehaviour, BaseEnemy, IHittable
     //Attacking State
     //Dependent entirely on animation states
     [Header("Attacking State Settings")]
-    private bool startAttack= false;
+    private bool startAttack = false;
     [SerializeField] private DamageVolume attackHitbox;
     [SerializeField] private float attackTravelTime = 0.5f;
     private float attackTravelTimer = 0f;
     private Vector3 oldAttackPosition;
     private Vector3 oldplayerPos;
-    
+
     Action BaseEnemy.OnDeath { get => On_Death; set => On_Death = value; }
     Action IHittable.OnHit { get => On_Hit; set => On_Hit = value; }
 
@@ -75,7 +74,7 @@ public class MeleeStepperBotEnemy : MonoBehaviour, BaseEnemy, IHittable
                 break;
             case State.Attacking:
                 if (startAttack) {
-                Attacking();
+                    Attacking();
                 }
                 break;
             case State.Retreating:
@@ -89,7 +88,7 @@ public class MeleeStepperBotEnemy : MonoBehaviour, BaseEnemy, IHittable
     private void Idle() {
         // Implement Idle behavior
         Vector3 playerPos = Player.CharacterInstance.playerBehaviourTree.modelTransform.position;
-        if (Vector3.SqrMagnitude(transform.position-playerPos) <= playerDetectionRadius*playerDetectionRadius) {
+        if (Vector3.SqrMagnitude(transform.position - playerPos) <= playerDetectionRadius * playerDetectionRadius) {
             state = State.Moving;
             OnStateChange?.Invoke(state);
             navMeshAgent.isStopped = false;
@@ -111,7 +110,7 @@ public class MeleeStepperBotEnemy : MonoBehaviour, BaseEnemy, IHittable
 
                 navMeshAgent.speed = 0f;
                 navMeshAgent.isStopped = true;
-              
+
             }
         }
     }
@@ -163,7 +162,7 @@ public class MeleeStepperBotEnemy : MonoBehaviour, BaseEnemy, IHittable
     private void Retreating() {
         // Implement Retreating behavior
         attackTravelTimer -= Time.fixedDeltaTime;
-        float t = 1f- attackTravelTimer / attackTravelTime;
+        float t = 1f - attackTravelTimer / attackTravelTime;
         transform.position = Vector3.Lerp(oldplayerPos, oldAttackPosition, t);
         if (attackTravelTimer < 0) {
             attackTravelTimer = 0;
@@ -199,4 +198,8 @@ public class MeleeStepperBotEnemy : MonoBehaviour, BaseEnemy, IHittable
         return HittableType.Enemy;
     }
 
+
+    private void OnDrawGizmosSelected() {
+        Gizmos.DrawWireSphere(transform.position, playerDetectionRadius);
+    }
 }

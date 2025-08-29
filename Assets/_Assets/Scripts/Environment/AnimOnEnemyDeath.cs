@@ -7,11 +7,17 @@ public class AnimOnEnemyDeath : MonoBehaviour {
     private void Start() {
         foreach (var enemy in enemies) {
             BaseEnemy enemyComponent = enemy.GetComponent<BaseEnemy>();
-            enemyComponent.OnDeath += HandleEnemyDeath;
+            if (enemyComponent != null) {
+                enemyComponent.OnDeath += HandleEnemyDeath;
+            }
+            else {
+                print($"AnimOnEnemyDeath: Enemy {enemy.name} does not have a BaseEnemy component.");
+                enemies = System.Array.FindAll(enemies, e => e != enemy);
+            }
         }
         aliveEnemies = enemies.Length;
 
-        if(aliveEnemies == 0) {
+        if (aliveEnemies == 0) {
             foreach (var anim in animations) {
                 if (anim != null) {
                     anim.Play();
