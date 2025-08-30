@@ -162,6 +162,7 @@ public class World8Boss : MonoBehaviour, BaseEnemy {
             state = State.Crying;
             attackTimer = cryAttackDuration;
         }
+        OnStateChange?.Invoke(state);
     }
 
     public void SpawnTrantrumShockwave(Vector3? p = null) {
