@@ -1,13 +1,22 @@
 using UnityEngine;
 
 public class World8BossAnimationEventHandler : MonoBehaviour {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start() {
 
+    [SerializeField] private World8Boss boss;
+
+    public void MagicAttackStart() {
+        boss.StartSpawningPillars();
     }
 
-    // Update is called once per frame
-    void Update() {
+    public void TantrumShockwave1() {
+        boss.SpawnTrantrumShockwave();
 
+    }
+    public void TantrumShockwave2() {
+        boss.SpawnTrantrumShockwave();
+    }
+
+    public void TantrumEnd() {
+        boss.EndTantrum();
     }
 }
