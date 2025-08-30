@@ -35,7 +35,7 @@ RenderSettings:
   m_DefaultReflectionMode: 0
   m_DefaultReflectionResolution: 256
   m_ReflectionBounces: 1
-  m_ReflectionIntensity: 0.212
+  m_ReflectionIntensity: 0.5
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
   m_UseRadianceAmbientProbe: 0
@@ -230147,11 +230147,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6695489051614882999, guid: 1397966936eceb240a27049a03182851, type: 3}
       propertyPath: levelName
-      value: World8Level2
+      value: World8Boss
       objectReference: {fileID: 0}
     - target: {fileID: 6695489051614882999, guid: 1397966936eceb240a27049a03182851, type: 3}
       propertyPath: selectedSceneIndex
-      value: 22
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 6840787674012636349, guid: 1397966936eceb240a27049a03182851, type: 3}
       propertyPath: m_Mesh

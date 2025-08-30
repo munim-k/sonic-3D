@@ -74,5 +74,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Stages/Levels/World8 (Steampunk)/World8Level2/World8Level2.unity
     guid: eaf8477d0f375614eb169c106ef95c50
+  - enabled: 1
+    path: Assets/Stages/Levels/World8 (Steampunk)/World8Boss/World8Boss.unity
+    guid: 34380a2b592711440aa3e25696658532
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
