@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class World8Boss : MonoBehaviour, BaseEnemy {
@@ -53,6 +54,11 @@ public class World8Boss : MonoBehaviour, BaseEnemy {
         state = State.Staff;
         attackTimer = staffAttackDuration;
         pillarTimer = pillarAttackStep;
+        StartCoroutine(InitialEvent());
+    }
+
+    IEnumerator InitialEvent() {
+        yield return null;
         OnStateChange?.Invoke(state);
     }
 
