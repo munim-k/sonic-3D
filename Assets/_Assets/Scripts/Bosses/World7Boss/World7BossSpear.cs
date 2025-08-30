@@ -1,6 +1,4 @@
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
-using UnityEngine.UI;
 
 public class World7BossSpear : MonoBehaviour {
     [SerializeField] private float speed = 10f;
@@ -45,7 +43,7 @@ public class World7BossSpear : MonoBehaviour {
                 if (spearCollisionParticles != null) {
                     Instantiate(spearCollisionParticles, collision.GetContact(0).point, Quaternion.identity);
                 }
-                Destroy(gameObject,3f);
+                Destroy(gameObject, 3f);
             }
         }
     }
